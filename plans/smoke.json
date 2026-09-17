@@ -1,0 +1,14 @@
+{
+  "name": "Open the authenticated oboda dashboard",
+  "steps": [
+    {
+      "action": "navigate",
+      "path": "/"
+    },
+    {
+      "action": "assertText",
+      "target": "inventory-alerts-heading",
+      "value": "Inventory Alerts"
+    }
+  ]
+}

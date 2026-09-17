@@ -1,0 +1,23 @@
+{
+  "pages": {
+    "dashboard": "/",
+    "sign-in": "/"
+  },
+  "targets": {
+    "inventory-alerts-heading": {
+      "selector": "h2:has-text('Inventory Alerts')"
+    },
+    "welcome-heading": {
+      "selector": "h2:has-text('Welcome back')"
+    },
+    "email-input": {
+      "selector": "input[type='email']"
+    },
+    "password-input": {
+      "selector": "input[type='password']"
+    },
+    "sign-in-button": {
+      "selector": "button:has-text('Sign in')"
+    }
+  }
+}
