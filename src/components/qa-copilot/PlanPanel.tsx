@@ -4,6 +4,7 @@ import { ClipboardList, TriangleAlert } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { CollapsibleSection } from '@/components/ui/CollapsibleSection'
 import { PlanStepCard } from './PlanStepCard'
 import { PlanParamsCard } from './PlanParamsCard'
 import { useQaCopilot } from './QaCopilotContext'
@@ -30,16 +31,29 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
     missingParamNames.length > 0 ? `Fill in ${missingParamNames.join(', ')} first` : null
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, background: 'var(--surface-sunken)' }}>
-      <div
-        style={{
-          flex: 'none',
-          padding: '18px 20px 14px',
-          background: 'var(--neutral-white)',
-          borderBottom: '1px solid var(--border-subtle)'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: 0,
+        background: 'var(--surface-sunken)'
+      }}
+    >
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+        <div
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 2,
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 12,
+            flexWrap: 'wrap',
+            padding: '18px 20px 14px',
+            background: 'var(--neutral-white)',
+            borderBottom: '1px solid var(--border-subtle)'
+          }}
+        >
           <div style={{ minWidth: 0, flex: '1 1 220px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
               <span style={{ font: '700 18px/1.2 var(--font-display)', color: 'var(--brand-oboda-blue)' }}>
@@ -71,67 +85,73 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
           </div>
         </div>
 
-        {planMeta && planMeta.sourceModules.length > 0 ? (
-          <div style={{ marginTop: 12, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {planMeta.sourceModules.map((module) => (
-              <Badge key={module} tone='brand' size='sm' variant='outline'>
-                {module}
-              </Badge>
-            ))}
-          </div>
-        ) : null}
+        <div
+          style={{
+            padding: '16px 20px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 12
+          }}
+        >
+          {planMeta && planMeta.sourceModules.length > 0 ? (
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              {planMeta.sourceModules.map((module) => (
+                <Badge key={module} tone='brand' size='sm' variant='outline'>
+                  {module}
+                </Badge>
+              ))}
+            </div>
+          ) : null}
 
-        {planMeta && planMeta.warnings.length > 0 ? (
-          <div
-            style={{
-              marginTop: 12,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 6,
-              padding: '10px 12px',
-              borderRadius: 10,
-              background: 'var(--warning-50)'
-            }}
-          >
-            {planMeta.warnings.map((warning) => (
+          {planMeta && planMeta.warnings.length > 0 ? (
+            <CollapsibleSection
+              title='Warnings'
+              count={planMeta.warnings.length}
+              tone='warning'
+              defaultOpen={planMeta.warnings.length <= 2}
+            >
               <div
-                key={warning}
                 style={{
                   display: 'flex',
-                  gap: 8,
-                  alignItems: 'flex-start',
-                  fontSize: 12.5,
-                  lineHeight: 1.45,
-                  color: 'var(--warning-700)'
+                  flexDirection: 'column',
+                  gap: 6,
+                  padding: '10px 12px',
+                  borderRadius: 10,
+                  background: 'var(--warning-50)'
                 }}
               >
-                <TriangleAlert size={15} style={{ flex: 'none', marginTop: 1 }} />
-                {warning}
+                {planMeta.warnings.map((warning) => (
+                  <div
+                    key={warning}
+                    style={{
+                      display: 'flex',
+                      gap: 8,
+                      alignItems: 'flex-start',
+                      fontSize: 12.5,
+                      lineHeight: 1.45,
+                      color: 'var(--warning-700)'
+                    }}
+                  >
+                    <TriangleAlert size={15} style={{ flex: 'none', marginTop: 1 }} />
+                    {warning}
+                  </div>
+                ))}
               </div>
+            </CollapsibleSection>
+          ) : null}
+
+          {blockedReason ? (
+            <div style={{ fontSize: 12.5, color: 'var(--error-700)' }}>{blockedReason}</div>
+          ) : null}
+
+          <PlanParamsCard />
+
+          <CollapsibleSection title='Steps' count={plan.steps.length} defaultOpen={plan.steps.length <= 12}>
+            {plan.steps.map((step, index) => (
+              <PlanStepCard key={`${step.action}-${index}`} step={step} position={index + 1} />
             ))}
-          </div>
-        ) : null}
-
-        {blockedReason ? (
-          <div style={{ marginTop: 10, fontSize: 12.5, color: 'var(--error-700)' }}>{blockedReason}</div>
-        ) : null}
-      </div>
-
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          overflowY: 'auto',
-          padding: '16px 20px 24px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 10
-        }}
-      >
-        <PlanParamsCard />
-        {plan.steps.map((step, index) => (
-          <PlanStepCard key={`${step.action}-${index}`} step={step} position={index + 1} />
-        ))}
+          </CollapsibleSection>
+        </div>
       </div>
     </div>
   )

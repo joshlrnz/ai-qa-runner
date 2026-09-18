@@ -205,3 +205,57 @@ button {
   border: 3px solid transparent;
   background-clip: content-box;
 }
+
+.qa-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease-standard);
+}
+
+.qa-collapse[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+
+.qa-collapse-clip {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.qa-collapse-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity var(--dur-base) var(--ease-standard),
+    transform var(--dur-base) var(--ease-standard);
+}
+
+.qa-collapse[data-open='true'] .qa-collapse-inner {
+  opacity: 1;
+  transform: none;
+  transition-delay: 60ms;
+}
+
+.qa-collapse-toggle {
+  transition: background var(--dur-fast) var(--ease-standard);
+}
+
+.qa-collapse-toggle:hover {
+  background: var(--action-hover);
+}
+
+.qa-chevron {
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qa-collapse,
+  .qa-collapse-inner,
+  .qa-collapse-toggle,
+  .qa-chevron {
+    transition: none;
+  }
+}

@@ -689,15 +689,16 @@
       "note": "last crumb is the page name — `assertText` against this is the cheapest \"am I on the right page\" check **verified 2026-09-17**: 1 match."
     },
     "shell.toast": {
-      "selector": "role=alert",
+      "selector": "[role=\"alert\"]:not(#__next-route-announcer__)",
       "module": "shell",
       "confidence": "high",
-      "note": "MUI `Alert`; carries both success and error copy **verified 2026-09-17**: 1 match."
+      "note": "MUI `Alert`; carries both success and error copy. Next injects `#__next-route-announcer__` with `role=alert` on every page, so a bare `role=alert` is always 2 matches — the announcer must be excluded."
     },
     "shell.toast-close-button": {
-      "selector": "role=alert >> role=button[name=\"close\"]",
+      "selector": "[role=\"alert\"]:not(#__next-route-announcer__) >> role=button[name=\"close\"]",
       "module": "shell",
-      "confidence": "medium"
+      "confidence": "medium",
+      "note": "scoped past the Next route announcer, same as `shell.toast`"
     },
     "shell.companies-list-item": {
       "selector": "role=button[name=\"{companyName}\"]",

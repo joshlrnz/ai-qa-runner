@@ -141,8 +141,8 @@ click the section tile immediately beforehand.
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
 | `shell.breadcrumb` | navigation "breadcrumb" | `role=navigation[name="breadcrumb"]` | `Navbar/Breadcrumbs.tsx:14` | high | last crumb is the page name — `assertText` against this is the cheapest "am I on the right page" check **verified 2026-09-17**: 1 match. |
-| `shell.toast` | alert | `role=alert` | `Toast/Toast.tsx:54` | high | MUI `Alert`; carries both success and error copy **verified 2026-09-17**: 1 match. |
-| `shell.toast-close-button` | button "close" | `role=alert >> role=button[name="close"]` | `Toast/Toast.tsx:90` | medium | |
+| `shell.toast` | alert | `[role="alert"]:not(#__next-route-announcer__)` | `Toast/Toast.tsx:54` | high | MUI `Alert`; carries both success and error copy. Next injects `#__next-route-announcer__` with `role=alert` on every page, so a bare `role=alert` is always 2 matches — the announcer must be excluded. |
+| `shell.toast-close-button` | button "close" | `[role="alert"]:not(#__next-route-announcer__) >> role=button[name="close"]` | `Toast/Toast.tsx:90` | medium | scoped past the Next route announcer, same as `shell.toast` |
 
 ### Company picker (`/companies`)
 

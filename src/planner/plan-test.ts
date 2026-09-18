@@ -37,8 +37,59 @@ export class UnknownPlanRunError extends Error {
 }
 
 // Research, clarification and validation run well past Mastra's default of 5 steps.
+// Each step is one HTTP call carrying the whole history, so fewer steps means fewer
+// chances of a dropped connection. Raise QA_PLANNER_MAX_STEPS if plans come back thin.
 export function getPlannerMaxSteps() {
-  return Number(process.env.QA_PLANNER_MAX_STEPS ?? 40)
+  return Number(process.env.QA_PLANNER_MAX_STEPS ?? 20)
+}
+
+function getPlannerAttempts() {
+  return Number(process.env.QA_PLANNER_ATTEMPTS ?? 3)
+}
+
+// The upstream call returns 200 and then dies mid-body, which the AI SDK marks
+// isRetryable: false. It is a dropped socket, not a rejected request, so it is worth retrying.
+function isDroppedConnection(error: unknown) {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  if (error.message.includes('Failed to process successful response')) {
+    return true
+  }
+
+  let cause: unknown = error.cause
+
+  while (cause instanceof Error) {
+    const code = (cause as Error & { code?: string }).code
+
+    if (code === 'ETIMEDOUT' || code === 'ECONNRESET' || cause.message === 'terminated') {
+      return true
+    }
+
+    cause = cause.cause
+  }
+
+  return false
+}
+
+async function withRetry<T>(operation: () => Promise<T>): Promise<T> {
+  const attempts = getPlannerAttempts()
+  let lastError: unknown = null
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await operation()
+    } catch (error) {
+      lastError = error
+
+      if (!isDroppedConnection(error) || attempt === attempts) {
+        throw error
+      }
+    }
+  }
+
+  throw lastError
 }
 
 function getPlannerAgent() {
@@ -106,7 +157,9 @@ function toAttempt(run: AgentRun): PlanAttempt {
 }
 
 export async function planTest(instruction: string): Promise<PlanAttempt> {
-  const run = await getPlannerAgent().generate(instruction, { maxSteps: getPlannerMaxSteps() })
+  const run = await withRetry(() =>
+    getPlannerAgent().generate(instruction, { maxSteps: getPlannerMaxSteps() })
+  )
   return toAttempt(run as AgentRun)
 }
 
@@ -115,10 +168,12 @@ export async function resumePlanTest(
   answers: ClarificationAnswers
 ): Promise<PlanAttempt> {
   try {
-    const run = await getPlannerAgent().resumeGenerate(answers, {
-      runId,
-      maxSteps: getPlannerMaxSteps()
-    })
+    const run = await withRetry(() =>
+      getPlannerAgent().resumeGenerate(answers, {
+        runId,
+        maxSteps: getPlannerMaxSteps()
+      })
+    )
 
     return toAttempt(run as AgentRun)
   } catch (error) {

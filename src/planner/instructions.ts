@@ -72,6 +72,11 @@ requiredParams; the values are supplied per run, never by you.
 - Every plan begins by signing in. Read the "Sign in with email" flow in the shell module and
   reproduce it. That flow needs {email} and {password}, which are ALWAYS declared secret: true.
 - Never invent a parameter value. Declare the parameter and describe it.
+- Parameters are INPUTS, never expectations. A value the application itself produces — toast copy,
+  generated codes, computed totals, status words — must never become a parameter. A plan whose
+  expected value is supplied at run time can never fail: whatever the user types becomes the
+  assertion. If you do not know the expected text, assert the element's presence with
+  assertVisible, or assert a structural outcome the knowledge base does name.
 
 ## Trusting the knowledge base
 
