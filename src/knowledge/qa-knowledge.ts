@@ -1,0 +1,429 @@
+import { readFileSync, readdirSync } from 'node:fs'
+import path from 'node:path'
+
+export type TargetConfidence = 'high' | 'medium' | 'low'
+
+export type SelectorCandidate = {
+  name: string
+  selector: string
+  module: string
+  confidence: TargetConfidence
+  group: string | null
+  note: string | null
+  params: string[]
+}
+
+export type UnresolvedTarget = {
+  name: string
+  module: string
+  selector: string
+  reason: string
+}
+
+export type PageEntry = {
+  name: string
+  path: string
+  params: string[]
+}
+
+export type ParamEntry = {
+  name: string
+  description: string
+  scope: string
+}
+
+export type ModuleVerification = {
+  targets: number
+  verified: number
+  ambiguous: number
+  zeroMatch: number
+  notProbed: number
+}
+
+export type ModuleSummary = {
+  name: string
+  routes: number
+  targets: number
+  flows: number
+  status: string
+  lastUpdated: string
+  depth: string | null
+  verification: ModuleVerification | null
+}
+
+export type ModuleSection = {
+  level: number
+  title: string
+  content: string
+}
+
+export type SearchHit = {
+  module: string
+  heading: string
+  excerpt: string
+  score: number
+}
+
+type CompiledTarget = {
+  selector: string
+  module: string
+  confidence: TargetConfidence
+  note?: string
+  fallbacks?: string[]
+}
+
+type CompiledKnowledge = {
+  pages: Record<string, string>
+  targets: Record<string, CompiledTarget>
+  params: Record<string, { description: string; scope: string }>
+  unresolvedTargets: Record<string, { module: string; selector: string; reason: string }>
+}
+
+const parameterPattern = /\{(\w+)\}/g
+const confidenceRank: Record<TargetConfidence, number> = { high: 0, medium: 1, low: 2 }
+
+export function getKnowledgeDirectory() {
+  return process.env.QA_KNOWLEDGE_DIR ?? path.join(process.cwd(), 'qa-knowledge')
+}
+
+function readParams(value: string) {
+  return [...value.matchAll(parameterPattern)].map((match) => match[1])
+}
+
+function normalise(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+}
+
+function tokenise(value: string) {
+  return normalise(value).split(' ').filter((token) => token.length > 1)
+}
+
+function scoreText(tokens: string[], text: string, weight: number) {
+  const haystack = normalise(text)
+  return tokens.reduce((total, token) => (haystack.includes(token) ? total + weight : total), 0)
+}
+
+function splitSections(markdown: string): ModuleSection[] {
+  const lines = markdown.split('\n')
+  const headings: { level: number; title: string; line: number }[] = []
+  let insideFence = false
+
+  lines.forEach((line, index) => {
+    if (line.trimStart().startsWith('```')) {
+      insideFence = !insideFence
+      return
+    }
+
+    if (insideFence) {
+      return
+    }
+
+    const match = /^(#{2,4})\s+(.+)$/.exec(line)
+
+    if (match) {
+      headings.push({ level: match[1].length, title: match[2].trim(), line: index })
+    }
+  })
+
+  return headings.map((heading, index) => {
+    const next = headings.slice(index + 1).find((candidate) => candidate.level <= heading.level)
+    const end = next ? next.line : lines.length
+
+    return {
+      level: heading.level,
+      title: heading.title,
+      content: lines.slice(heading.line + 1, end).join('\n').trim()
+    }
+  })
+}
+
+function parseTableRows(markdown: string) {
+  return markdown
+    .split('\n')
+    .filter((line) => line.trimStart().startsWith('|'))
+    .map((line) =>
+      line
+        .trim()
+        .replace(/^\|/, '')
+        .replace(/\|$/, '')
+        .split('|')
+        .map((cell) => cell.trim())
+    )
+    .filter((cells) => cells.length > 1 && !cells.every((cell) => /^-+$/.test(cell)))
+}
+
+function stripCode(value: string) {
+  return value.replace(/[`*]/g, '').trim()
+}
+
+function isSeparatorRow(cells: string[]) {
+  return cells.every((cell) => /^:?-+:?$/.test(cell))
+}
+
+function findTable(markdown: string, expectedHeaders: string[]) {
+  const rows = parseTableRows(markdown)
+  const headerIndex = rows.findIndex((cells) =>
+    expectedHeaders.every((header, column) =>
+      normalise(cells[column] ?? '').startsWith(normalise(header))
+    )
+  )
+
+  if (headerIndex < 0) {
+    return []
+  }
+
+  const table: string[][] = []
+
+  for (const cells of rows.slice(headerIndex + 1)) {
+    if (isSeparatorRow(cells)) {
+      continue
+    }
+
+    if (cells.length !== rows[headerIndex].length) {
+      break
+    }
+
+    table.push(cells)
+  }
+
+  return table
+}
+
+type LoadedKnowledge = {
+  compiled: CompiledKnowledge
+  modules: ModuleSummary[]
+  sectionsByModule: Map<string, ModuleSection[]>
+  groupByTarget: Map<string, string>
+}
+
+let cache: LoadedKnowledge | null = null
+
+function load(): LoadedKnowledge {
+  if (cache) {
+    return cache
+  }
+
+  const directory = getKnowledgeDirectory()
+  const compiled = JSON.parse(
+    readFileSync(path.join(directory, 'application.json'), 'utf8')
+  ) as CompiledKnowledge
+
+  const indexMarkdown = readFileSync(path.join(directory, 'index.md'), 'utf8')
+  const indexSections = splitSections(indexMarkdown)
+  const depthSection = indexSections.find((section) => section.title.startsWith('Depth'))
+  const depthByModule = new Map<string, string>()
+
+  if (depthSection) {
+    for (const cells of parseTableRows(depthSection.content)) {
+      const name = stripCode(cells[0])
+
+      if (name && name !== 'module' && name !== '—') {
+        depthByModule.set(name, cells[1] ?? '')
+      }
+    }
+  }
+
+  const verificationByModule = new Map<string, ModuleVerification>()
+
+  for (const cells of findTable(indexMarkdown, ['module', 'targets', 'verified'])) {
+    const name = stripCode(cells[0])
+
+    if (name.toLowerCase() === 'total') {
+      continue
+    }
+
+    verificationByModule.set(name, {
+      targets: Number(cells[1]),
+      verified: Number(cells[2]),
+      ambiguous: Number(cells[3]),
+      zeroMatch: Number(cells[4]),
+      notProbed: Number(cells[5])
+    })
+  }
+
+  const modules: ModuleSummary[] = findTable(indexMarkdown, [
+    'module',
+    'routes',
+    'targets',
+    'named flows'
+  ]).map((cells) => {
+    const name = stripCode(cells[0])
+
+    return {
+      name,
+      routes: Number(cells[1]),
+      targets: Number(cells[2]),
+      flows: Number(cells[3]),
+      status: cells[4],
+      lastUpdated: cells[5],
+      depth: depthByModule.get(name) ?? null,
+      verification: verificationByModule.get(name) ?? null
+    }
+  })
+
+  const sectionsByModule = new Map<string, ModuleSection[]>()
+  const groupByTarget = new Map<string, string>()
+  const moduleDirectory = path.join(directory, 'modules')
+
+  for (const file of readdirSync(moduleDirectory).filter((name) => name.endsWith('.md'))) {
+    const moduleName = file.replace(/\.md$/, '')
+    const markdown = readFileSync(path.join(moduleDirectory, file), 'utf8')
+    const sections = splitSections(markdown)
+    sectionsByModule.set(moduleName, sections)
+
+    for (const section of sections) {
+      if (section.level < 3) {
+        continue
+      }
+
+      for (const cells of parseTableRows(section.content)) {
+        const name = stripCode(cells[0])
+
+        if (name.includes('.')) {
+          groupByTarget.set(name, section.title)
+        }
+      }
+    }
+  }
+
+  cache = { compiled, modules, sectionsByModule, groupByTarget }
+  return cache
+}
+
+export function listModules() {
+  return load().modules
+}
+
+export function getModuleSections(module: string) {
+  return load().sectionsByModule.get(module) ?? null
+}
+
+export function getModuleSection(module: string, heading: string) {
+  const sections = getModuleSections(module)
+
+  if (!sections) {
+    return null
+  }
+
+  const wanted = normalise(heading)
+  return sections.find((section) => normalise(section.title) === wanted) ?? null
+}
+
+export function searchKnowledge(query: string, module?: string, limit = 8) {
+  const tokens = tokenise(query)
+
+  if (tokens.length === 0) {
+    return []
+  }
+
+  const { sectionsByModule } = load()
+  const hits: SearchHit[] = []
+
+  for (const [moduleName, sections] of sectionsByModule) {
+    if (module && moduleName !== module) {
+      continue
+    }
+
+    for (const section of sections) {
+      const score = scoreText(tokens, section.title, 3) + scoreText(tokens, section.content, 1)
+
+      if (score > 0) {
+        hits.push({
+          module: moduleName,
+          heading: section.title,
+          excerpt: section.content.slice(0, 600),
+          score
+        })
+      }
+    }
+  }
+
+  return hits.sort((a, b) => b.score - a.score).slice(0, limit)
+}
+
+export function findPages(query: string, limit = 10) {
+  const tokens = tokenise(query)
+  const { compiled } = load()
+
+  const entries: (PageEntry & { score: number })[] = Object.entries(compiled.pages).map(
+    ([name, pagePath]) => ({
+      name,
+      path: pagePath,
+      params: readParams(pagePath),
+      score: scoreText(tokens, name, 2) + scoreText(tokens, pagePath, 2)
+    })
+  )
+
+  return entries
+    .filter((entry) => entry.score > 0)
+    .sort((a, b) => b.score - a.score || a.path.length - b.path.length)
+    .slice(0, limit)
+    .map((entry) => ({ name: entry.name, path: entry.path, params: entry.params }))
+}
+
+export function findSelectors(query: string, limit = 12) {
+  const tokens = tokenise(query)
+  const { compiled, groupByTarget } = load()
+  const unresolved = new Set(Object.keys(compiled.unresolvedTargets))
+
+  const candidates: (SelectorCandidate & { score: number })[] = Object.entries(compiled.targets)
+    .filter(([name]) => !unresolved.has(name))
+    .map(([name, target]) => {
+      const group = groupByTarget.get(name) ?? null
+
+      return {
+        name,
+        selector: target.selector,
+        module: target.module,
+        confidence: target.confidence,
+        group,
+        note: target.note ?? null,
+        params: readParams(target.selector),
+        score:
+          scoreText(tokens, name, 3) +
+          scoreText(tokens, group ?? '', 3) +
+          scoreText(tokens, target.selector, 1) +
+          scoreText(tokens, target.note ?? '', 1)
+      }
+    })
+
+  return candidates
+    .filter((candidate) => candidate.score > 0)
+    .sort(
+      (a, b) =>
+        b.score - a.score || confidenceRank[a.confidence] - confidenceRank[b.confidence]
+    )
+    .slice(0, limit)
+    .map((candidate) => ({
+      name: candidate.name,
+      selector: candidate.selector,
+      module: candidate.module,
+      confidence: candidate.confidence,
+      group: candidate.group,
+      note: candidate.note,
+      params: candidate.params
+    }))
+}
+
+export function listUnresolvedTargets(): UnresolvedTarget[] {
+  const { compiled } = load()
+
+  return Object.entries(compiled.unresolvedTargets).map(([name, entry]) => ({
+    name,
+    module: entry.module,
+    selector: entry.selector,
+    reason: entry.reason
+  }))
+}
+
+export function listParams(names?: string[]): ParamEntry[] {
+  const { compiled } = load()
+
+  return Object.entries(compiled.params)
+    .filter(([name]) => !names || names.includes(name))
+    .map(([name, entry]) => ({
+      name,
+      description: entry.description,
+      scope: entry.scope
+    }))
+}
