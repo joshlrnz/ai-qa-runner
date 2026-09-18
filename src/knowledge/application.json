@@ -7,6 +7,218 @@
     "shell.account-deleted": "/account-deleted",
     "shell.auth-callback": "/auth-callback",
     "shell.companies-list": "/companies",
+    "shell.company-home": "/companies/{companyId}",
+    "lite.home": "/companies/{companyId}/lite",
+    "lite.contacts-list": "/companies/{companyId}/lite/contacts",
+    "lite.contacts-update": "/companies/{companyId}/lite/contacts/{contactId}/update",
+    "lite.contacts-create": "/companies/{companyId}/lite/contacts/create",
+    "lite.customers-list": "/companies/{companyId}/lite/customers",
+    "lite.customers-update": "/companies/{companyId}/lite/customers/{customerId}/update",
+    "lite.customers-create": "/companies/{companyId}/lite/customers/create",
+    "lite.customers-import": "/companies/{companyId}/lite/customers/import",
+    "lite.expenses-list": "/companies/{companyId}/lite/expenses",
+    "lite.expenses-update": "/companies/{companyId}/lite/expenses/{expenseId}/update",
+    "lite.expenses-create": "/companies/{companyId}/lite/expenses/create",
+    "lite.inventory-locations-list": "/companies/{companyId}/lite/inventory-locations",
+    "lite.inventory-locations-detail": "/companies/{companyId}/lite/inventory-locations/{inventoryLocationId}",
+    "lite.inventory-locations-qr-codes": "/companies/{companyId}/lite/inventory-locations/qr-codes",
+    "lite.inventory-reports-list": "/companies/{companyId}/lite/inventory-reports",
+    "lite.inventory-transactions-list": "/companies/{companyId}/lite/inventory-transactions",
+    "lite.oGPT-list": "/companies/{companyId}/lite/oGPT",
+    "lite.products-list": "/companies/{companyId}/lite/products",
+    "lite.products-detail": "/companies/{companyId}/lite/products/{productId}",
+    "lite.products-update": "/companies/{companyId}/lite/products/{productId}/update",
+    "lite.products-create": "/companies/{companyId}/lite/products/create",
+    "lite.products-import": "/companies/{companyId}/lite/products/import",
+    "lite.purchase-orders-list": "/companies/{companyId}/lite/purchase-orders",
+    "lite.purchase-orders-update": "/companies/{companyId}/lite/purchase-orders/{purchaseOrderId}/update",
+    "lite.purchase-orders-create": "/companies/{companyId}/lite/purchase-orders/create",
+    "lite.purchase-orders-upload-with-ovision": "/companies/{companyId}/lite/purchase-orders/upload-with-ovision",
+    "lite.purchase-services-list": "/companies/{companyId}/lite/purchase-services",
+    "lite.purchase-services-update": "/companies/{companyId}/lite/purchase-services/{purchaseServiceId}/update",
+    "lite.purchase-services-create": "/companies/{companyId}/lite/purchase-services/create",
+    "lite.purchasing-reports-list": "/companies/{companyId}/lite/purchasing-reports",
+    "lite.quick-checkout-list": "/companies/{companyId}/lite/quick-checkout",
+    "lite.quick-checkout-order-receipts": "/companies/{companyId}/lite/quick-checkout/order-receipts",
+    "lite.reports-list": "/companies/{companyId}/lite/reports",
+    "lite.reports-collections-report": "/companies/{companyId}/lite/reports/collections-report",
+    "lite.reports-current-inventory-value": "/companies/{companyId}/lite/reports/current-inventory-value",
+    "lite.reports-customer-aging-accounts-receivable": "/companies/{companyId}/lite/reports/customer-aging-accounts-receivable",
+    "lite.reports-customer-sales": "/companies/{companyId}/lite/reports/customer-sales",
+    "lite.reports-customer-statement-of-account": "/companies/{companyId}/lite/reports/customer-statement-of-account",
+    "lite.reports-history": "/companies/{companyId}/lite/reports/history",
+    "lite.reports-inventory-by-date": "/companies/{companyId}/lite/reports/inventory-by-date",
+    "lite.reports-inventory-per-location": "/companies/{companyId}/lite/reports/inventory-per-location",
+    "lite.reports-order-items-report": "/companies/{companyId}/lite/reports/order-items-report",
+    "lite.reports-products": "/companies/{companyId}/lite/reports/products",
+    "lite.reports-purchase-order-items-report": "/companies/{companyId}/lite/reports/purchase-order-items-report",
+    "lite.reports-receiving-items-report": "/companies/{companyId}/lite/reports/receiving-items-report",
+    "lite.reports-releasing-items-report": "/companies/{companyId}/lite/reports/releasing-items-report",
+    "lite.reports-sales-order-services": "/companies/{companyId}/lite/reports/sales-order-services",
+    "lite.reports-sales-orders-report": "/companies/{companyId}/lite/reports/sales-orders-report",
+    "lite.reports-sales-report-by-product-type": "/companies/{companyId}/lite/reports/sales-report-by-product-type",
+    "lite.sales-agents-list": "/companies/{companyId}/lite/sales-agents",
+    "lite.sales-agents-update": "/companies/{companyId}/lite/sales-agents/{salesAgentId}/update",
+    "lite.sales-agents-create": "/companies/{companyId}/lite/sales-agents/create",
+    "lite.sales-orders-list": "/companies/{companyId}/lite/sales-orders",
+    "lite.sales-orders-update": "/companies/{companyId}/lite/sales-orders/{orderId}/update",
+    "lite.sales-orders-analytics": "/companies/{companyId}/lite/sales-orders/analytics",
+    "lite.sales-orders-create": "/companies/{companyId}/lite/sales-orders/create",
+    "lite.sales-orders-upload-with-ovision": "/companies/{companyId}/lite/sales-orders/upload-with-ovision",
+    "lite.sales-reports-list": "/companies/{companyId}/lite/sales-reports",
+    "lite.sales-services-list": "/companies/{companyId}/lite/sales-services",
+    "lite.sales-services-update": "/companies/{companyId}/lite/sales-services/{salesServiceId}/update",
+    "lite.sales-services-create": "/companies/{companyId}/lite/sales-services/create",
+    "lite.settings-list": "/companies/{companyId}/lite/settings",
+    "lite.stock-adjustments-list": "/companies/{companyId}/lite/stock-adjustments",
+    "lite.stock-adjustments-update": "/companies/{companyId}/lite/stock-adjustments/{adjustmentId}/update",
+    "lite.stock-adjustments-create": "/companies/{companyId}/lite/stock-adjustments/create",
+    "lite.stock-transfers-list": "/companies/{companyId}/lite/stock-transfers",
+    "lite.stock-transfers-update": "/companies/{companyId}/lite/stock-transfers/{transferId}/update",
+    "lite.stock-transfers-create": "/companies/{companyId}/lite/stock-transfers/create",
+    "lite.stock-transfers-upload-with-ovision": "/companies/{companyId}/lite/stock-transfers/upload-with-ovision",
+    "lite.stocktakes-list": "/companies/{companyId}/lite/stocktakes",
+    "lite.stocktakes-update": "/companies/{companyId}/lite/stocktakes/{stocktakeId}/update",
+    "lite.stocktakes-create": "/companies/{companyId}/lite/stocktakes/create",
+    "lite.suppliers-list": "/companies/{companyId}/lite/suppliers",
+    "lite.suppliers-update": "/companies/{companyId}/lite/suppliers/{supplierId}/update",
+    "lite.suppliers-create": "/companies/{companyId}/lite/suppliers/create",
+    "lite.suppliers-import": "/companies/{companyId}/lite/suppliers/import",
+    "lite.users-list": "/companies/{companyId}/lite/users",
+    "v2-masterdata.home": "/companies/{companyId}/v2",
+    "v2-finance.accounts-list": "/companies/{companyId}/v2/accounts",
+    "v2-finance.accounts-create": "/companies/{companyId}/v2/accounts/create",
+    "v2-finance.accounts-scorecard": "/companies/{companyId}/v2/accounts/scorecard",
+    "v2-inventory.assemblies-list": "/companies/{companyId}/v2/assemblies",
+    "v2-inventory.assemblies-update": "/companies/{companyId}/v2/assemblies/{assemblyId}/update",
+    "v2-inventory.assemblies-create": "/companies/{companyId}/v2/assemblies/create",
+    "v2-masterdata.audit-logs-list": "/companies/{companyId}/v2/audit-logs",
+    "v2-finance.bank-accounts-list": "/companies/{companyId}/v2/bank-accounts",
+    "v2-finance.bank-accounts-detail": "/companies/{companyId}/v2/bank-accounts/{bankAccountId}",
+    "v2-finance.bank-accounts-create": "/companies/{companyId}/v2/bank-accounts/create",
+    "v2-inventory.barcodes-generator-list": "/companies/{companyId}/v2/barcodes-generator",
+    "v2-sales.beat-route-pending-orders-list": "/companies/{companyId}/v2/beat-route-pending-orders",
+    "v2-inventory.bill-of-materials-list": "/companies/{companyId}/v2/bill-of-materials",
+    "v2-inventory.bill-of-materials-update": "/companies/{companyId}/v2/bill-of-materials/{billOfMaterialId}/update",
+    "v2-inventory.bill-of-materials-create": "/companies/{companyId}/v2/bill-of-materials/create",
+    "v2-masterdata.companies-list": "/companies/{companyId}/v2/companies",
+    "v2-masterdata.company-list": "/companies/{companyId}/v2/company",
+    "v2-masterdata.company-create": "/companies/{companyId}/v2/company/create",
+    "v2-masterdata.contacts-list": "/companies/{companyId}/v2/contacts",
+    "v2-masterdata.contacts-update": "/companies/{companyId}/v2/contacts/{contactId}/update",
+    "v2-masterdata.contacts-create": "/companies/{companyId}/v2/contacts/create",
+    "v2-masterdata.customer-groups-list": "/companies/{companyId}/v2/customer-groups",
+    "v2-masterdata.customer-groups-update": "/companies/{companyId}/v2/customer-groups/{customerGroupId}/update",
+    "v2-masterdata.customer-groups-create": "/companies/{companyId}/v2/customer-groups/create",
+    "v2-masterdata.customer-success-announcements-list": "/companies/{companyId}/v2/customer-success-announcements",
+    "v2-masterdata.customer-success-announcements-update": "/companies/{companyId}/v2/customer-success-announcements/{announcementId}/update",
+    "v2-masterdata.customer-success-announcements-create": "/companies/{companyId}/v2/customer-success-announcements/create",
+    "v2-masterdata.customer-success-tool-logs": "/companies/{companyId}/v2/customer-success/tool-logs",
+    "v2-masterdata.customer-success-tools": "/companies/{companyId}/v2/customer-success/tools",
+    "v2-masterdata.customers-list": "/companies/{companyId}/v2/customers",
+    "v2-masterdata.customers-update": "/companies/{companyId}/v2/customers/{customerId}/update",
+    "v2-masterdata.customers-create": "/companies/{companyId}/v2/customers/create",
+    "v2-masterdata.dashboard-list": "/companies/{companyId}/v2/dashboard",
+    "v2-inventory.dispatches-list": "/companies/{companyId}/v2/dispatches",
+    "v2-inventory.dispatches-update": "/companies/{companyId}/v2/dispatches/{dispatchId}/update",
+    "v2-inventory.dispatches-create": "/companies/{companyId}/v2/dispatches/create",
+    "v2-masterdata.distributors-list": "/companies/{companyId}/v2/distributors",
+    "v2-masterdata.distributors-detail": "/companies/{companyId}/v2/distributors/{distributorId}",
+    "v2-masterdata.distributors-quarterly-reports": "/companies/{companyId}/v2/distributors/{distributorId}/quarterly-reports",
+    "v2-masterdata.distributors-quarterly-reports-detail": "/companies/{companyId}/v2/distributors/{distributorId}/quarterly-reports/{reportId}",
+    "v2-masterdata.distributors-update": "/companies/{companyId}/v2/distributors/{distributorId}/update",
+    "v2-masterdata.distributors-create": "/companies/{companyId}/v2/distributors/create",
+    "v2-finance.expenses-list": "/companies/{companyId}/v2/expenses",
+    "v2-finance.expenses-update": "/companies/{companyId}/v2/expenses/{expenseId}/update",
+    "v2-finance.expenses-create": "/companies/{companyId}/v2/expenses/create",
+    "v2-masterdata.import-logs-list": "/companies/{companyId}/v2/import-logs",
+    "v2-inventory.inventory-locations-list": "/companies/{companyId}/v2/inventory-locations",
+    "v2-inventory.inventory-locations-detail": "/companies/{companyId}/v2/inventory-locations/{inventoryLocationId}",
+    "v2-inventory.inventory-locations-qr-codes": "/companies/{companyId}/v2/inventory-locations/qr-codes",
+    "v2-inventory.inventory-transactions-list": "/companies/{companyId}/v2/inventory-transactions",
+    "v2-masterdata.oGPT-list": "/companies/{companyId}/v2/oGPT",
+    "v2-finance.payments-list": "/companies/{companyId}/v2/payments",
+    "v2-finance.payments-update": "/companies/{companyId}/v2/payments/{paymentId}/update",
+    "v2-finance.payments-create": "/companies/{companyId}/v2/payments/create",
+    "v2-finance.post-dated-cheques-list": "/companies/{companyId}/v2/post-dated-cheques",
+    "v2-finance.post-dated-cheques-update": "/companies/{companyId}/v2/post-dated-cheques/{chequeId}/update",
+    "v2-finance.post-dated-cheques-create": "/companies/{companyId}/v2/post-dated-cheques/create",
+    "v2-inventory.products-list": "/companies/{companyId}/v2/products",
+    "v2-inventory.products-detail": "/companies/{companyId}/v2/products/{productId}",
+    "v2-inventory.products-update": "/companies/{companyId}/v2/products/{productId}/update",
+    "v2-inventory.products-create": "/companies/{companyId}/v2/products/create",
+    "v2-purchasing.purchase-order-returns-list": "/companies/{companyId}/v2/purchase-order-returns",
+    "v2-purchasing.purchase-order-returns-update": "/companies/{companyId}/v2/purchase-order-returns/{purchaseOrderReturnId}/update",
+    "v2-purchasing.purchase-order-returns-create": "/companies/{companyId}/v2/purchase-order-returns/create",
+    "v2-purchasing.purchase-orders-list": "/companies/{companyId}/v2/purchase-orders",
+    "v2-purchasing.purchase-orders-update": "/companies/{companyId}/v2/purchase-orders/{purchaseOrderId}/update",
+    "v2-purchasing.purchase-orders-create": "/companies/{companyId}/v2/purchase-orders/create",
+    "v2-purchasing.purchase-orders-upload-with-ovision": "/companies/{companyId}/v2/purchase-orders/upload-with-ovision",
+    "v2-purchasing.purchase-price-matrices-list": "/companies/{companyId}/v2/purchase-price-matrices",
+    "v2-purchasing.purchase-price-matrices-update": "/companies/{companyId}/v2/purchase-price-matrices/{purchasePriceMatrixId}/update",
+    "v2-purchasing.purchase-price-matrices-create": "/companies/{companyId}/v2/purchase-price-matrices/create",
+    "v2-purchasing.purchase-refunds-list": "/companies/{companyId}/v2/purchase-refunds",
+    "v2-purchasing.purchase-services-list": "/companies/{companyId}/v2/purchase-services",
+    "v2-purchasing.purchase-services-update": "/companies/{companyId}/v2/purchase-services/{purchaseServiceId}/update",
+    "v2-purchasing.purchase-services-create": "/companies/{companyId}/v2/purchase-services/create",
+    "v2-sales.quick-checkout-list": "/companies/{companyId}/v2/quick-checkout",
+    "v2-sales.quick-checkout-order-receipts": "/companies/{companyId}/v2/quick-checkout/order-receipts",
+    "v2-sales.quotations-list": "/companies/{companyId}/v2/quotations",
+    "v2-sales.quotations-update": "/companies/{companyId}/v2/quotations/{quotationId}/update",
+    "v2-purchasing.receivings-list": "/companies/{companyId}/v2/receivings",
+    "v2-purchasing.receivings-update": "/companies/{companyId}/v2/receivings/{receivingId}/update",
+    "v2-purchasing.receivings-create": "/companies/{companyId}/v2/receivings/create",
+    "v2-inventory.releasings-list": "/companies/{companyId}/v2/releasings",
+    "v2-inventory.releasings-update": "/companies/{companyId}/v2/releasings/{releasingId}/update",
+    "v2-inventory.releasings-create": "/companies/{companyId}/v2/releasings/create",
+    "v2-purchasing.requisitions-list": "/companies/{companyId}/v2/requisitions",
+    "v2-purchasing.requisitions-update": "/companies/{companyId}/v2/requisitions/{requisitionId}/update",
+    "v2-purchasing.requisitions-create": "/companies/{companyId}/v2/requisitions/create",
+    "v2-sales.sales-agents-list": "/companies/{companyId}/v2/sales-agents",
+    "v2-sales.sales-agents-update": "/companies/{companyId}/v2/sales-agents/{salesAgentId}/update",
+    "v2-sales.sales-agents-create": "/companies/{companyId}/v2/sales-agents/create",
+    "v2-sales.sales-collections-list": "/companies/{companyId}/v2/sales-collections",
+    "v2-sales.sales-collections-update": "/companies/{companyId}/v2/sales-collections/{collectionId}/update",
+    "v2-sales.sales-collections-create": "/companies/{companyId}/v2/sales-collections/create",
+    "v2-sales.sales-orders-list": "/companies/{companyId}/v2/sales-orders",
+    "v2-sales.sales-orders-update": "/companies/{companyId}/v2/sales-orders/{orderId}/update",
+    "v2-sales.sales-orders-analytics": "/companies/{companyId}/v2/sales-orders/analytics",
+    "v2-sales.sales-orders-create": "/companies/{companyId}/v2/sales-orders/create",
+    "v2-sales.sales-orders-upload-with-ovision": "/companies/{companyId}/v2/sales-orders/upload-with-ovision",
+    "v2-sales.sales-price-matrices-list": "/companies/{companyId}/v2/sales-price-matrices",
+    "v2-sales.sales-price-matrices-update": "/companies/{companyId}/v2/sales-price-matrices/{salesPriceMatrixId}/update",
+    "v2-sales.sales-price-matrices-create": "/companies/{companyId}/v2/sales-price-matrices/create",
+    "v2-sales.sales-refunds-list": "/companies/{companyId}/v2/sales-refunds",
+    "v2-sales.sales-returns-list": "/companies/{companyId}/v2/sales-returns",
+    "v2-sales.sales-returns-update": "/companies/{companyId}/v2/sales-returns/{salesReturnId}/update",
+    "v2-sales.sales-returns-create": "/companies/{companyId}/v2/sales-returns/create",
+    "v2-sales.sales-services-list": "/companies/{companyId}/v2/sales-services",
+    "v2-sales.sales-services-update": "/companies/{companyId}/v2/sales-services/{salesServiceId}/update",
+    "v2-sales.sales-services-create": "/companies/{companyId}/v2/sales-services/create",
+    "v2-inventory.serial-numbers-generator-list": "/companies/{companyId}/v2/serial-numbers-generator",
+    "v2-masterdata.settings-list": "/companies/{companyId}/v2/settings",
+    "v2-inventory.stock-adjustments-list": "/companies/{companyId}/v2/stock-adjustments",
+    "v2-inventory.stock-adjustments-update": "/companies/{companyId}/v2/stock-adjustments/{adjustmentId}/update",
+    "v2-inventory.stock-adjustments-create": "/companies/{companyId}/v2/stock-adjustments/create",
+    "v2-inventory.stock-transfers-list": "/companies/{companyId}/v2/stock-transfers",
+    "v2-inventory.stock-transfers-update": "/companies/{companyId}/v2/stock-transfers/{transferId}/update",
+    "v2-inventory.stock-transfers-create": "/companies/{companyId}/v2/stock-transfers/create",
+    "v2-inventory.stock-transfers-upload-with-ovision": "/companies/{companyId}/v2/stock-transfers/upload-with-ovision",
+    "v2-inventory.stocktakes-list": "/companies/{companyId}/v2/stocktakes",
+    "v2-inventory.stocktakes-update": "/companies/{companyId}/v2/stocktakes/{stocktakeId}/update",
+    "v2-inventory.stocktakes-create": "/companies/{companyId}/v2/stocktakes/create",
+    "v2-purchasing.suppliers-list": "/companies/{companyId}/v2/suppliers",
+    "v2-purchasing.suppliers-update": "/companies/{companyId}/v2/suppliers/{supplierId}/update",
+    "v2-purchasing.suppliers-create": "/companies/{companyId}/v2/suppliers/create",
+    "v2-inventory.vehicles-list": "/companies/{companyId}/v2/vehicles",
+    "v2-inventory.vehicles-update": "/companies/{companyId}/v2/vehicles/{vehicleId}/update",
+    "v2-inventory.vehicles-create": "/companies/{companyId}/v2/vehicles/create",
+    "v3-analytics.home": "/companies/{companyId}/v3",
+    "v3-analytics.quarterly-reports-list": "/companies/{companyId}/v3/quarterly-reports",
+    "v3-analytics.quarterly-reports-detail": "/companies/{companyId}/v3/quarterly-reports/{reportId}",
+    "v3-analytics.superuser-lite-onboarding-tracker": "/companies/{companyId}/v3/superuser/lite-onboarding-tracker",
+    "v3-analytics.superuser-oGPT-changelog": "/companies/{companyId}/v3/superuser/oGPT-changelog",
+    "v3-analytics.superuser-quarterly-reports": "/companies/{companyId}/v3/superuser/quarterly-reports",
     "shell.company-deleted": "/company-deleted",
     "shell.delete-account": "/delete-account",
     "shell.lite-check-email": "/lite/check-email",
@@ -189,6 +401,21 @@
     "shell.table-row-checkbox": {
       "selector": "tr:has(td:has-text('{recordCode}')) >> role=checkbox"
     },
+    "shell.table-first-row": {
+      "selector": "role=table >> tbody tr >> nth=0"
+    },
+    "shell.table-first-row-checkbox": {
+      "selector": "role=table >> tbody tr >> nth=0 >> role=checkbox"
+    },
+    "shell.table-first-row-with-text": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0"
+    },
+    "shell.table-first-row-with-text-checkbox": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> role=checkbox"
+    },
+    "shell.table-first-row-with-text-link": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> a >> nth=0"
+    },
     "shell.table-select-all-matching-link": {
       "selector": "text=Select all"
     },
@@ -303,6 +530,84 @@
     "v2-finance.bank-account-tab-expense-payments": {
       "selector": "role=tab[name=\"EXPENSE PAYMENTS\"]"
     },
+    "v2-finance.expense-name-input": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.expense-supplier-input": {
+      "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.expense-sales-agent-input": {
+      "selector": "[data-field='salesAgentId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.expense-reference-input": {
+      "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.expense-remarks-input": {
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.bank-account-name-input": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.bank-account-number-input": {
+      "selector": "[data-field='bankAccountNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.bank-account-xero-code-input": {
+      "selector": "[data-field='xeroAccountCode'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-date-input": {
+      "selector": "[data-field='chequeDate'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-amount-input": {
+      "selector": "[data-field='amount'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-reference-input": {
+      "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-bank-account-input": {
+      "selector": "[data-field='bankAccountId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-customer-input": {
+      "selector": "[data-field='customerId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-supplier-input": {
+      "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.cheque-remarks-input": {
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-supplier-input": {
+      "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-date-input": {
+      "selector": "[data-field='paymentDate'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-currency-input": {
+      "selector": "[data-field='payInCurrency'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-entry-type-input": {
+      "selector": "[data-field='paymentEntries.0.type'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-entry-amount-input": {
+      "selector": "[data-field='paymentEntries.0.amount'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-entry-method-input": {
+      "selector": "[data-field='paymentEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-entry-bank-account-input": {
+      "selector": "[data-field='paymentEntries.0.bankAccountId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-entry-reference-input": {
+      "selector": "[data-field='paymentEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-entry-remarks-input": {
+      "selector": "[data-field='paymentEntries.0.remarks'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-override-confirm-checkbox": {
+      "selector": "[data-field='confirmOverride'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-finance.payment-post-confirm-checkbox": {
+      "selector": "[data-field='confirmPost'] :is(input,textarea):not([aria-hidden])"
+    },
     "v2-inventory.product-create-button": {
       "selector": "role=button[name=\"Add product\"]"
     },
@@ -313,13 +618,43 @@
       "selector": "tr:has(td:has-text('{recordCode}'))"
     },
     "v2-inventory.product-name-input": {
-      "selector": "input[id='name']"
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-inventory.product-submit": {
       "selector": "role=button[name=\"Save changes\"]"
     },
     "v2-inventory.product-delete-button": {
       "selector": "role=button[name=\"Delete Product\"]"
+    },
+    "v2-inventory.product-quick-add-button": {
+      "selector": "role=button[name=\"Add\"]"
+    },
+    "v2-inventory.product-quick-subtract-button": {
+      "selector": "role=button[name=\"Subtract\"]"
+    },
+    "v2-inventory.product-quick-transfer-button": {
+      "selector": "role=button[name=\"Transfer\"]"
+    },
+    "v2-inventory.product-quick-adjust-batch-input": {
+      "selector": "role=dialog >> [data-field='batchNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-quick-adjust-location-input": {
+      "selector": "role=dialog >> [data-field='locationId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-quick-adjust-location-selected": {
+      "selector": "role=dialog >> [data-field='locationId'] input[value*='{locationName}']"
+    },
+    "v2-inventory.product-quick-adjust-quantity-input": {
+      "selector": "role=dialog >> [data-field='quantity'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-quick-adjust-remarks-input": {
+      "selector": "role=dialog >> [data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-quick-adjust-cancel-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+    },
+    "v2-inventory.product-quick-adjust-submit": {
+      "selector": "role=dialog >> role=button[name*=\"Subtract\"]"
     },
     "v2-inventory.stocktake-create-button": {
       "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
@@ -534,17 +869,116 @@
     "v2-inventory.releasings-list-tab-cancelled": {
       "selector": "role=tab[name=\"CANCELLED\"]"
     },
+    "v2-inventory.product-name-field": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-sku-input": {
+      "selector": "[data-field='code'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-description-input": {
+      "selector": "[data-field='description'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-barcode-input": {
+      "selector": "[data-field='barcode'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-selling-price-input": {
+      "selector": "[data-field='sellingPrice'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-buying-price-input": {
+      "selector": "[data-field='buyingPrice'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-srp-input": {
+      "selector": "[data-field='suggestedRetailPrice'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-minimum-quantity-input": {
+      "selector": "[data-field='minimumQuantity'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-maximum-quantity-input": {
+      "selector": "[data-field='maximumQuantity'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.product-reordering-quantity-input": {
+      "selector": "[data-field='reorderingQuantity'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-name-input": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-plate-number-input": {
+      "selector": "[data-field='plateNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-model-input": {
+      "selector": "[data-field='model'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-maker-input": {
+      "selector": "[data-field='maker'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-color-input": {
+      "selector": "[data-field='color'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-cor-number-input": {
+      "selector": "[data-field='certificateOfRegistrationNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-engine-number-input": {
+      "selector": "[data-field='engineNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-chassis-number-input": {
+      "selector": "[data-field='chassisNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.vehicle-vin-input": {
+      "selector": "[data-field='vehicleIdentificationNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.transfer-source-input": {
+      "selector": "[data-field='sourceLocationId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.transfer-destination-input": {
+      "selector": "[data-field='destinationLocationId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.transfer-vehicle-input": {
+      "selector": "[data-field='vehicleId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.transfer-delivered-at-input": {
+      "selector": "[data-field='deliveredAt'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.transfer-reference-input": {
+      "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.stocktake-reference-date-input": {
+      "selector": "[data-field='referenceDate'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.stocktake-contacts-input": {
+      "selector": "[data-field='contactIds'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.adjustment-type-input": {
+      "selector": "[data-field='type'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.adjustment-reference-date-input": {
+      "selector": "[data-field='referenceDate'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.adjustment-vehicle-input": {
+      "selector": "[data-field='vehicleId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.location-name-input": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.location-description-input": {
+      "selector": "[data-field='description'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-inventory.location-branches-input": {
+      "selector": "[data-field='branchIds'] :is(input,textarea):not([aria-hidden])"
+    },
     "v2-masterdata.customer-create-button": {
       "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
     },
     "v2-masterdata.customer-export-button": {
       "selector": "role=button[name=\"Export\"]"
     },
+    "v2-masterdata.customer-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))"
+    },
     "v2-masterdata.customer-name-input": {
-      "selector": "input[id='name']"
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-masterdata.customer-code-input": {
-      "selector": "input[id='code']"
+      "selector": "[data-field='code'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-masterdata.customer-submit": {
       "selector": "role=button[name=\"Submit\"]"
@@ -651,6 +1085,84 @@
     "v2-masterdata.contact-tab-stocktakes": {
       "selector": "role=tab[name=\"STOCKTAKES\"]"
     },
+    "v2-masterdata.customer-legal-name-input": {
+      "selector": "[data-field='legalName'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-business-style-input": {
+      "selector": "[data-field='businessStyle'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-mailing-address-input": {
+      "selector": "[data-field='mailingAddress'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-email-input": {
+      "selector": "[data-field='email'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-phone-input": {
+      "selector": "[data-field='phoneNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-group-input": {
+      "selector": "[data-field='customerGroupId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-contacts-input": {
+      "selector": "[data-field='contactIds'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-website-input": {
+      "selector": "[data-field='website'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-remarks-input": {
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-bank-input": {
+      "selector": "[data-field='bank'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-account-number-input": {
+      "selector": "[data-field='accountNumber'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-ewt-input": {
+      "selector": "[data-field='defaultEwtPercentage'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-price-matrix-input": {
+      "selector": "[data-field='salesPriceMatrixId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-sales-agent-input": {
+      "selector": "[data-field='salesAgentId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-tin-input": {
+      "selector": "[data-field='tin'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-credit-limit-input": {
+      "selector": "[data-field='creditLimit'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-vat-chargeable-checkbox": {
+      "selector": "[data-field='vatChargeable'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-group-name-input": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-group-customers-input": {
+      "selector": "[data-field='customers'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.customer-group-price-matrix-input": {
+      "selector": "[data-field='salesPriceMatrixId'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.contact-name-input": {
+      "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.contact-email-input": {
+      "selector": "[data-field='email'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.contact-description-input": {
+      "selector": "[data-field='description'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.contact-birthday-input": {
+      "selector": "[data-field='birthday'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.contact-number-label-input": {
+      "selector": "[data-field='contactNumbers.0.label'] :is(input,textarea):not([aria-hidden])"
+    },
+    "v2-masterdata.contact-number-value-input": {
+      "selector": "[data-field='contactNumbers.0.number'] :is(input,textarea):not([aria-hidden])"
+    },
     "v2-purchase-order-record.tablist": {
       "selector": "role=tablist[name=\"Order details tabs\"]"
     },
@@ -679,28 +1191,28 @@
       "selector": "role=tabpanel"
     },
     "v2-purchase-order-record.payment-date-input": {
-      "selector": "input[id='paymentDate']"
+      "selector": "[data-field='paymentDate'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-currency-input": {
-      "selector": "input[id='currency']"
+      "selector": "[data-field='currency'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-remarks-input": {
-      "selector": "input[id='remarks']"
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-entry-type-input": {
-      "selector": "input[id='paymentEntries.0.type']"
+      "selector": "[data-field='paymentEntries.0.type'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-entry-amount-input": {
-      "selector": "input[id='paymentEntries.0.amount']"
+      "selector": "[data-field='paymentEntries.0.amount'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-entry-method-input": {
-      "selector": "input[id='paymentEntries.0.paymentMethod']"
+      "selector": "[data-field='paymentEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-entry-bank-account-input": {
-      "selector": "input[id='paymentEntries.0.bankAccountId']"
+      "selector": "[data-field='paymentEntries.0.bankAccountId'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-entry-reference-input": {
-      "selector": "input[id='paymentEntries.0.referenceNumber']"
+      "selector": "[data-field='paymentEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-add-source-button": {
       "selector": "role=button[name=\"Add Another Source\"]"
@@ -709,7 +1221,7 @@
       "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
     },
     "v2-purchase-order-record.payment-post-confirm-checkbox": {
-      "selector": "input[id='confirmPost']"
+      "selector": "[data-field='confirmPost'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.payment-post-continue-button": {
       "selector": "role=dialog >> role=button[name=\"Continue\"]"
@@ -733,22 +1245,22 @@
       "selector": "role=dialog >> role=button[name=\"Cancel\"]"
     },
     "v2-purchase-order-record.refund-type-input": {
-      "selector": "input[id='refundType']"
+      "selector": "[data-field='refundType'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.refund-amount-input": {
-      "selector": "input[id='amount']"
+      "selector": "[data-field='amount'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.refund-date-input": {
-      "selector": "input[id='refundDate']"
+      "selector": "[data-field='refundDate'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.refund-reference-input": {
-      "selector": "input[id='referenceNumber']"
+      "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.refund-payment-method-input": {
-      "selector": "input[id='paymentMethod']"
+      "selector": "[data-field='paymentMethod'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.refund-remarks-input": {
-      "selector": "input[id='remarks']"
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchase-order-record.refund-submit": {
       "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
@@ -772,25 +1284,25 @@
       "selector": "tr:has(td:has-text('{recordCode}'))"
     },
     "v2-purchasing.po-supplier-input": {
-      "selector": "input[id='supplierId']"
+      "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-invoice-number-input": {
-      "selector": "input[id='payment.invoiceNumber']"
+      "selector": "[data-field='payment.invoiceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-reference-number-input": {
-      "selector": "input[id='payment.referenceNumber']"
+      "selector": "[data-field='payment.referenceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-invoice-date-input": {
-      "selector": "input[id='payment.invoiceAt']"
+      "selector": "[data-field='payment.invoiceAt'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-payment-due-input": {
-      "selector": "input[id='payment.paymentDueAt']"
+      "selector": "[data-field='payment.paymentDueAt'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-expected-delivery-input": {
-      "selector": "input[id='payment.expectedDeliveryAt']"
+      "selector": "[data-field='payment.expectedDeliveryAt'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-attention-input": {
-      "selector": "input[id='attention']"
+      "selector": "[data-field='attention'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-submit": {
       "selector": "role=button[name=\"Submit\"]"
@@ -814,13 +1326,13 @@
       "selector": "role=dialog >> role=button[name=\"Lock\"]"
     },
     "v2-purchasing.po-lock-confirm-checkbox": {
-      "selector": "input[id='confirmLock']"
+      "selector": "[data-field='confirmLock'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-override-confirm-button": {
       "selector": "role=dialog >> role=button[name=\"Override purchase order\"]"
     },
     "v2-purchasing.po-override-confirm-checkbox": {
-      "selector": "input[id='confirmOverride']"
+      "selector": "[data-field='confirmOverride'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.po-delete-confirm-button": {
       "selector": "role=dialog >> role=button[name=\"Delete\"]"
@@ -832,10 +1344,10 @@
       "selector": "role=button[name=\"Sync to Xero\"]"
     },
     "v2-purchasing.receiving-delivery-receipt-input": {
-      "selector": "input[id='deliveryReceiptNumber']"
+      "selector": "[data-field='deliveryReceiptNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.receiving-location-input": {
-      "selector": "input[id='inventoryLocationId']"
+      "selector": "[data-field='inventoryLocationId'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.receiving-save-pending-button": {
       "selector": "role=button[name=\"Save as Pending\"]"
@@ -865,13 +1377,13 @@
       "selector": "role=button[name=\"Import\"]"
     },
     "v2-purchasing.supplier-code-input": {
-      "selector": "input[id='code']"
+      "selector": "[data-field='code'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.supplier-address-input": {
-      "selector": "input[id='address']"
+      "selector": "[data-field='address'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.supplier-email-input": {
-      "selector": "input[id='primaryEmail']"
+      "selector": "[data-field='primaryEmail'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-purchasing.supplier-submit": {
       "selector": "role=button[name=\"Submit\"]"
@@ -940,25 +1452,25 @@
       "selector": "role=tabpanel"
     },
     "v2-sales-order-record.collection-date-input": {
-      "selector": "input[id='collectionDate']"
+      "selector": "[data-field='collectionDate'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-currency-input": {
-      "selector": "input[id='currency']"
+      "selector": "[data-field='currency'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-remarks-input": {
-      "selector": "input[id='remarks']"
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-entry-type-input": {
-      "selector": "input[id='collectionEntries.0.type']"
+      "selector": "[data-field='collectionEntries.0.type'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-entry-amount-input": {
-      "selector": "input[id='collectionEntries.0.amount']"
+      "selector": "[data-field='collectionEntries.0.amount'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-entry-payment-method-input": {
-      "selector": "input[id='collectionEntries.0.paymentMethod']"
+      "selector": "[data-field='collectionEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-entry-reference-input": {
-      "selector": "input[id='collectionEntries.0.referenceNumber']"
+      "selector": "[data-field='collectionEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.collection-create-pdc-button": {
       "selector": "role=button[name=\"Create Post-dated Check\"]"
@@ -970,19 +1482,19 @@
       "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
     },
     "v2-sales-order-record.releasing-delivered-at-input": {
-      "selector": "input[id='deliveredAt']"
+      "selector": "[data-field='deliveredAt'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.releasing-driver-input": {
-      "selector": "input[id='contactDriverIds']"
+      "selector": "[data-field='contactDriverIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.releasing-checker-input": {
-      "selector": "input[id='contactCheckerIds']"
+      "selector": "[data-field='contactCheckerIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.releasing-helper-input": {
-      "selector": "input[id='contactHelperIds']"
+      "selector": "[data-field='contactHelperIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.releasing-dispatcher-input": {
-      "selector": "input[id='contactDispatcherIds']"
+      "selector": "[data-field='contactDispatcherIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.releasing-add-location-button": {
       "selector": "role=button[name=\"Add location\"]"
@@ -997,13 +1509,13 @@
       "selector": "role=checkbox[name=\"Return with dummy releasing\"]"
     },
     "v2-sales-order-record.return-driver-input": {
-      "selector": "input[id='contactDriverIds']"
+      "selector": "[data-field='contactDriverIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.return-checker-input": {
-      "selector": "input[id='contactCheckerIds']"
+      "selector": "[data-field='contactCheckerIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.return-helper-input": {
-      "selector": "input[id='contactHelperIds']"
+      "selector": "[data-field='contactHelperIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.return-submit": {
       "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
@@ -1015,37 +1527,37 @@
       "selector": "role=button[name=\"Open\"]"
     },
     "v2-sales-order-record.refund-type-input": {
-      "selector": "input[id='refundType']"
+      "selector": "[data-field='refundType'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.refund-amount-input": {
-      "selector": "input[id='amount']"
+      "selector": "[data-field='amount'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.refund-date-input": {
-      "selector": "input[id='refundDate']"
+      "selector": "[data-field='refundDate'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.refund-bank-account-input": {
-      "selector": "input[id='bankAccountId']"
+      "selector": "[data-field='bankAccountId'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.refund-remarks-input": {
-      "selector": "input[id='remarks']"
+      "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.print-dialog": {
       "selector": "role=dialog"
     },
     "v2-sales-order-record.print-template-input": {
-      "selector": "input[id='specId']"
+      "selector": "[data-field='specId'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.print-discount-option-input": {
-      "selector": "input[id='discountOption']"
+      "selector": "[data-field='discountOption'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.print-brand-name-option-input": {
-      "selector": "input[id='brandNameOption']"
+      "selector": "[data-field='brandNameOption'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.print-sku-option-input": {
-      "selector": "input[id='skuOption']"
+      "selector": "[data-field='skuOption'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.print-price-option-input": {
-      "selector": "input[id='priceOption']"
+      "selector": "[data-field='priceOption'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales-order-record.print-confirm-button": {
       "selector": "role=dialog >> role=button[name=\"Print\"]"
@@ -1065,6 +1577,12 @@
     "v2-sales.orders-row": {
       "selector": "tr:has(td:has-text('{recordCode}'))"
     },
+    "v2-sales.orders-row-code-link": {
+      "selector": "tr:has(td:has-text('{recordCode}')) >> a:has-text('{recordCode}')"
+    },
+    "v2-sales.quotation-rejected-row": {
+      "selector": "tr:has(td:has-text('{recordCode}')):has-text('rejected')"
+    },
     "v2-sales.orders-empty-state": {
       "selector": "text=No sales orders found"
     },
@@ -1081,52 +1599,52 @@
       "selector": "role=button[name=\"Lock\"]"
     },
     "v2-sales.bulk-delete-button": {
-      "selector": "role=button[name=\"Delete\"]"
+      "selector": "role=button[name=\"Delete\"] >> visible=true"
     },
     "v2-sales.bulk-collect-date-input": {
-      "selector": "input[id='collectionDate']"
+      "selector": "[data-field='collectionDate'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.bulk-collect-reference-input": {
-      "selector": "input[id='referenceNumber']"
+      "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-status-input": {
-      "selector": "input[id='status']"
+      "selector": "[data-field='status'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-delivery-status-input": {
-      "selector": "input[id='deliveryStatus']"
+      "selector": "[data-field='deliveryStatus'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-payment-status-input": {
-      "selector": "input[id='paymentStatus']"
+      "selector": "[data-field='paymentStatus'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-customer-input": {
-      "selector": "input[id='customerIds']"
+      "selector": "[data-field='customerIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-product-input": {
-      "selector": "input[id='productIds']"
+      "selector": "[data-field='productIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-payment-method-input": {
-      "selector": "input[id='paymentMethod']"
+      "selector": "[data-field='paymentMethod'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.filter-sales-channel-input": {
-      "selector": "input[id='salesChannelIds']"
+      "selector": "[data-field='salesChannelIds'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-customer-input": {
-      "selector": "input[id='billing.customerId']"
+      "selector": "[data-field='billing.customerId'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-delivery-receipt-input": {
-      "selector": "input[id='billing.deliveryReceiptNumber']"
+      "selector": "[data-field='billing.deliveryReceiptNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-remarks-input": {
-      "selector": "input[id='billing.remarks']"
+      "selector": "[data-field='billing.remarks'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-invoice-number-input": {
-      "selector": "input[id='payment.invoiceNumber']"
+      "selector": "[data-field='payment.invoiceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-reference-number-input": {
-      "selector": "input[id='payment.referenceNumber']"
+      "selector": "[data-field='payment.referenceNumber'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-payment-terms-select": {
-      "selector": "div[id='payment.terms']"
+      "selector": "[data-field='payment.terms'] :is(input,textarea):not([aria-hidden])"
     },
     "v2-sales.order-add-product-button": {
       "selector": "role=button[name=\"Add product\"]"
@@ -1180,34 +1698,34 @@
       "selector": "role=dialog >> role=button[name=\"Cancel\"]"
     },
     "v3-analytics.tab-overview": {
-      "selector": "role=tab[name=\"OVERVIEW\"]"
+      "selector": "role=button[name=\"OVERVIEW\"]"
     },
     "v3-analytics.tab-inventory": {
-      "selector": "role=tab[name=\"INVENTORY\"]"
+      "selector": "role=button[name=\"INVENTORY\"]"
     },
     "v3-analytics.tab-sales": {
-      "selector": "role=tab[name=\"SALES\"]"
+      "selector": "role=button[name=\"SALES\"]"
     },
     "v3-analytics.tab-purchasing": {
-      "selector": "role=tab[name=\"PURCHASING\"]"
+      "selector": "role=button[name=\"PURCHASING\"]"
     },
     "v3-analytics.tab-logistics": {
-      "selector": "role=tab[name=\"LOGISTICS\"]"
+      "selector": "role=button[name=\"LOGISTICS\"]"
     },
     "v3-analytics.tab-finances": {
-      "selector": "role=tab[name=\"FINANCES\"]"
+      "selector": "role=button[name=\"FINANCES\"]"
     },
     "v3-analytics.tab-production": {
-      "selector": "role=tab[name=\"PRODUCTION\"]"
+      "selector": "role=button[name=\"PRODUCTION\"]"
     },
     "v3-analytics.vat-mode-button": {
-      "selector": "role=button[name=\"VAT presentation mode\"]"
+      "selector": "role=group[name=\"VAT presentation mode\"]"
     },
     "v3-analytics.vat-inclusive-option": {
-      "selector": "role=menuitem[name=\"Show VAT-inclusive amounts\"]"
+      "selector": "role=button[name=\"Show VAT-inclusive amounts\"]"
     },
     "v3-analytics.vat-exclusive-option": {
-      "selector": "role=menuitem[name=\"Show VAT-exclusive amounts\"]"
+      "selector": "role=button[name=\"Show VAT-exclusive amounts\"]"
     },
     "v3-analytics.drawer-next-page-button": {
       "selector": "role=button[name=\"Next page\"]"

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { planParamsSchema, testPlanSchema } from '@/contracts/test-plan'
-import { findMissingParams } from '@/runner/plan-params'
+import { findMissingParams, readParamsFromEnv } from '@/runner/plan-params'
 import { startRun } from '@/runner/start-run'
 
 export const runtime = 'nodejs'
@@ -24,7 +24,10 @@ export async function POST(request: Request) {
     )
   }
 
-  const { plan, params } = parsedRequest.data
+  const { plan, params: requestParams } = parsedRequest.data
+  // QA_PARAM_* in the server environment (e.g. companyId, email, password in
+  // .env) bind by default; values in the request win.
+  const params = { ...readParamsFromEnv(process.env), ...requestParams }
   const missingParams = findMissingParams(plan, params)
 
   if (missingParams.length > 0) {

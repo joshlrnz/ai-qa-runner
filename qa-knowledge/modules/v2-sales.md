@@ -1,8 +1,8 @@
 ---
 module: v2-sales
 routes: 26
-targets: 43
-flows: 15
+targets: 44
+flows: 16
 status: drafted
 lastUpdated: 2026-09-18
 ---
@@ -134,7 +134,7 @@ every v2 form field; the role selector is recorded as the fallback.
 | `v2-sales.order-submit-saving` | button "Saving..." | `role=button[name="Saving..."]` | `…/Details/index.tsx:679` | low | transient; only assertable mid-submit |
 | `v2-sales.order-save-as-quotation-button` | button "Save as Quotation" | `role=button[name="Save as Quotation"]` | `…/Details/index.tsx:820` | high | create only, hidden in Lite and without quotation WRITE **verified 2026-09-17**: 1 match. |
 | `v2-sales.order-cancel-button` | button "Cancel" | `role=button[name="Cancel"]` | `CreateUpdateForm/index.tsx:613` | high | opens `CancelOrderDialog`, does not cancel directly **verified 2026-09-17**: 1 match. |
-| `v2-sales.order-delete-button` | button "Delete" | `role=button[name="Delete"]` | `CreateUpdateForm/index.tsx:672` | unresolved | opens `SalesOrderDeleteModal` **verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use. |
+| `v2-sales.order-delete-button` | button "Delete" | `role=button[name="Delete"]` | `CreateUpdateForm/index.tsx:672` | unresolved | opens `SalesOrderDeleteModal` **verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use. Ambiguous only on `/companies/{companyId}/v2/sales-orders/{orderId}/update`; the same string with `>> visible=true` is the verified list-page bulk Delete. |
 | `v2-sales.order-duplicate-button` | button "Duplicate" | `role=button[name="Duplicate"]` | `CreateUpdateForm/index.tsx:665` | high | **verified 2026-09-17**: 1 match. |
 | `v2-sales.order-override-button` | button "Override" | `role=button[name="Override"]` | `CreateUpdateForm/index.tsx:628` | medium | |
 | `v2-sales.order-lock-button` | button "Lock" | `role=button[name="Lock"]` | `CreateUpdateForm/index.tsx:644` | high | **verified 2026-09-17**: 1 match. |
@@ -359,10 +359,27 @@ Preconditions: SALES WRITE; `{orderId}` bound.
 
 > Writes a new record. Repeated runs accumulate duplicate orders.
 
-### Select a rejected quotation for bulk delete
+### Select any rejected quotation for bulk delete
+
+Preconditions: SALES READ and DELETE; Prime tenant; at least one Rejected quotation on the first
+page of the list. **No record identifier is needed** — use this for "rejected quotations should be
+selectable" checks. Read-only — the bulk Delete button is asserted, never clicked.
+
+1. `navigate` → `/companies/{companyId}/v2/quotations`
+2. `assertText` → `shell.breadcrumb` contains `Quotations`
+3. `assertVisible` → `shell.table-first-row-with-text` with `rowText` = `rejected`
+4. `click` → `shell.table-first-row-with-text-checkbox` with `rowText` = `rejected`
+5. `assertVisible` → `v2-sales.bulk-delete-button`
+
+Step 3 fails with a selector error if no rejected quotation is on the page, which is the honest
+outcome for an empty fixture. Step 5 is the proxy for "selectable": the bulk action bar only mounts
+once a row is checked. **verified 2026-09-18** end to end.
+
+### Select a specific rejected quotation for bulk delete
 
 Preconditions: SALES READ and DELETE; Prime tenant; `{recordCode}` bound to a quotation whose status
-is Rejected. Read-only — the bulk Delete button is asserted, never clicked.
+is Rejected. Use only when the instruction names the quotation. Read-only — the bulk Delete button
+is asserted, never clicked.
 
 1. `navigate` → `/companies/{companyId}/v2/quotations`
 2. `assertText` → `shell.breadcrumb` contains `Quotations`

@@ -48,6 +48,31 @@ function stripPickers(selector: string) {
   return current
 }
 
+// A held-out target's reason may name the page it was ambiguous on, as a path
+// template in backticks (e.g. `/companies/{companyId}/v2/sales-orders/{orderId}/update`).
+// With that, the error is confined to that page; without it, to the module.
+function ambiguousPagePaths(reason: string) {
+  return [...reason.matchAll(/`(\/[^`\s]+)`/g)].map((match) => match[1])
+}
+
+function isOnAmbiguousPage(
+  ambiguous: { module: string; reason: string },
+  currentModule: string | null,
+  currentPagePath: string | null
+) {
+  if (currentModule === null) {
+    return true
+  }
+
+  const pages = ambiguousPagePaths(ambiguous.reason)
+
+  if (pages.length > 0) {
+    return currentPagePath !== null && pages.includes(currentPagePath)
+  }
+
+  return ambiguous.module === currentModule
+}
+
 function describeCandidates(names: string[]) {
   const shown = names.slice(0, 4).join(', ')
   return names.length > 4 ? `${shown}, and ${names.length - 4} more` : shown
@@ -98,9 +123,10 @@ export function validatePlan(
     }
   }
 
-  // The module of the most recent navigate step: ambiguity is per page, so the
-  // module a step runs in decides whether a held-out selector is an error.
+  // The page of the most recent navigate step: ambiguity is per page, so where a
+  // step runs decides whether a held-out selector is an error or a warning.
   let currentModule: string | null = null
+  let currentPagePath: string | null = null
 
   plan.steps.forEach((step, index) => {
     const position = `step ${index + 1} (${step.action})`
@@ -108,6 +134,7 @@ export function validatePlan(
     if (step.action === 'navigate') {
       const page = lookupPath(step.path)
       currentModule = page?.module ?? null
+      currentPagePath = page?.path ?? null
 
       if (!page) {
         warnings.push(
@@ -124,8 +151,7 @@ export function validatePlan(
     const coreSelector = stripPickers(step.selector)
     const ambiguous = findAmbiguousMatch(coreSelector)
     const matches = lookupSelectors(step.selector)
-    const onAmbiguousPage =
-      ambiguous !== null && (currentModule === null || ambiguous.module === currentModule)
+    const onAmbiguousPage = ambiguous !== null && isOnAmbiguousPage(ambiguous, currentModule, currentPagePath)
 
     if (ambiguous && (matches.length === 0 || onAmbiguousPage)) {
       const suffixNote =

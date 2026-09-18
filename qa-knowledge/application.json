@@ -198,6 +198,11 @@
       "description": "Display name of an inventory location, as shown in a Location autocomplete (e.g. the warehouse name). Substring-matched against the input value.",
       "source": "parameter",
       "scope": "flow"
+    },
+    "rowText": {
+      "description": "Visible text that picks a row in a list — a status word such as rejected, or a name. Case-insensitive substring. Taken from the instruction, not supplied by the caller.",
+      "source": "instruction",
+      "scope": "flow"
     }
   },
   "pages": {
@@ -756,6 +761,35 @@
       "module": "shell",
       "confidence": "high",
       "note": "content-scoped to one row — the only way to select a specific record, since the vocabulary has no row indexing. **Verified 2026-09-18**: the original `:text-is()` form matched **0**, `:has-text()` matches 1. The cell's text *is* exactly the code — the problem is that `td:text-is()` requires the `td` itself to be the element holding that text, but the code is nested inside a `Stack > a > Typography`, so `:text-is` resolves to the innermost element and never the `td`. Use `:has-text()` for any cell whose content is a nested component **verified 2026-09-18**: 1 match."
+    },
+    "shell.table-first-row": {
+      "selector": "role=table >> tbody tr >> nth=0",
+      "module": "shell",
+      "confidence": "high",
+      "note": "for \"open any record\" checks. `nth=0` is documented here because the rows are interchangeable"
+    },
+    "shell.table-first-row-checkbox": {
+      "selector": "role=table >> tbody tr >> nth=0 >> role=checkbox",
+      "module": "shell",
+      "confidence": "high"
+    },
+    "shell.table-first-row-with-text": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18** on `/v2/quotations` with `rowText` = `rejected`: 1 match. `has-text` is a case-insensitive substring, so a status word from the instruction works as typed. **`rowText` comes from the instruction, not from the caller**: \"observe the rejected quotations\" binds `rejected`"
+    },
+    "shell.table-first-row-with-text-checkbox": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> role=checkbox",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match, enabled, checks on click and the bulk action bar appears"
+    },
+    "shell.table-first-row-with-text-link": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> a >> nth=0",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "opens the record on lists whose code cell is a link (sales orders, quotations, customers). Not on products — see `v2-inventory.product-row`"
     },
     "shell.table-select-all-matching-link": {
       "selector": "text=Select all",
@@ -3283,7 +3317,7 @@
     "v2-sales.order-delete-button": {
       "module": "v2-sales",
       "selector": "role=button[name=\"Delete\"]",
-      "reason": "opens `SalesOrderDeleteModal` **verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use."
+      "reason": "opens `SalesOrderDeleteModal` **verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use. Ambiguous only on `/companies/{companyId}/v2/sales-orders/{orderId}/update`; the same string with `>> visible=true` is the verified list-page bulk Delete."
     }
   }
 }

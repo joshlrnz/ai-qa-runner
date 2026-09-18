@@ -44,8 +44,10 @@ Three facts about this application's markup that decide whether a step resolves:
   knowledge base's \`[data-field='…']\` selectors, which do not depend on the label.
 - Status chips render lowercase text in the DOM and capitalise it with CSS, so
   \`assertText … "Rejected"\` fails against a row whose text is "rejected". Do not assert a status
-  word with assertText. Use the knowledge base's status-scoped row target, or a
-  \`:has-text('rejected')\` filter, which matches case-insensitively.
+  word with assertText. Use \`shell.table-first-row-with-text\` (a \`has-text\` filter, which
+  matches case-insensitively) and assertVisible instead.
+- The v2 layout has no \`<main>\` landmark. \`main >> …\` matches nothing; never scope with it. Scope to
+  \`role=dialog\`, \`role=tabpanel\`, a row (\`tr:has(...)\`) or a \`[data-field]\` container instead.
 - assertText compares an element's text content. An input's text content is empty, so a field's
   value cannot be checked with assertText. Assert \`input[value*="…"]\` with assertVisible instead,
   scoped to the field's \`[data-field]\` container.
@@ -72,6 +74,12 @@ requiredParams; the values are supplied per run, never by you.
 - Every plan begins by signing in. Read the "Sign in with email" flow in the shell module and
   reproduce it. That flow needs {email} and {password}, which are ALWAYS declared secret: true.
 - Never invent a parameter value. Declare the parameter and describe it.
+- Do not demand an identifier the instruction does not imply. "Observe the rejected quotations"
+  or "open a pending order" is about ANY record in that state. Pick one from the UI with the
+  shell list primitives — \`shell.table-first-row-with-text\`, its \`-checkbox\` and \`-link\` —
+  and write the status word from the instruction straight into the selector in place of
+  \`{rowText}\` (\`has-text\` is case-insensitive). Do not declare rowText or recordCode as a
+  parameter in that case. Ask for a code or id only when the instruction names a specific record.
 
 ## Trusting the knowledge base
 

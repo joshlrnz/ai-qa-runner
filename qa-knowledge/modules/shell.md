@@ -1,10 +1,10 @@
 ---
 module: shell
 routes: 23
-targets: 46
-flows: 9
+targets: 51
+flows: 10
 status: drafted
-lastUpdated: 2026-09-17
+lastUpdated: 2026-09-18
 ---
 
 # Shell
@@ -166,6 +166,11 @@ targets are defined once here and referenced by module files rather than redefin
 | `shell.table` | table | `role=table` | `_common/DataGrid/index.tsx` | high | real MUI `Table` — `role=row` / `role=cell` and `tr:has(td:text-is('…'))` all work **verified 2026-09-17**: 1 match. |
 | `shell.table-select-all-checkbox` | checkbox | `thead >> role=checkbox` | `_common/DataGrid/index.tsx:133` | high | the header checkbox; **no accessible name**, so it is scoped structurally to the table head **verified 2026-09-17**: 1 match. |
 | `shell.table-row-checkbox` | checkbox | `tr:has(td:has-text('{recordCode}')) >> role=checkbox` | `_common/DataGrid/index.tsx:170` | high | content-scoped to one row — the only way to select a specific record, since the vocabulary has no row indexing. **Verified 2026-09-18**: the original `:text-is()` form matched **0**, `:has-text()` matches 1. The cell's text *is* exactly the code — the problem is that `td:text-is()` requires the `td` itself to be the element holding that text, but the code is nested inside a `Stack > a > Typography`, so `:text-is` resolves to the innermost element and never the `td`. Use `:has-text()` for any cell whose content is a nested component **verified 2026-09-18**: 1 match. |
+| `shell.table-first-row` | first data row of the list | `role=table >> tbody tr >> nth=0` | `_common/DataGrid/index.tsx` | high | for "open any record" checks. `nth=0` is documented here because the rows are interchangeable |
+| `shell.table-first-row-checkbox` | that row's checkbox | `role=table >> tbody tr >> nth=0 >> role=checkbox` | `_common/DataGrid/index.tsx:170` | high | |
+| `shell.table-first-row-with-text` | first row whose cells contain `{rowText}` | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0` | `_common/DataGrid/index.tsx` | high | **verified 2026-09-18** on `/v2/quotations` with `rowText` = `rejected`: 1 match. `has-text` is a case-insensitive substring, so a status word from the instruction works as typed. **`rowText` comes from the instruction, not from the caller**: "observe the rejected quotations" binds `rejected` |
+| `shell.table-first-row-with-text-checkbox` | that row's checkbox | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> role=checkbox` | `_common/DataGrid/index.tsx:170` | high | **verified 2026-09-18**: 1 match, enabled, checks on click and the bulk action bar appears |
+| `shell.table-first-row-with-text-link` | that row's record link | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> a >> nth=0` | `_common/DataGrid/index.tsx` | medium | opens the record on lists whose code cell is a link (sales orders, quotations, customers). Not on products — see `v2-inventory.product-row` |
 | `shell.table-select-all-matching-link` | text "Select all N" | `text=Select all` | `_common/DataGrid/SelectionBar.tsx:100` | low | a clickable `Typography`, **not a button** — no role. The visible text embeds a live count, so the selector matches on a prefix |
 | `shell.table-clear-selection-link` | text "Clear selection" | `text=Clear selection` | `_common/DataGrid/SelectionBar.tsx:103` | low | as above; label unconfirmed |
 | `shell.select-option` | option, name = `{optionLabel}` | `role=option[name="{optionLabel}"]` | `_common/Form/Select.tsx:41` | medium | the second half of the two-click `select` workaround — see Contract gaps |
@@ -255,6 +260,23 @@ Preconditions: a flow that has just produced a toast.
 Useful as a cleanup step between two mutations in one plan: a stale toast from the first can
 otherwise satisfy the second's `assertText` and hide a failure. **If a plan performs two
 mutations and asserts a toast after each, dismiss the first.**
+
+### Select any row matching a status in a list
+
+Preconditions: a v2 list page; at least one row on the first page whose visible text contains
+`<rowText>`. `<rowText>` is a word from the instruction — a status such as `rejected`, `pending`,
+`completed` — not a caller-supplied parameter. Read-only: selecting a row only reveals the bulk
+action bar; nothing is clicked in it.
+
+1. `navigate` → `<list path>`
+2. `assertText` → `shell.breadcrumb` contains `<page name>`
+3. `assertVisible` → `shell.table-first-row-with-text`
+4. `click` → `shell.table-first-row-with-text-checkbox`
+5. `assertVisible` → `<the bulk action the instruction is about, e.g. v2-sales.bulk-delete-button>`
+
+Step 3 fails with a selector error when no such row is on the page, which is the honest outcome
+for an empty fixture. Use `shell.table-first-row-with-text-link` in place of step 4 to open the
+record instead. **verified 2026-09-18** end to end on `/v2/quotations` with `rejected`.
 
 ### Sort and configure columns on a list
 

@@ -7,18 +7,14 @@ const destinationPath = path.resolve('src', 'knowledge', 'application.json')
 const source = JSON.parse(readFileSync(sourcePath, 'utf8'))
 
 const pages = {}
-const skippedPages = []
 
 for (const [name, routePath] of Object.entries(source.pages)) {
   if (typeof routePath !== 'string' || !routePath.startsWith('/')) {
     continue
   }
 
-  if (routePath.includes('{')) {
-    skippedPages.push(name)
-    continue
-  }
-
+  // Templated paths ({companyId}, {orderId}, …) are kept: /api/generate
+  // declares their placeholders as plan parameters, bound at run time.
   pages[name] = routePath
 }
 
@@ -32,5 +28,5 @@ for (const [name, definition] of Object.entries(source.targets)) {
 
 writeFileSync(destinationPath, `${JSON.stringify({ pages, targets }, null, 2)}\n`)
 
-console.log(`pages:   ${Object.keys(pages).length} copied, ${skippedPages.length} skipped (they need a {param})`)
+console.log(`pages:   ${Object.keys(pages).length} copied`)
 console.log(`targets: ${Object.keys(targets).length} copied`)

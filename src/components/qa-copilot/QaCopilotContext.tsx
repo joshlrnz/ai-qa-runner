@@ -85,10 +85,71 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
   const [selectedStepIndex, setSelectedStepIndex] = useState<number | null>(null)
   const [savedCases, setSavedCases] = useState<SavedCase[]>([])
   const [suiteFilter, setSuiteFilter] = useState('All suites')
+  // Parameters the runner reported missing; while set, the next user message
+  // answers them (name=value per line, or a bare value when only one is asked).
+  const [pendingParams, setPendingParams] = useState<string[]>([])
+  const [boundParams, setBoundParams] = useState<Record<string, string>>({})
 
   const appendMessage = useCallback((message: ChatMessage) => {
     setMessages((current) => [...current, message])
   }, [])
+
+  const startRunWith = useCallback(
+    (params: Record<string, string>) => {
+      if (!plan || isStartingRun) {
+        return
+      }
+
+      const merged = { ...boundParams, ...params }
+      setBoundParams(merged)
+      setIsStartingRun(true)
+      setRun(null)
+      setSelectedStepIndex(null)
+      setView('runs')
+
+      startTestRun(plan, merged)
+        .then(({ runId: startedRunId }) => {
+          setPendingParams([])
+          setRunId(startedRunId)
+        })
+        .catch((error: unknown) => {
+          setView('author')
+
+          if (error instanceof QaRequestError && error.missingParams.length > 0) {
+            setPendingParams(error.missingParams)
+            const single = error.missingParams.length === 1
+            appendMessage({
+              id: `agent-${Date.now()}`,
+              role: 'agent',
+              text: single
+                ? `Before I can run this I need a value for ${error.missingParams[0]}. Reply with the value.`
+                : `Before I can run this I need values for ${error.missingParams.join(', ')}. Reply with one per line as name=value.`,
+              details: error.missingParams.map((name) => ({
+                label: `${name}:`,
+                value: plan.requiredParams[name]?.description ?? 'no description recorded'
+              }))
+            })
+            setSuggestions([])
+            return
+          }
+
+          appendMessage({
+            id: `agent-${Date.now()}`,
+            role: 'agent',
+            text: error instanceof Error ? error.message : 'The run could not be started.',
+            details: []
+          })
+        })
+        .finally(() => {
+          setIsStartingRun(false)
+        })
+    },
+    [appendMessage, boundParams, isStartingRun, plan]
+  )
+
+  const runPlan = useCallback(() => {
+    startRunWith({})
+  }, [startRunWith])
 
   const submitDraft = useCallback(
     (text: string) => {
@@ -100,8 +161,40 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
 
       setDraft('')
       setSuggestions([])
-      setIsGenerating(true)
       appendMessage({ id: `user-${Date.now()}`, role: 'user', text: trimmed, details: [] })
+
+      if (pendingParams.length > 0) {
+        const answered: Record<string, string> = {}
+        const lines = trimmed.split('\n').map((line) => line.trim()).filter(Boolean)
+
+        if (pendingParams.length === 1 && lines.length === 1 && !lines[0].includes('=')) {
+          answered[pendingParams[0]] = lines[0]
+        } else {
+          for (const line of lines) {
+            const separator = line.indexOf('=')
+            if (separator > 0) {
+              answered[line.slice(0, separator).trim()] = line.slice(separator + 1).trim()
+            }
+          }
+        }
+
+        const stillMissing = pendingParams.filter((name) => !(name in answered))
+
+        if (stillMissing.length > 0) {
+          appendMessage({
+            id: `agent-${Date.now()}`,
+            role: 'agent',
+            text: `I still need ${stillMissing.join(', ')}. Reply as name=value, one per line.`,
+            details: []
+          })
+          return
+        }
+
+        startRunWith(answered)
+        return
+      }
+
+      setIsGenerating(true)
 
       generateTestPlan(trimmed)
         .then(({ plan: generated }) => {
@@ -142,7 +235,7 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
           setIsGenerating(false)
         })
     },
-    [appendMessage, isGenerating]
+    [appendMessage, isGenerating, pendingParams, startRunWith]
   )
 
   const approvePlan = useCallback(() => {
@@ -163,34 +256,6 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       ...current
     ])
   }, [plan])
-
-  const runPlan = useCallback(() => {
-    if (!plan || isStartingRun) {
-      return
-    }
-
-    setIsStartingRun(true)
-    setRun(null)
-    setSelectedStepIndex(null)
-    setView('runs')
-
-    startTestRun(plan)
-      .then(({ runId: startedRunId }) => {
-        setRunId(startedRunId)
-      })
-      .catch((error: unknown) => {
-        setView('author')
-        appendMessage({
-          id: `agent-${Date.now()}`,
-          role: 'agent',
-          text: error instanceof Error ? error.message : 'The run could not be started.',
-          details: []
-        })
-      })
-      .finally(() => {
-        setIsStartingRun(false)
-      })
-  }, [appendMessage, isStartingRun, plan])
 
   useEffect(() => {
     if (!runId) {
