@@ -5,16 +5,17 @@ import { Spinner } from '@/components/ui/Spinner'
 import { ChatBubble } from './ChatBubble'
 import { SuggestionChips } from './SuggestionChips'
 import { Composer } from './Composer'
+import { ClarificationCard } from './ClarificationCard'
 import { useQaCopilot } from './QaCopilotContext'
 
 const SCROLL_ANCHOR_ID = 'qa-conversation-anchor'
 
 export function ConversationPanel() {
-  const { messages, suggestions, isGenerating, submitDraft } = useQaCopilot()
+  const { messages, suggestions, isPlanning, submitDraft } = useQaCopilot()
 
   useEffect(() => {
     document.getElementById(SCROLL_ANCHOR_ID)?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  }, [messages, isGenerating])
+  }, [messages, isPlanning])
 
   return (
     <div
@@ -39,7 +40,7 @@ export function ConversationPanel() {
         {messages.map((message) => (
           <ChatBubble key={message.id} message={message} />
         ))}
-        {isGenerating ? (
+        {isPlanning ? (
           <div
             style={{
               display: 'flex',
@@ -53,6 +54,7 @@ export function ConversationPanel() {
             Reading the knowledge base and drafting the steps...
           </div>
         ) : null}
+        <ClarificationCard />
         <div id={SCROLL_ANCHOR_ID} />
       </div>
 

@@ -1,25 +1,20 @@
 'use client'
 
-import { ClipboardList } from 'lucide-react'
+import { ClipboardList, TriangleAlert } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { PlanStepCard } from './PlanStepCard'
+import { PlanParamsCard } from './PlanParamsCard'
 import { useQaCopilot } from './QaCopilotContext'
 
 export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
-  const { plan, planApproved, approvePlan, runPlan, isStartingRun } = useQaCopilot()
+  const { plan, planMeta, planApproved, approvePlan, runPlan, isStartingRun, missingParamNames } =
+    useQaCopilot()
 
   if (!plan) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: 0,
-          background: 'var(--surface-sunken)'
-        }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, background: 'var(--surface-sunken)' }}>
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
           <EmptyState
             icon={<ClipboardList size={26} />}
@@ -31,11 +26,8 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
     )
   }
 
-  const meta = [
-    { label: 'Environment', value: environmentLabel },
-    { label: 'Steps', value: String(plan.steps.length) },
-    { label: 'Approval', value: planApproved ? 'Approved by you' : 'Waiting on you' }
-  ]
+  const blockedReason =
+    missingParamNames.length > 0 ? `Fill in ${missingParamNames.join(', ')} first` : null
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, background: 'var(--surface-sunken)' }}>
@@ -58,7 +50,7 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
               </Badge>
             </div>
             <div style={{ marginTop: 4, fontSize: 12, color: 'var(--text-secondary)' }}>
-              {plan.steps.length} steps &middot; nothing runs until you say so
+              {plan.steps.length} steps &middot; {environmentLabel} &middot; nothing runs until you say so
             </div>
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, flex: 'none' }}>
@@ -67,46 +59,62 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
                 Approve &amp; save
               </Button>
             ) : null}
-            <Button hierarchy='primary' size='sm' onClick={runPlan} disabled={isStartingRun}>
+            <Button
+              hierarchy='primary'
+              size='sm'
+              onClick={runPlan}
+              disabled={isStartingRun || missingParamNames.length > 0}
+              title={blockedReason ?? undefined}
+            >
               {isStartingRun ? 'Starting...' : 'Run now'}
             </Button>
           </div>
         </div>
 
-        <div
-          style={{
-            marginTop: 14,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))',
-            gap: 10
-          }}
-        >
-          {meta.map(({ label, value }) => (
-            <div key={label} style={{ padding: '9px 11px', borderRadius: 10, background: 'var(--surface-sunken)' }}>
+        {planMeta && planMeta.sourceModules.length > 0 ? (
+          <div style={{ marginTop: 12, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {planMeta.sourceModules.map((module) => (
+              <Badge key={module} tone='brand' size='sm' variant='outline'>
+                {module}
+              </Badge>
+            ))}
+          </div>
+        ) : null}
+
+        {planMeta && planMeta.warnings.length > 0 ? (
+          <div
+            style={{
+              marginTop: 12,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 6,
+              padding: '10px 12px',
+              borderRadius: 10,
+              background: 'var(--warning-50)'
+            }}
+          >
+            {planMeta.warnings.map((warning) => (
               <div
+                key={warning}
                 style={{
-                  fontSize: 11,
-                  letterSpacing: '.04em',
-                  textTransform: 'uppercase',
-                  color: 'var(--text-tertiary)'
+                  display: 'flex',
+                  gap: 8,
+                  alignItems: 'flex-start',
+                  fontSize: 12.5,
+                  lineHeight: 1.45,
+                  color: 'var(--warning-700)'
                 }}
               >
-                {label}
+                <TriangleAlert size={15} style={{ flex: 'none', marginTop: 1 }} />
+                {warning}
               </div>
-              <div
-                style={{
-                  marginTop: 3,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  color: 'var(--neutral-800)',
-                  wordBreak: 'break-word'
-                }}
-              >
-                {value}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : null}
+
+        {blockedReason ? (
+          <div style={{ marginTop: 10, fontSize: 12.5, color: 'var(--error-700)' }}>{blockedReason}</div>
+        ) : null}
       </div>
 
       <div
@@ -120,6 +128,7 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
           gap: 10
         }}
       >
+        <PlanParamsCard />
         {plan.steps.map((step, index) => (
           <PlanStepCard key={`${step.action}-${index}`} step={step} position={index + 1} />
         ))}

@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { generateResponseSchema, type GenerateResponse } from '@/contracts/test-generation'
+import { planResultSchema, type ClarificationAnswers, type PlanResult } from '@/contracts/plan-request'
 import { startRunResponseSchema, testRunSchema, type TestRun } from '@/contracts/test-run'
-import type { TestPlan } from '@/contracts/test-plan'
+import type { PlanParams, TestPlan } from '@/contracts/test-plan'
 
 export class QaRequestError extends Error {
   readonly status: number
@@ -35,32 +35,33 @@ async function readErrorMessage(response: Response) {
   return text.slice(0, 300)
 }
 
-export async function generateTestPlan(description: string): Promise<GenerateResponse> {
-  const response = await fetch('/api/generate', {
+async function postJson(url: string, body: unknown) {
+  const response = await fetch(url, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ description })
+    body: JSON.stringify(body)
   })
 
   if (!response.ok) {
     throw new QaRequestError(response.status, await readErrorMessage(response))
   }
 
-  return generateResponseSchema.parse(await response.json())
+  return response.json()
 }
 
-export async function startTestRun(plan: TestPlan) {
-  const response = await fetch('/api/runs', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ plan })
-  })
+export async function createPlan(instruction: string): Promise<PlanResult> {
+  return planResultSchema.parse(await postJson('/api/plans', { instruction }))
+}
 
-  if (!response.ok) {
-    throw new QaRequestError(response.status, await readErrorMessage(response))
-  }
+export async function answerPlanQuestions(
+  runId: string,
+  answers: ClarificationAnswers
+): Promise<PlanResult> {
+  return planResultSchema.parse(await postJson(`/api/plans/${runId}`, answers))
+}
 
-  return startRunResponseSchema.parse(await response.json())
+export async function startTestRun(plan: TestPlan, params: PlanParams) {
+  return startRunResponseSchema.parse(await postJson('/api/runs', { plan, params }))
 }
 
 export async function fetchTestRun(runId: string): Promise<TestRun> {

@@ -1,39 +1,54 @@
 import type { TestStep } from '@/contracts/test-plan'
 
+const ROLE_PATTERN = /role=(\w+)\[name\*?=["']([^"']+)["']\]/
+const TEST_ID_PATTERN = /\[data-(?:field|testid)=['"]([^'"]+)['"]\]/
+
+export function humaniseSelector(selector: string) {
+  const roleMatch = selector.match(ROLE_PATTERN)
+
+  if (roleMatch) {
+    return `the "${roleMatch[2]}" ${roleMatch[1]}`
+  }
+
+  const testIdMatch = selector.match(TEST_ID_PATTERN)
+
+  if (testIdMatch) {
+    return `the ${testIdMatch[1]} field`
+  }
+
+  return selector.length > 48 ? `${selector.slice(0, 45)}...` : selector
+}
+
 export function describeTestStep(step: TestStep) {
   switch (step.action) {
     case 'navigate':
-      return `Navigate to ${step.path}`
+      return `Go to ${step.path}`
     case 'click':
-      return `Click ${step.target}`
+      return `Click ${humaniseSelector(step.selector)}`
     case 'fill':
-      return `Fill ${step.target}`
-    case 'select':
-      return `Select ${step.value} in ${step.target}`
+      return `Type into ${humaniseSelector(step.selector)}`
     case 'assertVisible':
-      return `Verify ${step.target} is visible`
+      return `Check ${humaniseSelector(step.selector)} is visible`
     case 'assertText':
-      return `Verify ${step.target} contains expected text`
+      return `Check ${humaniseSelector(step.selector)} says "${step.value}"`
   }
 }
 
 export function describeExpectation(step: TestStep) {
   switch (step.action) {
     case 'navigate':
-      return `The page at ${step.path} loads`
+      return `${step.path} loads`
     case 'click':
-      return `${step.target} responds to the click`
+      return `${humaniseSelector(step.selector)} responds`
     case 'fill':
-      return `${step.target} holds "${step.value}"`
-    case 'select':
-      return `${step.target} is set to "${step.value}"`
+      return `${humaniseSelector(step.selector)} holds the value`
     case 'assertVisible':
-      return `${step.target} is on screen`
+      return `${humaniseSelector(step.selector)} is on screen`
     case 'assertText':
-      return `${step.target} contains "${step.value}"`
+      return `the text reads "${step.value}"`
   }
 }
 
 export function describeTarget(step: TestStep) {
-  return step.action === 'navigate' ? step.path : step.target
+  return step.action === 'navigate' ? step.path : step.selector
 }
