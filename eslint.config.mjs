@@ -14,7 +14,9 @@ const eslintConfig = defineConfig([
     'runs/**',
     'playwright-report/**',
     'test-results/**',
-    'next-env.d.ts'
+    'next-env.d.ts',
+    // Compiled output of tsconfig.scratch.json, used by `npm run planner:ask`.
+    '.planner-tmp/**'
   ])
 ])
 

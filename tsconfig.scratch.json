@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": ".planner-tmp",
+    "rootDir": "src",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "skipLibCheck": true
+  },
+  "include": ["src/planner/**/*", "src/knowledge/**/*", "src/mastra/**/*"]
+}
