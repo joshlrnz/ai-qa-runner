@@ -18,6 +18,10 @@ export default defineConfig({
   forbidOnly: true,
   retries: 0,
   workers: 1,
+  timeout: 60_000,
+  expect: {
+    timeout: 10_000
+  },
   outputDir: path.join(runOutputDirectory, 'test-results'),
   reporter: [
     ['list'],
@@ -32,6 +36,8 @@ export default defineConfig({
   use: {
     ...devices['Desktop Chrome'],
     baseURL: process.env.TARGET_BASE_URL ?? 'https://releasing.oboda.app',
+    actionTimeout: 15_000,
+    navigationTimeout: 30_000,
     trace: 'on',
     screenshot: 'only-on-failure',
     storageState: existsSync(storageStatePath) ? storageStatePath : undefined

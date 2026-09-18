@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process'
 import { closeSync, openSync } from 'node:fs'
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
 import { planParamsSchema, testPlanSchema, type PlanParams, type TestPlan } from '@/contracts/test-plan'
@@ -18,9 +18,33 @@ function getReportUrl(runId: string) {
   return `/api/runs/${runId}/report/index.html`
 }
 
-function getErrorMessage(exitCode: number | null, signal: NodeJS.Signals | null) {
+async function readMissingBrowserHint(logPath: string) {
+  try {
+    const log = await readFile(logPath, 'utf8')
+
+    if (log.includes("Executable doesn't exist")) {
+      return 'Playwright browsers are not installed. Run `npm run test:setup`, then start the run again.'
+    }
+
+    return null
+  } catch {
+    return null
+  }
+}
+
+async function describeFailure(
+  logPath: string,
+  exitCode: number | null,
+  signal: NodeJS.Signals | null
+) {
   if (signal) {
     return `Playwright stopped with signal ${signal}`
+  }
+
+  const missingBrowserHint = await readMissingBrowserHint(logPath)
+
+  if (missingBrowserHint) {
+    return missingBrowserHint
   }
 
   return `Playwright exited with code ${exitCode ?? 'unknown'}. See run.log for details.`
@@ -99,7 +123,7 @@ export async function startRun(input: TestPlan, inputParams: PlanParams = {}) {
       ...queuedRun,
       status: passed ? 'passed' : 'failed',
       updatedAt: new Date().toISOString(),
-      error: passed ? null : getErrorMessage(exitCode, signal),
+      error: passed ? null : await describeFailure(logPath, exitCode, signal),
       reportUrl: getReportUrl(runId)
     })
   })

@@ -8,9 +8,13 @@ The current runner targets `https://releasing.oboda.app` by default. Set `TARGET
 
 ```bash
 npm install
-npx playwright install chromium
+npm run test:setup
 cp .env.example .env.local
 ```
+
+`npm run test:setup` downloads the Chromium build that the installed Playwright version expects.
+Skipping it makes every run fail with `Executable doesn't exist`. Re-run it after a Playwright
+upgrade, because each version pins its own browser build.
 
 ## Run the smoke test
 

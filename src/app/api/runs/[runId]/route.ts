@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { reconcileRun } from '@/runner/reconcile-run'
 import { getRun } from '@/runner/run-store'
 
 export const runtime = 'nodejs'
@@ -19,7 +20,7 @@ export async function GET(_request: Request, context: RouteContext) {
       return NextResponse.json({ error: 'Run not found' }, { status: 404 })
     }
 
-    return NextResponse.json(run)
+    return NextResponse.json(await reconcileRun(run))
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unable to read run'
     return NextResponse.json({ error: message }, { status: 400 })

@@ -9,6 +9,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test --workers=1",
+    "test:setup": "playwright install chromium",
     "auth:setup": "node scripts/save-auth-state.mjs",
     "planner:ask": "tsc -p tsconfig.scratch.json && node scripts/ask-planner.mjs",
     "planner:plan": "tsc -p tsconfig.scratch.json && node scripts/make-plan.mjs"
