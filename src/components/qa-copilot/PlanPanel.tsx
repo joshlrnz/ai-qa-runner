@@ -10,8 +10,16 @@ import { PlanParamsCard } from './PlanParamsCard'
 import { useQaCopilot } from './QaCopilotContext'
 
 export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
-  const { plan, planMeta, planApproved, approvePlan, runPlan, isStartingRun, missingParamNames } =
-    useQaCopilot()
+  const {
+    plan,
+    planMeta,
+    planApproved,
+    approvePlan,
+    runPlan,
+    isStartingRun,
+    isSavingTest,
+    missingParamNames
+  } = useQaCopilot()
 
   if (!plan) {
     return (
@@ -60,7 +68,7 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
                 {plan.name}
               </span>
               <Badge tone={planApproved ? 'success' : 'warning'} size='sm'>
-                {planApproved ? 'Approved' : 'Awaiting your approval'}
+                {planApproved ? 'Saved to library' : 'Awaiting your approval'}
               </Badge>
             </div>
             <div style={{ marginTop: 4, fontSize: 12, color: 'var(--text-secondary)' }}>
@@ -69,8 +77,8 @@ export function PlanPanel({ environmentLabel }: { environmentLabel: string }) {
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, flex: 'none' }}>
             {!planApproved ? (
-              <Button hierarchy='secondary' size='sm' onClick={approvePlan}>
-                Approve &amp; save
+              <Button hierarchy='secondary' size='sm' onClick={approvePlan} disabled={isSavingTest}>
+                {isSavingTest ? 'Saving...' : 'Approve & save'}
               </Button>
             ) : null}
             <Button

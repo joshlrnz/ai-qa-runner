@@ -6,14 +6,25 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode
 } from 'react'
 import type { PlanParams, TestPlan } from '@/contracts/test-plan'
 import type { ClarificationQuestion, PlanResult } from '@/contracts/plan-request'
 import type { TestRun } from '@/contracts/test-run'
-import type { ChatMessage, SavedCase, WorkspaceView } from '@/contracts/qa-copilot'
-import { answerPlanQuestions, createPlan, fetchTestRun, repairPlan, startTestRun } from '@/lib/qa-client'
+import type { SavedTest } from '@/contracts/saved-test'
+import type { ChatMessage, WorkspaceView } from '@/contracts/qa-copilot'
+import {
+  answerPlanQuestions,
+  createPlan,
+  fetchTestRun,
+  listSavedTests,
+  recordSavedTestRun,
+  repairPlan,
+  saveTest,
+  startTestRun
+} from '@/lib/qa-client'
 
 const POLL_INTERVAL_MS = 900
 
@@ -54,8 +65,10 @@ type QaCopilotState = {
   canSuggestFix: boolean
   run: TestRun | null
   selectedStepIndex: number | null
-  savedCases: SavedCase[]
-  suiteFilter: string
+  savedTests: SavedTest[]
+  isSavingTest: boolean
+  isLoadingSavedTests: boolean
+  savedTestsError: string | null
   setView: (view: WorkspaceView) => void
   setDraft: (draft: string) => void
   submitDraft: (text: string) => void
@@ -65,7 +78,8 @@ type QaCopilotState = {
   approvePlan: () => void
   runPlan: () => void
   selectStep: (index: number) => void
-  setSuiteFilter: (suite: string) => void
+  refreshSavedTests: () => void
+  openSavedTest: (savedTest: SavedTest) => void
 }
 
 const QaCopilotContext = createContext<QaCopilotState | null>(null)
@@ -95,8 +109,12 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
   const [runId, setRunId] = useState<string | null>(null)
   const [run, setRun] = useState<TestRun | null>(null)
   const [selectedStepIndex, setSelectedStepIndex] = useState<number | null>(null)
-  const [savedCases, setSavedCases] = useState<SavedCase[]>([])
-  const [suiteFilter, setSuiteFilter] = useState('All suites')
+  const [savedTests, setSavedTests] = useState<SavedTest[]>([])
+  const [savedTestId, setSavedTestId] = useState<string | null>(null)
+  const [isSavingTest, setIsSavingTest] = useState(false)
+  const [isLoadingSavedTests, setIsLoadingSavedTests] = useState(false)
+  const [savedTestsError, setSavedTestsError] = useState<string | null>(null)
+  const recordedRunIdRef = useRef<string | null>(null)
 
   const appendMessage = useCallback((message: ChatMessage) => {
     setMessages((current) => [...current, message])
@@ -134,6 +152,7 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       setPlan(result.plan)
       setEnvironmentParams(result.environmentParams)
       setPlanApproved(false)
+      setSavedTestId(null)
       setPlanMeta({
         assumptions: result.assumptions,
         warnings: result.warnings,
@@ -237,24 +256,81 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
     return missing
   }, [environmentParams, paramValues, plan])
 
+  const upsertSavedTest = useCallback((savedTest: SavedTest) => {
+    setSavedTests((current) => [savedTest, ...current.filter((candidate) => candidate.id !== savedTest.id)])
+  }, [])
+
   const approvePlan = useCallback(() => {
-    if (!plan) {
+    if (!plan || isSavingTest || savedTestId) {
       return
     }
 
-    setPlanApproved(true)
-    setSavedCases((current) => [
-      {
-        id: `QA-${String(current.length + 1).padStart(3, '0')}`,
-        name: plan.name,
-        area: 'Release',
-        suite: 'Release Regression',
-        lastRun: 'Not run yet',
-        result: 'Approved'
-      },
-      ...current
-    ])
-  }, [plan])
+    setIsSavingTest(true)
+
+    saveTest(plan, paramValues)
+      .then((savedTest) => {
+        setPlanApproved(true)
+        setSavedTestId(savedTest.id)
+        upsertSavedTest(savedTest)
+        appendMessage(
+          agentMessage(`Saved "${savedTest.name}" to your library. You can run it again from there any time.`)
+        )
+      })
+      .catch(handleFailure)
+      .finally(() => setIsSavingTest(false))
+  }, [appendMessage, handleFailure, isSavingTest, paramValues, plan, savedTestId, upsertSavedTest])
+
+  const refreshSavedTests = useCallback(() => {
+    setIsLoadingSavedTests(true)
+    setSavedTestsError(null)
+
+    listSavedTests()
+      .then(setSavedTests)
+      .catch((error: unknown) => {
+        setSavedTestsError(error instanceof Error ? error.message : 'Could not load your saved tests.')
+      })
+      .finally(() => setIsLoadingSavedTests(false))
+  }, [])
+
+  const changeView = useCallback(
+    (nextView: WorkspaceView) => {
+      setView(nextView)
+
+      if (nextView === 'library') {
+        refreshSavedTests()
+      }
+    },
+    [refreshSavedTests]
+  )
+
+  const openSavedTest = useCallback(
+    (savedTest: SavedTest) => {
+      const seeded: PlanParams = {}
+
+      for (const name of Object.keys(savedTest.plan.requiredParams)) {
+        seeded[name] = savedTest.defaultParams[name] ?? ''
+      }
+
+      recordedRunIdRef.current = null
+      setPlan(savedTest.plan)
+      setPlanMeta(null)
+      setPlanApproved(true)
+      setSavedTestId(savedTest.id)
+      setParamValues(seeded)
+      setQuestions([])
+      setRun(null)
+      setRunId(null)
+      setSelectedStepIndex(null)
+      setSuggestions([])
+      setView('author')
+      appendMessage(
+        agentMessage(
+          `Loaded "${savedTest.name}" from your library. Check the steps, fill in anything it needs, then run it.`
+        )
+      )
+    },
+    [appendMessage]
+  )
 
   const runPlan = useCallback(() => {
     if (!plan || isStartingRun || missingParamNames.length > 0) {
@@ -311,6 +387,32 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
     }
   }, [runId])
 
+  useEffect(() => {
+    if (!run || !savedTestId) {
+      return
+    }
+
+    if (run.status !== 'passed' && run.status !== 'failed') {
+      return
+    }
+
+    if (recordedRunIdRef.current === run.runId) {
+      return
+    }
+
+    recordedRunIdRef.current = run.runId
+
+    recordSavedTestRun(savedTestId, {
+      lastRunId: run.runId,
+      lastRunStatus: run.status,
+      lastRunAt: run.updatedAt
+    })
+      .then(upsertSavedTest)
+      .catch(() => {
+        recordedRunIdRef.current = null
+      })
+  }, [run, savedTestId, upsertSavedTest])
+
   const selectStep = useCallback((index: number) => setSelectedStepIndex(index), [])
 
   const failedStep = useMemo(() => run?.steps?.find((step) => step.status === 'failed') ?? null, [run])
@@ -363,9 +465,11 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       canSuggestFix,
       run,
       selectedStepIndex,
-      savedCases,
-      suiteFilter,
-      setView,
+      savedTests,
+      isSavingTest,
+      isLoadingSavedTests,
+      savedTestsError,
+      setView: changeView,
       setDraft,
       submitDraft,
       submitAnswers,
@@ -374,16 +478,21 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       approvePlan,
       runPlan,
       selectStep,
-      setSuiteFilter
+      refreshSavedTests,
+      openSavedTest
     }),
     [
       approvePlan,
       canSuggestFix,
+      changeView,
       isRepairing,
       suggestFix,
       draft,
+      isLoadingSavedTests,
       isPlanning,
+      isSavingTest,
       isStartingRun,
+      openSavedTest,
       messages,
       missingParamNames,
       environmentParams,
@@ -392,16 +501,17 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       planApproved,
       planMeta,
       questions,
+      refreshSavedTests,
       run,
       runPlan,
-      savedCases,
+      savedTests,
+      savedTestsError,
       selectStep,
       selectedStepIndex,
       setParamValue,
       submitAnswers,
       submitDraft,
       suggestions,
-      suiteFilter,
       view
     ]
   )

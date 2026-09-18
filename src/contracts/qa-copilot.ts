@@ -16,17 +16,7 @@ export const chatMessageSchema = z.object({
   details: z.array(chatDetailSchema)
 })
 
-export const savedCaseSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  area: z.string(),
-  suite: z.string(),
-  lastRun: z.string(),
-  result: z.string()
-})
-
 export type WorkspaceView = z.infer<typeof workspaceViewSchema>
 export type ChatRole = z.infer<typeof chatRoleSchema>
 export type ChatDetail = z.infer<typeof chatDetailSchema>
 export type ChatMessage = z.infer<typeof chatMessageSchema>
-export type SavedCase = z.infer<typeof savedCaseSchema>

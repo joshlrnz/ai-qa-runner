@@ -1,6 +1,12 @@
 import { z } from 'zod'
 import { planResultSchema, type ClarificationAnswers, type PlanResult } from '@/contracts/plan-request'
 import { startRunResponseSchema, testRunSchema, type TestRun } from '@/contracts/test-run'
+import {
+  savedTestListSchema,
+  savedTestSchema,
+  type RecordTestRunRequest,
+  type SavedTest
+} from '@/contracts/saved-test'
 import type { PlanParams, TestPlan } from '@/contracts/test-plan'
 
 export class QaRequestError extends Error {
@@ -35,12 +41,26 @@ async function readErrorMessage(response: Response) {
   return text.slice(0, 300)
 }
 
-async function postJson(url: string, body: unknown) {
+async function sendJson(method: 'POST' | 'PATCH', url: string, body: unknown) {
   const response = await fetch(url, {
-    method: 'POST',
+    method,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body)
   })
+
+  if (!response.ok) {
+    throw new QaRequestError(response.status, await readErrorMessage(response))
+  }
+
+  return response.json()
+}
+
+async function postJson(url: string, body: unknown) {
+  return sendJson('POST', url, body)
+}
+
+async function getJson(url: string) {
+  const response = await fetch(url, { cache: 'no-store' })
 
   if (!response.ok) {
     throw new QaRequestError(response.status, await readErrorMessage(response))
@@ -53,10 +73,7 @@ export async function createPlan(instruction: string): Promise<PlanResult> {
   return planResultSchema.parse(await postJson('/api/plans', { instruction }))
 }
 
-export async function answerPlanQuestions(
-  runId: string,
-  answers: ClarificationAnswers
-): Promise<PlanResult> {
+export async function answerPlanQuestions(runId: string, answers: ClarificationAnswers): Promise<PlanResult> {
   return planResultSchema.parse(await postJson(`/api/plans/${runId}`, answers))
 }
 
@@ -75,11 +92,17 @@ export async function startTestRun(plan: TestPlan, params: PlanParams) {
 }
 
 export async function fetchTestRun(runId: string): Promise<TestRun> {
-  const response = await fetch(`/api/runs/${runId}`, { cache: 'no-store' })
+  return testRunSchema.parse(await getJson(`/api/runs/${runId}`))
+}
 
-  if (!response.ok) {
-    throw new QaRequestError(response.status, await readErrorMessage(response))
-  }
+export async function saveTest(plan: TestPlan, params: PlanParams): Promise<SavedTest> {
+  return savedTestSchema.parse(await postJson('/api/tests', { plan, params }))
+}
 
-  return testRunSchema.parse(await response.json())
+export async function listSavedTests(): Promise<SavedTest[]> {
+  return savedTestListSchema.parse(await getJson('/api/tests')).tests
+}
+
+export async function recordSavedTestRun(testId: string, lastRun: RecordTestRunRequest): Promise<SavedTest> {
+  return savedTestSchema.parse(await sendJson('PATCH', `/api/tests/${testId}`, lastRun))
 }
