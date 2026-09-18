@@ -1,16 +1,28 @@
-import { z } from 'zod'
+import { z } from "zod";
 
-export const runStatusSchema = z.enum(['queued', 'running', 'passed', 'failed'])
+export const runStatusSchema = z.enum([
+  "queued",
+  "running",
+  "passed",
+  "failed",
+]);
 
-export const stepStatusSchema = z.enum(['pending', 'running', 'passed', 'failed', 'skipped'])
+export const stepStatusSchema = z.enum([
+  "pending",
+  "running",
+  "passed",
+  "failed",
+  "skipped",
+]);
 
 export const stepResultSchema = z.object({
   index: z.number().int().nonnegative(),
   title: z.string().min(1),
   status: stepStatusSchema,
   durationMs: z.number().int().nonnegative().nullable(),
-  error: z.string().nullable()
-})
+  error: z.string().nullable(),
+  screenshotUrl: z.string().nullable().default(null),
+});
 
 export const testRunSchema = z.object({
   runId: z.string().min(1),
@@ -20,15 +32,15 @@ export const testRunSchema = z.object({
   updatedAt: z.string().datetime(),
   error: z.string().nullable(),
   reportUrl: z.string().nullable(),
-  steps: z.array(stepResultSchema).optional()
-})
+  steps: z.array(stepResultSchema).optional(),
+});
 
 export const startRunResponseSchema = z.object({
   runId: z.string().min(1),
-  status: runStatusSchema
-})
+  status: runStatusSchema,
+});
 
-export type RunStatus = z.infer<typeof runStatusSchema>
-export type StepStatus = z.infer<typeof stepStatusSchema>
-export type StepResult = z.infer<typeof stepResultSchema>
-export type TestRun = z.infer<typeof testRunSchema>
+export type RunStatus = z.infer<typeof runStatusSchema>;
+export type StepStatus = z.infer<typeof stepStatusSchema>;
+export type StepResult = z.infer<typeof stepResultSchema>;
+export type TestRun = z.infer<typeof testRunSchema>;

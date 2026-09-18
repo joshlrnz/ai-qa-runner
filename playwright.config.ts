@@ -2,20 +2,22 @@ import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { defineConfig, devices } from '@playwright/test'
 
-const localEnvironmentPath = path.resolve('.env.local')
+for (const environmentFile of ['.env', '.env.local']) {
+  const environmentPath = path.resolve(environmentFile)
 
-if (existsSync(localEnvironmentPath)) {
-  process.loadEnvFile(localEnvironmentPath)
+  if (existsSync(environmentPath)) {
+    process.loadEnvFile(environmentPath)
+  }
 }
 
 const runOutputDirectory = path.resolve(process.env.RUN_OUTPUT_DIR ?? path.join('runs', 'local'))
 const configuredStorageStatePath = process.env.PLAYWRIGHT_STORAGE_STATE_PATH ?? path.join('.auth', 'dev-user.json')
 const storageStatePath = path.resolve(configuredStorageStatePath)
 
-// Plans from the grounded planner sign in themselves (their first step is
-// `navigate /sign-in`), so a saved session must not be injected for them —
-// the app would redirect off /sign-in and the sign-in assertions would fail.
-// Plans from /api/generate carry no sign-in and need the saved session.
+// The runner starts every plan signed in: playwright/global-setup.ts signs the
+// test account in through the credentials API and saves the session here.
+// Older plans that still begin with `navigate /sign-in` must not receive it,
+// or the app redirects off /sign-in and their sign-in assertions fail.
 function planSignsInItself() {
   const planPath = path.resolve(process.env.TEST_PLAN_PATH ?? path.join('plans', 'smoke.json'))
 
@@ -28,10 +30,14 @@ function planSignsInItself() {
   }
 }
 
-const useSavedSession = existsSync(storageStatePath) && !planSignsInItself()
+// The file may not exist yet when this config is evaluated; global setup
+// creates it before the first test runs.
+const useSavedSession = !planSignsInItself()
 
 export default defineConfig({
   testDir: './playwright',
+  testMatch: /.*\.spec\.ts$/,
+  globalSetup: './playwright/global-setup.ts',
   fullyParallel: false,
   forbidOnly: true,
   retries: 0,
@@ -43,8 +49,6 @@ export default defineConfig({
   outputDir: path.join(runOutputDirectory, 'test-results'),
   reporter: [
     ['list'],
-    // Per-step outcomes for the run API: which step failed and with what error.
-    ['json', { outputFile: path.join(runOutputDirectory, 'results.json') }],
     [
       'html',
       {

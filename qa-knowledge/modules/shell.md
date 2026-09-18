@@ -33,7 +33,10 @@ flows drafted yet.
 
 ## Preconditions
 
-- An account that can sign in with email + password, bound as the run's credentials.
+- **The runner is already signed in.** `playwright/global-setup.ts` signs the configured test
+  account in through the next-auth credentials API before the first step and saves the session
+  as storage state, so plans start authenticated and carry no credentials. The "Sign in with
+  email" flow below is for instructions that are explicitly about signing in; nothing else needs it.
 - `companyId` bound to a tenant that account has access to.
 - **Tier matters.** `authenticatedV2` (`src/layouts/authenticatedV2/index.tsx:127`) resolves a
   tier route on every render: a LITE company is forced into `/companies/{companyId}/lite/*`

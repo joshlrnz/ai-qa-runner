@@ -106,8 +106,46 @@ function toAttempt(run: AgentRun): PlanAttempt {
   return attempt
 }
 
+// Model calls fail at the network layer now and then: a stalled read while the
+// response body streams (read ETIMEDOUT), a reset, a dropped keep-alive. The
+// provider has already done the work, so a short retry is cheap and usually
+// enough. Anything that is not a transport error is rethrown as is.
+const transportErrorPattern = /ETIMEDOUT|ECONNRESET|ECONNREFUSED|EAI_AGAIN|terminated|socket hang up|fetch failed|Cannot connect to API/i
+
+function isTransportError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  return transportErrorPattern.test(error.message) || isTransportError(error.cause)
+}
+
+export function getPlannerTransportRetries() {
+  return Number(process.env.QA_PLANNER_TRANSPORT_RETRIES ?? 2)
+}
+
+async function withTransportRetry<T>(label: string, call: () => Promise<T>): Promise<T> {
+  const retries = getPlannerTransportRetries()
+
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      return await call()
+    } catch (error) {
+      if (!isTransportError(error) || attempt >= retries) {
+        throw error
+      }
+
+      const delayMs = 2000 * (attempt + 1)
+      console.warn(`[planner] ${label}: transport error, retrying in ${delayMs}ms (${attempt + 1}/${retries})`)
+      await new Promise((resolve) => setTimeout(resolve, delayMs))
+    }
+  }
+}
+
 export async function planTest(instruction: string): Promise<PlanAttempt> {
-  const run = await getPlannerAgent().generate(instruction, { maxSteps: getPlannerMaxSteps() })
+  const run = await withTransportRetry('generate', () =>
+    getPlannerAgent().generate(instruction, { maxSteps: getPlannerMaxSteps() })
+  )
   return toAttempt(run as AgentRun)
 }
 
@@ -116,10 +154,12 @@ export async function resumePlanTest(
   answers: ClarificationAnswers
 ): Promise<PlanAttempt> {
   try {
-    const run = await getPlannerAgent().resumeGenerate(answers, {
-      runId,
-      maxSteps: getPlannerMaxSteps()
-    })
+    const run = await withTransportRetry('resume', () =>
+      getPlannerAgent().resumeGenerate(answers, {
+        runId,
+        maxSteps: getPlannerMaxSteps()
+      })
+    )
 
     return toAttempt(run as AgentRun)
   } catch (error) {

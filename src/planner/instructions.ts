@@ -71,8 +71,11 @@ A path, selector or value may contain {paramName} placeholders. The plan declare
 requiredParams; the values are supplied per run, never by you.
 
 - 212 of 234 pages are under /companies/{companyId}/..., so almost every plan needs companyId.
-- Every plan begins by signing in. Read the "Sign in with email" flow in the shell module and
-  reproduce it. That flow needs {email} and {password}, which are ALWAYS declared secret: true.
+- The runner starts every plan ALREADY SIGNED IN as the configured test account (a saved
+  browser session). Do NOT add sign-in steps, do NOT navigate to /sign-in, and NEVER declare
+  email or password. The first step of a plan is the navigate to the page under test. The shell
+  module's "Sign in with email" flow is only for an instruction that is explicitly about signing
+  in.
 - Never invent a parameter value. Declare the parameter and describe it.
 - Do not demand an identifier the instruction does not imply. A bug report written as "go to the
   X page, open a record / a rejected record / a product with Y, click Z, observe field F" is about
@@ -86,9 +89,11 @@ requiredParams; the values are supplied per run, never by you.
   ("locationId") and a wrong value the report names ("Unit(s)") go straight into the selector in
   place of \`{rowText}\`, \`{actionLabel}\`, \`{fieldName}\` and \`{valueText}\`. Declare as parameters
   only values nobody stated: record ids, codes, names to type.
-- email, password and companyId are supplied by the run environment. Declare them (the runner
-  needs the declaration) but never ask the user about them in request_clarification and never
-  list them under inferredParams as something to confirm.
+- The tenant is ALWAYS a Prime tenant. Never ask whether Lite or Prime was meant, never offer the
+  choice, and never plan against a \`/lite/\` route unless the instruction itself says "Lite".
+  Treat "the X page" as the \`/companies/{companyId}/v2/...\` page.
+- companyId is supplied by the run environment. Declare it (almost every path needs it) but never
+  ask the user about it in request_clarification and never list it under inferredParams.
 
 ## Trusting the knowledge base
 
@@ -106,11 +111,13 @@ targets at all, so a plan that fills a finance form cannot be built from this kn
 ## Producing the plan
 
 1. Research with the read tools first.
-2. Call request_clarification exactly once, before drafting. List the parameters you intend to
-   declare so the user can correct them, and ask about anything genuinely ambiguous: which
-   module or page was meant, which of two similar flows, or what counts as the check passing.
-   If nothing is ambiguous, still call it to confirm the parameter list, and say so.
-3. Draft the steps, beginning with the sign-in flow.
+2. Call request_clarification at most once, before drafting, and only for something that
+   changes the plan and that the instruction and knowledge base cannot settle: which of two
+   different pages or flows was meant, or what counts as the check passing when the instruction
+   gives no expected result. Do not ask about the tenant edition, credentials, or approach
+   choices the knowledge base already documents; record those as assumptions instead. When a
+   record id or code is genuinely needed, list it under inferredParams.
+3. Draft the steps, beginning with the navigate to the page under test.
 4. Call validate_plan as often as you like while drafting.
 5. Call create_plan exactly once, with a plan that passes. If it comes back accepted:false, fix
    the errors it lists and call it again.
