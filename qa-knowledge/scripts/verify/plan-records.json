@@ -1,0 +1,21 @@
+[
+ {"path":"/companies/10004/v2/sales-orders/26018/update","targets":["v2-sales.order-*","v2-sales-order-record.tab*","v2-sales-order-record.active-tabpanel","v2-sales-order-record.tablist","shell.breadcrumb","shell.toast"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-collections"],"targets":["v2-sales-order-record.collection-*"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-releasings"],"targets":["v2-sales-order-record.releasing-*"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-returns"],"targets":["v2-sales-order-record.return-*"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-refunds"],"targets":["v2-sales-order-record.refund-*"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-attachments"],"targets":["v2-sales-order-record.attachments-*"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales.order-print-button"],"targets":["v2-sales-order-record.print-*"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","targets":["v2-purchasing.po-*","v2-purchase-order-record.tab*","v2-purchase-order-record.active-tabpanel","v2-purchase-order-record.tablist"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchase-order-record.tab-payments"],"targets":["v2-purchase-order-record.payment-*"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchase-order-record.tab-receivings"],"targets":["v2-purchase-order-record.receiving-*"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchase-order-record.tab-refunds"],"targets":["v2-purchase-order-record.refund-*"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchase-order-record.tab-returns"],"targets":["v2-purchase-order-record.return-*"]},
+ {"path":"/companies/10004/v2/products/44687/update","targets":["v2-inventory.product-*"]},
+ {"path":"/companies/10004/v2/stocktakes/907/update","targets":["v2-inventory.stocktake-*"]},
+ {"path":"/companies/10004/v2/stock-adjustments/1493/update","targets":["v2-inventory.adjustment-*"]},
+ {"path":"/companies/10004/v2/stock-transfers/1306/update","targets":["v2-inventory.transfer-*"]},
+ {"path":"/companies/10004/v2/receivings/3900/update","targets":["v2-purchasing.receiving-*"]},
+ {"path":"/companies/10004/v2/requisitions/126/update","targets":["v2-purchasing.requisition-*"]},
+ {"path":"/companies/10004/v2/payments/2531/update","targets":["v2-finance.payment-*"]}
+]

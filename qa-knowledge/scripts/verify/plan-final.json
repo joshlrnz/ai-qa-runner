@@ -1,0 +1,22 @@
+[
+ {"path":"/companies/10004/v2/sales-orders","targets":["shell.sidenav*","shell.account-button","shell.company-switcher","shell.table*","shell.breadcrumb","v2-sales.orders-*"],"vars":{"companyName":"Dhin Company","recordCode":"DHIN-OR-00395"}},
+ {"path":"/companies/10004/v3","targets":["v3-analytics.*"]},
+ {"path":"/companies/10004/v2/customers","targets":["v2-masterdata.customer-*"],"vars":{"recordCode":"a"}},
+ {"path":"/companies/10004/v2/customers/9572/update","targets":["v2-masterdata.customer-*"]},
+ {"path":"/companies/10004/v2/suppliers/1053/update","targets":["v2-purchasing.supplier-*"]},
+ {"path":"/companies/10004/v2/contacts/433/update","targets":["v2-masterdata.contact-*"]},
+ {"path":"/companies/10004/v2/expenses/687/update","targets":["v2-finance.expense-*"]},
+ {"path":"/companies/10004/v2/bank-accounts/109","targets":["v2-finance.bank-account-*"]},
+ {"path":"/companies/10004/v2/assemblies/629/update","targets":["v2-inventory.assembly-*"]},
+ {"path":"/companies/10004/v2/bill-of-materials/299/update","targets":["v2-inventory.bom-*"]},
+ {"path":"/companies/10004/v2/suppliers","targets":["v2-purchasing.supplier-*"]},
+ {"path":"/companies/10004/v2/contacts","targets":["v2-masterdata.contact-*"]},
+ {"path":"/companies/10004/v2/expenses","targets":["v2-finance.expense-*"]},
+ {"path":"/companies/10004/v2/bank-accounts","targets":["v2-finance.bank-account-*"]},
+ {"path":"/companies/10004/v2/inventory-locations","targets":["v2-inventory.location-*"]},
+ {"path":"/companies/10004/v2/post-dated-cheques","targets":["v2-finance.cheque-*"]},
+ {"path":"/companies/10004/v2/customer-groups","targets":["v2-masterdata.customer-group-*"]},
+ {"path":"/companies/10004/v2/dispatches","targets":["v2-inventory.dispatch*"]},
+ {"path":"/companies/10004/v2/settings","targets":["v2-masterdata.settings-*"]},
+ {"path":"/companies/10004/v2/audit-logs","targets":["v2-masterdata.audit-logs-*"]}
+]

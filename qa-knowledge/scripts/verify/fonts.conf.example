@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <dir>/tmp/claude-1000/-home-genna-code-oboda-app/2d7709e2-e6ed-4f14-9842-abac879988ce/scratchpad/libs/root/usr/share/fonts</dir>
+  <cachedir>/tmp/claude-1000/-home-genna-code-oboda-app/2d7709e2-e6ed-4f14-9842-abac879988ce/scratchpad/libs/fccache</cachedir>
+  <match target="pattern"><edit name="family" mode="append_last"><string>DejaVu Sans</string></edit></match>
+</fontconfig>

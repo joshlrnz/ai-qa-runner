@@ -1,0 +1,2784 @@
+{
+  "$schema": "./application.schema.md",
+  "generatedBy": "build-qa-knowledge",
+  "generatedAt": "2026-09-17",
+  "pathTemplates": true,
+  "params": {
+    "adjustmentId": {
+      "description": "Id of the adjustment record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "announcementId": {
+      "description": "Id of the announcement record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "assemblyId": {
+      "description": "Id of the assembly record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "bankAccountId": {
+      "description": "Id of the bank account record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "billOfMaterialId": {
+      "description": "Id of the bill of material record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "chequeId": {
+      "description": "Id of the cheque record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "collectionId": {
+      "description": "Id of the collection record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "companyId": {
+      "description": "Tenant every authenticated route is scoped to. Constant for a whole run.",
+      "source": "parameter",
+      "scope": "run"
+    },
+    "companyName": {
+      "description": "Display name of the tenant bound to {companyId}. Used to resolve controls whose only accessible name is the company itself.",
+      "source": "parameter",
+      "scope": "run"
+    },
+    "contactId": {
+      "description": "Id of the contact record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "customerGroupId": {
+      "description": "Id of the customer group record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "customerId": {
+      "description": "Id of the customer record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "dispatchId": {
+      "description": "Id of the dispatch record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "distributorId": {
+      "description": "Distributor record id.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "expenseId": {
+      "description": "Id of the expense record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "inventoryLocationId": {
+      "description": "Id of the inventory location record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "optionLabel": {
+      "description": "Visible label of the option to pick in a v2 dropdown, used by the two-click select workaround.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "orderId": {
+      "description": "Id of the order record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "paymentId": {
+      "description": "Id of the payment record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "productId": {
+      "description": "Id of the product record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "purchaseOrderId": {
+      "description": "Id of the purchase order record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "purchaseOrderReturnId": {
+      "description": "Id of the purchase order return record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "purchasePriceMatrixId": {
+      "description": "Id of the purchase price matrix record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "purchaseServiceId": {
+      "description": "Id of the purchase service record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "quotationId": {
+      "description": "Id of the quotation record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "receivingId": {
+      "description": "Id of the receiving record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "recordCode": {
+      "description": "Human-readable code of the record under test (the Code column of any v2 list). Used by every <module>.*-row target to scope a table row by content.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "releasingId": {
+      "description": "Id of the releasing record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "reportId": {
+      "description": "Quarterly report id.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "requisitionId": {
+      "description": "Id of the requisition record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "salesAgentId": {
+      "description": "Id of the sales agent record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "salesPriceMatrixId": {
+      "description": "Id of the sales price matrix record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "salesReturnId": {
+      "description": "Id of the sales return record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "salesServiceId": {
+      "description": "Id of the sales service record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "stocktakeId": {
+      "description": "Id of the stocktake record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "supplierId": {
+      "description": "Id of the supplier record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "transferId": {
+      "description": "Id of the transfer record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    },
+    "vehicleId": {
+      "description": "Id of the vehicle record under test.",
+      "source": "parameter",
+      "scope": "flow"
+    }
+  },
+  "pages": {
+    "shell.home": "/",
+    "shell._offline": "/_offline",
+    "shell.403": "/403",
+    "shell.404": "/404",
+    "shell.account-deleted": "/account-deleted",
+    "shell.auth-callback": "/auth-callback",
+    "shell.companies-list": "/companies",
+    "shell.company-home": "/companies/{companyId}",
+    "lite.home": "/companies/{companyId}/lite",
+    "lite.contacts-list": "/companies/{companyId}/lite/contacts",
+    "lite.contacts-update": "/companies/{companyId}/lite/contacts/{contactId}/update",
+    "lite.contacts-create": "/companies/{companyId}/lite/contacts/create",
+    "lite.customers-list": "/companies/{companyId}/lite/customers",
+    "lite.customers-update": "/companies/{companyId}/lite/customers/{customerId}/update",
+    "lite.customers-create": "/companies/{companyId}/lite/customers/create",
+    "lite.customers-import": "/companies/{companyId}/lite/customers/import",
+    "lite.expenses-list": "/companies/{companyId}/lite/expenses",
+    "lite.expenses-update": "/companies/{companyId}/lite/expenses/{expenseId}/update",
+    "lite.expenses-create": "/companies/{companyId}/lite/expenses/create",
+    "lite.inventory-locations-list": "/companies/{companyId}/lite/inventory-locations",
+    "lite.inventory-locations-detail": "/companies/{companyId}/lite/inventory-locations/{inventoryLocationId}",
+    "lite.inventory-locations-qr-codes": "/companies/{companyId}/lite/inventory-locations/qr-codes",
+    "lite.inventory-reports-list": "/companies/{companyId}/lite/inventory-reports",
+    "lite.inventory-transactions-list": "/companies/{companyId}/lite/inventory-transactions",
+    "lite.oGPT-list": "/companies/{companyId}/lite/oGPT",
+    "lite.products-list": "/companies/{companyId}/lite/products",
+    "lite.products-detail": "/companies/{companyId}/lite/products/{productId}",
+    "lite.products-update": "/companies/{companyId}/lite/products/{productId}/update",
+    "lite.products-create": "/companies/{companyId}/lite/products/create",
+    "lite.products-import": "/companies/{companyId}/lite/products/import",
+    "lite.purchase-orders-list": "/companies/{companyId}/lite/purchase-orders",
+    "lite.purchase-orders-update": "/companies/{companyId}/lite/purchase-orders/{purchaseOrderId}/update",
+    "lite.purchase-orders-create": "/companies/{companyId}/lite/purchase-orders/create",
+    "lite.purchase-orders-upload-with-ovision": "/companies/{companyId}/lite/purchase-orders/upload-with-ovision",
+    "lite.purchase-services-list": "/companies/{companyId}/lite/purchase-services",
+    "lite.purchase-services-update": "/companies/{companyId}/lite/purchase-services/{purchaseServiceId}/update",
+    "lite.purchase-services-create": "/companies/{companyId}/lite/purchase-services/create",
+    "lite.purchasing-reports-list": "/companies/{companyId}/lite/purchasing-reports",
+    "lite.quick-checkout-list": "/companies/{companyId}/lite/quick-checkout",
+    "lite.quick-checkout-order-receipts": "/companies/{companyId}/lite/quick-checkout/order-receipts",
+    "lite.reports-list": "/companies/{companyId}/lite/reports",
+    "lite.reports-collections-report": "/companies/{companyId}/lite/reports/collections-report",
+    "lite.reports-current-inventory-value": "/companies/{companyId}/lite/reports/current-inventory-value",
+    "lite.reports-customer-aging-accounts-receivable": "/companies/{companyId}/lite/reports/customer-aging-accounts-receivable",
+    "lite.reports-customer-sales": "/companies/{companyId}/lite/reports/customer-sales",
+    "lite.reports-customer-statement-of-account": "/companies/{companyId}/lite/reports/customer-statement-of-account",
+    "lite.reports-history": "/companies/{companyId}/lite/reports/history",
+    "lite.reports-inventory-by-date": "/companies/{companyId}/lite/reports/inventory-by-date",
+    "lite.reports-inventory-per-location": "/companies/{companyId}/lite/reports/inventory-per-location",
+    "lite.reports-order-items-report": "/companies/{companyId}/lite/reports/order-items-report",
+    "lite.reports-products": "/companies/{companyId}/lite/reports/products",
+    "lite.reports-purchase-order-items-report": "/companies/{companyId}/lite/reports/purchase-order-items-report",
+    "lite.reports-receiving-items-report": "/companies/{companyId}/lite/reports/receiving-items-report",
+    "lite.reports-releasing-items-report": "/companies/{companyId}/lite/reports/releasing-items-report",
+    "lite.reports-sales-order-services": "/companies/{companyId}/lite/reports/sales-order-services",
+    "lite.reports-sales-orders-report": "/companies/{companyId}/lite/reports/sales-orders-report",
+    "lite.reports-sales-report-by-product-type": "/companies/{companyId}/lite/reports/sales-report-by-product-type",
+    "lite.sales-agents-list": "/companies/{companyId}/lite/sales-agents",
+    "lite.sales-agents-update": "/companies/{companyId}/lite/sales-agents/{salesAgentId}/update",
+    "lite.sales-agents-create": "/companies/{companyId}/lite/sales-agents/create",
+    "lite.sales-orders-list": "/companies/{companyId}/lite/sales-orders",
+    "lite.sales-orders-update": "/companies/{companyId}/lite/sales-orders/{orderId}/update",
+    "lite.sales-orders-analytics": "/companies/{companyId}/lite/sales-orders/analytics",
+    "lite.sales-orders-create": "/companies/{companyId}/lite/sales-orders/create",
+    "lite.sales-orders-upload-with-ovision": "/companies/{companyId}/lite/sales-orders/upload-with-ovision",
+    "lite.sales-reports-list": "/companies/{companyId}/lite/sales-reports",
+    "lite.sales-services-list": "/companies/{companyId}/lite/sales-services",
+    "lite.sales-services-update": "/companies/{companyId}/lite/sales-services/{salesServiceId}/update",
+    "lite.sales-services-create": "/companies/{companyId}/lite/sales-services/create",
+    "lite.settings-list": "/companies/{companyId}/lite/settings",
+    "lite.stock-adjustments-list": "/companies/{companyId}/lite/stock-adjustments",
+    "lite.stock-adjustments-update": "/companies/{companyId}/lite/stock-adjustments/{adjustmentId}/update",
+    "lite.stock-adjustments-create": "/companies/{companyId}/lite/stock-adjustments/create",
+    "lite.stock-transfers-list": "/companies/{companyId}/lite/stock-transfers",
+    "lite.stock-transfers-update": "/companies/{companyId}/lite/stock-transfers/{transferId}/update",
+    "lite.stock-transfers-create": "/companies/{companyId}/lite/stock-transfers/create",
+    "lite.stock-transfers-upload-with-ovision": "/companies/{companyId}/lite/stock-transfers/upload-with-ovision",
+    "lite.stocktakes-list": "/companies/{companyId}/lite/stocktakes",
+    "lite.stocktakes-update": "/companies/{companyId}/lite/stocktakes/{stocktakeId}/update",
+    "lite.stocktakes-create": "/companies/{companyId}/lite/stocktakes/create",
+    "lite.suppliers-list": "/companies/{companyId}/lite/suppliers",
+    "lite.suppliers-update": "/companies/{companyId}/lite/suppliers/{supplierId}/update",
+    "lite.suppliers-create": "/companies/{companyId}/lite/suppliers/create",
+    "lite.suppliers-import": "/companies/{companyId}/lite/suppliers/import",
+    "lite.users-list": "/companies/{companyId}/lite/users",
+    "v2-masterdata.home": "/companies/{companyId}/v2",
+    "v2-finance.accounts-list": "/companies/{companyId}/v2/accounts",
+    "v2-finance.accounts-create": "/companies/{companyId}/v2/accounts/create",
+    "v2-finance.accounts-scorecard": "/companies/{companyId}/v2/accounts/scorecard",
+    "v2-inventory.assemblies-list": "/companies/{companyId}/v2/assemblies",
+    "v2-inventory.assemblies-update": "/companies/{companyId}/v2/assemblies/{assemblyId}/update",
+    "v2-inventory.assemblies-create": "/companies/{companyId}/v2/assemblies/create",
+    "v2-masterdata.audit-logs-list": "/companies/{companyId}/v2/audit-logs",
+    "v2-finance.bank-accounts-list": "/companies/{companyId}/v2/bank-accounts",
+    "v2-finance.bank-accounts-detail": "/companies/{companyId}/v2/bank-accounts/{bankAccountId}",
+    "v2-finance.bank-accounts-create": "/companies/{companyId}/v2/bank-accounts/create",
+    "v2-inventory.barcodes-generator-list": "/companies/{companyId}/v2/barcodes-generator",
+    "v2-sales.beat-route-pending-orders-list": "/companies/{companyId}/v2/beat-route-pending-orders",
+    "v2-inventory.bill-of-materials-list": "/companies/{companyId}/v2/bill-of-materials",
+    "v2-inventory.bill-of-materials-update": "/companies/{companyId}/v2/bill-of-materials/{billOfMaterialId}/update",
+    "v2-inventory.bill-of-materials-create": "/companies/{companyId}/v2/bill-of-materials/create",
+    "v2-masterdata.companies-list": "/companies/{companyId}/v2/companies",
+    "v2-masterdata.company-list": "/companies/{companyId}/v2/company",
+    "v2-masterdata.company-create": "/companies/{companyId}/v2/company/create",
+    "v2-masterdata.contacts-list": "/companies/{companyId}/v2/contacts",
+    "v2-masterdata.contacts-update": "/companies/{companyId}/v2/contacts/{contactId}/update",
+    "v2-masterdata.contacts-create": "/companies/{companyId}/v2/contacts/create",
+    "v2-masterdata.customer-groups-list": "/companies/{companyId}/v2/customer-groups",
+    "v2-masterdata.customer-groups-update": "/companies/{companyId}/v2/customer-groups/{customerGroupId}/update",
+    "v2-masterdata.customer-groups-create": "/companies/{companyId}/v2/customer-groups/create",
+    "v2-masterdata.customer-success-announcements-list": "/companies/{companyId}/v2/customer-success-announcements",
+    "v2-masterdata.customer-success-announcements-update": "/companies/{companyId}/v2/customer-success-announcements/{announcementId}/update",
+    "v2-masterdata.customer-success-announcements-create": "/companies/{companyId}/v2/customer-success-announcements/create",
+    "v2-masterdata.customer-success-tool-logs": "/companies/{companyId}/v2/customer-success/tool-logs",
+    "v2-masterdata.customer-success-tools": "/companies/{companyId}/v2/customer-success/tools",
+    "v2-masterdata.customers-list": "/companies/{companyId}/v2/customers",
+    "v2-masterdata.customers-update": "/companies/{companyId}/v2/customers/{customerId}/update",
+    "v2-masterdata.customers-create": "/companies/{companyId}/v2/customers/create",
+    "v2-masterdata.dashboard-list": "/companies/{companyId}/v2/dashboard",
+    "v2-inventory.dispatches-list": "/companies/{companyId}/v2/dispatches",
+    "v2-inventory.dispatches-update": "/companies/{companyId}/v2/dispatches/{dispatchId}/update",
+    "v2-inventory.dispatches-create": "/companies/{companyId}/v2/dispatches/create",
+    "v2-masterdata.distributors-list": "/companies/{companyId}/v2/distributors",
+    "v2-masterdata.distributors-detail": "/companies/{companyId}/v2/distributors/{distributorId}",
+    "v2-masterdata.distributors-quarterly-reports": "/companies/{companyId}/v2/distributors/{distributorId}/quarterly-reports",
+    "v2-masterdata.distributors-quarterly-reports-detail": "/companies/{companyId}/v2/distributors/{distributorId}/quarterly-reports/{reportId}",
+    "v2-masterdata.distributors-update": "/companies/{companyId}/v2/distributors/{distributorId}/update",
+    "v2-masterdata.distributors-create": "/companies/{companyId}/v2/distributors/create",
+    "v2-finance.expenses-list": "/companies/{companyId}/v2/expenses",
+    "v2-finance.expenses-update": "/companies/{companyId}/v2/expenses/{expenseId}/update",
+    "v2-finance.expenses-create": "/companies/{companyId}/v2/expenses/create",
+    "v2-masterdata.import-logs-list": "/companies/{companyId}/v2/import-logs",
+    "v2-inventory.inventory-locations-list": "/companies/{companyId}/v2/inventory-locations",
+    "v2-inventory.inventory-locations-detail": "/companies/{companyId}/v2/inventory-locations/{inventoryLocationId}",
+    "v2-inventory.inventory-locations-qr-codes": "/companies/{companyId}/v2/inventory-locations/qr-codes",
+    "v2-inventory.inventory-transactions-list": "/companies/{companyId}/v2/inventory-transactions",
+    "v2-masterdata.oGPT-list": "/companies/{companyId}/v2/oGPT",
+    "v2-finance.payments-list": "/companies/{companyId}/v2/payments",
+    "v2-finance.payments-update": "/companies/{companyId}/v2/payments/{paymentId}/update",
+    "v2-finance.payments-create": "/companies/{companyId}/v2/payments/create",
+    "v2-finance.post-dated-cheques-list": "/companies/{companyId}/v2/post-dated-cheques",
+    "v2-finance.post-dated-cheques-update": "/companies/{companyId}/v2/post-dated-cheques/{chequeId}/update",
+    "v2-finance.post-dated-cheques-create": "/companies/{companyId}/v2/post-dated-cheques/create",
+    "v2-inventory.products-list": "/companies/{companyId}/v2/products",
+    "v2-inventory.products-detail": "/companies/{companyId}/v2/products/{productId}",
+    "v2-inventory.products-update": "/companies/{companyId}/v2/products/{productId}/update",
+    "v2-inventory.products-create": "/companies/{companyId}/v2/products/create",
+    "v2-purchasing.purchase-order-returns-list": "/companies/{companyId}/v2/purchase-order-returns",
+    "v2-purchasing.purchase-order-returns-update": "/companies/{companyId}/v2/purchase-order-returns/{purchaseOrderReturnId}/update",
+    "v2-purchasing.purchase-order-returns-create": "/companies/{companyId}/v2/purchase-order-returns/create",
+    "v2-purchasing.purchase-orders-list": "/companies/{companyId}/v2/purchase-orders",
+    "v2-purchasing.purchase-orders-update": "/companies/{companyId}/v2/purchase-orders/{purchaseOrderId}/update",
+    "v2-purchasing.purchase-orders-create": "/companies/{companyId}/v2/purchase-orders/create",
+    "v2-purchasing.purchase-orders-upload-with-ovision": "/companies/{companyId}/v2/purchase-orders/upload-with-ovision",
+    "v2-purchasing.purchase-price-matrices-list": "/companies/{companyId}/v2/purchase-price-matrices",
+    "v2-purchasing.purchase-price-matrices-update": "/companies/{companyId}/v2/purchase-price-matrices/{purchasePriceMatrixId}/update",
+    "v2-purchasing.purchase-price-matrices-create": "/companies/{companyId}/v2/purchase-price-matrices/create",
+    "v2-purchasing.purchase-refunds-list": "/companies/{companyId}/v2/purchase-refunds",
+    "v2-purchasing.purchase-services-list": "/companies/{companyId}/v2/purchase-services",
+    "v2-purchasing.purchase-services-update": "/companies/{companyId}/v2/purchase-services/{purchaseServiceId}/update",
+    "v2-purchasing.purchase-services-create": "/companies/{companyId}/v2/purchase-services/create",
+    "v2-sales.quick-checkout-list": "/companies/{companyId}/v2/quick-checkout",
+    "v2-sales.quick-checkout-order-receipts": "/companies/{companyId}/v2/quick-checkout/order-receipts",
+    "v2-sales.quotations-list": "/companies/{companyId}/v2/quotations",
+    "v2-sales.quotations-update": "/companies/{companyId}/v2/quotations/{quotationId}/update",
+    "v2-purchasing.receivings-list": "/companies/{companyId}/v2/receivings",
+    "v2-purchasing.receivings-update": "/companies/{companyId}/v2/receivings/{receivingId}/update",
+    "v2-purchasing.receivings-create": "/companies/{companyId}/v2/receivings/create",
+    "v2-inventory.releasings-list": "/companies/{companyId}/v2/releasings",
+    "v2-inventory.releasings-update": "/companies/{companyId}/v2/releasings/{releasingId}/update",
+    "v2-inventory.releasings-create": "/companies/{companyId}/v2/releasings/create",
+    "v2-purchasing.requisitions-list": "/companies/{companyId}/v2/requisitions",
+    "v2-purchasing.requisitions-update": "/companies/{companyId}/v2/requisitions/{requisitionId}/update",
+    "v2-purchasing.requisitions-create": "/companies/{companyId}/v2/requisitions/create",
+    "v2-sales.sales-agents-list": "/companies/{companyId}/v2/sales-agents",
+    "v2-sales.sales-agents-update": "/companies/{companyId}/v2/sales-agents/{salesAgentId}/update",
+    "v2-sales.sales-agents-create": "/companies/{companyId}/v2/sales-agents/create",
+    "v2-sales.sales-collections-list": "/companies/{companyId}/v2/sales-collections",
+    "v2-sales.sales-collections-update": "/companies/{companyId}/v2/sales-collections/{collectionId}/update",
+    "v2-sales.sales-collections-create": "/companies/{companyId}/v2/sales-collections/create",
+    "v2-sales.sales-orders-list": "/companies/{companyId}/v2/sales-orders",
+    "v2-sales.sales-orders-update": "/companies/{companyId}/v2/sales-orders/{orderId}/update",
+    "v2-sales.sales-orders-analytics": "/companies/{companyId}/v2/sales-orders/analytics",
+    "v2-sales.sales-orders-create": "/companies/{companyId}/v2/sales-orders/create",
+    "v2-sales.sales-orders-upload-with-ovision": "/companies/{companyId}/v2/sales-orders/upload-with-ovision",
+    "v2-sales.sales-price-matrices-list": "/companies/{companyId}/v2/sales-price-matrices",
+    "v2-sales.sales-price-matrices-update": "/companies/{companyId}/v2/sales-price-matrices/{salesPriceMatrixId}/update",
+    "v2-sales.sales-price-matrices-create": "/companies/{companyId}/v2/sales-price-matrices/create",
+    "v2-sales.sales-refunds-list": "/companies/{companyId}/v2/sales-refunds",
+    "v2-sales.sales-returns-list": "/companies/{companyId}/v2/sales-returns",
+    "v2-sales.sales-returns-update": "/companies/{companyId}/v2/sales-returns/{salesReturnId}/update",
+    "v2-sales.sales-returns-create": "/companies/{companyId}/v2/sales-returns/create",
+    "v2-sales.sales-services-list": "/companies/{companyId}/v2/sales-services",
+    "v2-sales.sales-services-update": "/companies/{companyId}/v2/sales-services/{salesServiceId}/update",
+    "v2-sales.sales-services-create": "/companies/{companyId}/v2/sales-services/create",
+    "v2-inventory.serial-numbers-generator-list": "/companies/{companyId}/v2/serial-numbers-generator",
+    "v2-masterdata.settings-list": "/companies/{companyId}/v2/settings",
+    "v2-inventory.stock-adjustments-list": "/companies/{companyId}/v2/stock-adjustments",
+    "v2-inventory.stock-adjustments-update": "/companies/{companyId}/v2/stock-adjustments/{adjustmentId}/update",
+    "v2-inventory.stock-adjustments-create": "/companies/{companyId}/v2/stock-adjustments/create",
+    "v2-inventory.stock-transfers-list": "/companies/{companyId}/v2/stock-transfers",
+    "v2-inventory.stock-transfers-update": "/companies/{companyId}/v2/stock-transfers/{transferId}/update",
+    "v2-inventory.stock-transfers-create": "/companies/{companyId}/v2/stock-transfers/create",
+    "v2-inventory.stock-transfers-upload-with-ovision": "/companies/{companyId}/v2/stock-transfers/upload-with-ovision",
+    "v2-inventory.stocktakes-list": "/companies/{companyId}/v2/stocktakes",
+    "v2-inventory.stocktakes-update": "/companies/{companyId}/v2/stocktakes/{stocktakeId}/update",
+    "v2-inventory.stocktakes-create": "/companies/{companyId}/v2/stocktakes/create",
+    "v2-purchasing.suppliers-list": "/companies/{companyId}/v2/suppliers",
+    "v2-purchasing.suppliers-update": "/companies/{companyId}/v2/suppliers/{supplierId}/update",
+    "v2-purchasing.suppliers-create": "/companies/{companyId}/v2/suppliers/create",
+    "v2-inventory.vehicles-list": "/companies/{companyId}/v2/vehicles",
+    "v2-inventory.vehicles-update": "/companies/{companyId}/v2/vehicles/{vehicleId}/update",
+    "v2-inventory.vehicles-create": "/companies/{companyId}/v2/vehicles/create",
+    "v3-analytics.home": "/companies/{companyId}/v3",
+    "v3-analytics.quarterly-reports-list": "/companies/{companyId}/v3/quarterly-reports",
+    "v3-analytics.quarterly-reports-detail": "/companies/{companyId}/v3/quarterly-reports/{reportId}",
+    "v3-analytics.superuser-lite-onboarding-tracker": "/companies/{companyId}/v3/superuser/lite-onboarding-tracker",
+    "v3-analytics.superuser-oGPT-changelog": "/companies/{companyId}/v3/superuser/oGPT-changelog",
+    "v3-analytics.superuser-quarterly-reports": "/companies/{companyId}/v3/superuser/quarterly-reports",
+    "shell.company-deleted": "/company-deleted",
+    "shell.delete-account": "/delete-account",
+    "shell.lite-check-email": "/lite/check-email",
+    "shell.lite-signup": "/lite/signup",
+    "shell.lite-signup-complete": "/lite/signup/complete",
+    "shell.lite-thank-you": "/lite/thank-you",
+    "shell.lite-verify-email": "/lite/verify-email",
+    "shell.no-company-access": "/no-company-access",
+    "shell.privacy-policy": "/privacy-policy",
+    "shell.redirect": "/redirect",
+    "shell.sign-in": "/sign-in",
+    "shell.sign-out": "/sign-out",
+    "shell.sign-up": "/sign-up",
+    "shell.temporary-print-on-top": "/temporary-print-on-top",
+    "shell.unauthorized": "/unauthorized"
+  },
+  "targets": {
+    "lite.signup-company-name-input": {
+      "selector": "role=textbox[name=\"Company Name\"]",
+      "module": "lite",
+      "confidence": "medium",
+      "note": "signup funnel, outside `/companies/`"
+    },
+    "lite.login-email-input": {
+      "selector": "role=textbox[name=\"Email\"]",
+      "module": "lite",
+      "confidence": "medium",
+      "note": "the Lite landing page has its own login card, separate from `/sign-in`"
+    },
+    "lite.login-password-input": {
+      "selector": "role=textbox[name=\"Password\"]",
+      "module": "lite",
+      "confidence": "medium"
+    },
+    "lite.profile-first-name-input": {
+      "selector": "role=textbox[name=\"First name\"]",
+      "module": "lite",
+      "confidence": "medium",
+      "note": "onboarding modal, shown once"
+    },
+    "lite.profile-last-name-input": {
+      "selector": "role=textbox[name=\"Last name\"]",
+      "module": "lite",
+      "confidence": "medium"
+    },
+    "lite.profile-phone-input": {
+      "selector": "role=textbox[name=\"Phone number (optional)\"]",
+      "module": "lite",
+      "confidence": "medium",
+      "note": "the label includes \"(optional)\" — match it exactly"
+    },
+    "lite.welcome-modal-close-button": {
+      "selector": "role=button[name=\"Close\"]",
+      "module": "lite",
+      "confidence": "medium",
+      "note": "blocks the page until dismissed on first load"
+    },
+    "lite.onboarding-mark-completed-button": {
+      "selector": "role=button[name=\"Mark onboarding as completed\"]",
+      "module": "lite",
+      "confidence": "medium"
+    },
+    "lite.invite-full-name-input": {
+      "selector": "role=textbox[name=\"Full name\"]",
+      "module": "lite",
+      "confidence": "medium"
+    },
+    "lite.invite-confirm-password-input": {
+      "selector": "role=textbox[name=\"Confirm password\"]",
+      "module": "lite",
+      "confidence": "medium"
+    },
+    "lite.expert-call-dismiss-button": {
+      "selector": "role=button[name=\"Dismiss expert call invitation\"]",
+      "module": "lite",
+      "confidence": "low",
+      "note": "promotional strip, conditionally shown"
+    },
+    "lite.import-help-dismiss-button": {
+      "selector": "role=button[name=\"Dismiss import help\"]",
+      "module": "lite",
+      "confidence": "low"
+    },
+    "shell.sign-in-heading": {
+      "selector": "role=heading[name=\"Sign in to oboda\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: exactly 1 match on releasing. `Typography component='h1'` does resolve as a heading"
+    },
+    "shell.sign-in-with-email-button": {
+      "selector": "role=button[name=\"Sign in with email\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: exactly 1 match"
+    },
+    "shell.sign-in-with-google-button": {
+      "selector": "role=button[name=\"Continue with Google\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: exactly 1 match. OAuth; leaves the app"
+    },
+    "shell.sign-in-with-apple-button": {
+      "selector": "role=button[name=\"Continue with Apple\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "**verified 2026-09-17**: 0 matches in a desktop browser, as documented. iOS native only"
+    },
+    "shell.email-input": {
+      "selector": "input[name='email']",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "placeholder only, **no associated `<label>`** — see Open questions"
+    },
+    "shell.password-input": {
+      "selector": "input[name='password']",
+      "module": "shell",
+      "confidence": "medium"
+    },
+    "shell.sign-in-submit": {
+      "selector": "role=button[name=\"Sign in\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "exact match, so it cannot hit \"Sign in with email\" (which is unmounted anyway)"
+    },
+    "shell.sign-in-back-button": {
+      "selector": "role=button[name=\"Back\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "returns to the provider choice"
+    },
+    "shell.sidenav": {
+      "selector": "nav:not([aria-label='breadcrumb'])",
+      "module": "shell",
+      "confidence": "high",
+      "note": "rung 5; needed because the breadcrumb is also a `nav` **verified 2026-09-17**: 1 match. **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-home": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Home\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "tier-aware href: `/v3` or `/lite` **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-search-button": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name*=\"Search\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "substring, because the keycap text is platform-dependent. Fallback avoids `[name*=]` entirely **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-sales": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Sales\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "section tile, **no href** — opens a flyout on hover **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-purchasing": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Purchasing\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "menuConfig calls the section `Purchase`; the rail relabels it `Purchasing` **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-inventory": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Inventory\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-finance": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Finance\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-logistics": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Logistics\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-reports": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Reports\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "a link, not a button — the tile has a `pathname` **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-settings": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Settings\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "company-admin only **verified 2026-09-18**: 1 match."
+    },
+    "shell.sidenav-help": {
+      "selector": "role=link[name=\"Help\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: the `nav`-scoped form matched **0** — Help sits in the rail footer, outside the `<nav>`. Unscoped matched 1. Still `target=\"_blank\"`, so no flow uses it"
+    },
+    "shell.account-button": {
+      "selector": "role=button[name*=\"Account\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: exact `[name=\"Account\"]` matched **0** — the avatar renders the user's initial inside the button, so the accessible name is e.g. `\"P Account\"`. Substring matched 1. Footer, outside the `nav`"
+    },
+    "shell.company-switcher": {
+      "selector": "role=button[name*=\"{companyName}\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "substring, not exact: the avatar's initial is part of the name. Non-interactive when the account has one company (`onClick` is `undefined`) **verified 2026-09-18**: 1 match."
+    },
+    "shell.sign-out-menu-item": {
+      "selector": "role=menuitem[name=\"Sign-out\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "only after `shell.account-button` **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-sales-orders": {
+      "selector": "role=link[name=\"Sales Orders\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "high **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-collections": {
+      "selector": "role=link[name=\"Collections\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "high **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-quotations": {
+      "selector": "role=link[name=\"Quotations\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "high **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-customers": {
+      "selector": "role=link[name=\"Customers\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "high **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-purchase-orders": {
+      "selector": "role=link[name=\"Purchase Orders\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-requisitions": {
+      "selector": "role=link[name=\"Requisitions\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-receivings": {
+      "selector": "role=link[name=\"Receivings\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "shell.nav-suppliers": {
+      "selector": "role=link[name=\"Suppliers\"]",
+      "module": "shell",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "shell.breadcrumb": {
+      "selector": "role=navigation[name=\"breadcrumb\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "last crumb is the page name — `assertText` against this is the cheapest \"am I on the right page\" check **verified 2026-09-17**: 1 match."
+    },
+    "shell.toast": {
+      "selector": "role=alert",
+      "module": "shell",
+      "confidence": "high",
+      "note": "MUI `Alert`; carries both success and error copy **verified 2026-09-17**: 1 match."
+    },
+    "shell.toast-close-button": {
+      "selector": "role=alert >> role=button[name=\"close\"]",
+      "module": "shell",
+      "confidence": "medium"
+    },
+    "shell.companies-list-item": {
+      "selector": "role=button[name=\"{companyName}\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "MUI `ListItem button` renders a real `<button>`; the name is the `ListItemText` content, so exact matching is safe here"
+    },
+    "shell.companies-sign-out-button": {
+      "selector": "role=button[name=\"Sign-out\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "distinct from `shell.sign-out-menu-item`, which is a `menuitem`"
+    },
+    "shell.table-search": {
+      "selector": "role=textbox[name=\"Search\"]",
+      "module": "shell",
+      "confidence": "high"
+    },
+    "shell.table-sort-button": {
+      "selector": "role=button[name=\"Sort\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "shell.table-filter-button": {
+      "selector": "role=button[name=\"Filter\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "not rendered on every list page"
+    },
+    "shell.filter-apply-button": {
+      "selector": "role=dialog >> role=button[name=\"Apply\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "every v2 filter dialog submits with \"Apply\""
+    },
+    "shell.table-columns-button": {
+      "selector": "role=button[name=\"Columns\"]",
+      "module": "shell",
+      "confidence": "medium"
+    },
+    "shell.table": {
+      "selector": "role=table",
+      "module": "shell",
+      "confidence": "high",
+      "note": "real MUI `Table` — `role=row` / `role=cell` and `tr:has(td:text-is('…'))` all work **verified 2026-09-17**: 1 match."
+    },
+    "shell.table-select-all-checkbox": {
+      "selector": "thead >> role=checkbox",
+      "module": "shell",
+      "confidence": "high",
+      "note": "the header checkbox; **no accessible name**, so it is scoped structurally to the table head **verified 2026-09-17**: 1 match."
+    },
+    "shell.table-row-checkbox": {
+      "selector": "tr:has(td:has-text('{recordCode}')) >> role=checkbox",
+      "module": "shell",
+      "confidence": "high",
+      "note": "content-scoped to one row — the only way to select a specific record, since the vocabulary has no row indexing. **Verified 2026-09-18**: the original `:text-is()` form matched **0**, `:has-text()` matches 1. The cell's text *is* exactly the code — the problem is that `td:text-is()` requires the `td` itself to be the element holding that text, but the code is nested inside a `Stack > a > Typography`, so `:text-is` resolves to the innermost element and never the `td`. Use `:has-text()` for any cell whose content is a nested component **verified 2026-09-18**: 1 match."
+    },
+    "shell.table-select-all-matching-link": {
+      "selector": "text=Select all",
+      "module": "shell",
+      "confidence": "low",
+      "note": "a clickable `Typography`, **not a button** — no role. The visible text embeds a live count, so the selector matches on a prefix"
+    },
+    "shell.table-clear-selection-link": {
+      "selector": "text=Clear selection",
+      "module": "shell",
+      "confidence": "low",
+      "note": "as above; label unconfirmed"
+    },
+    "shell.select-option": {
+      "selector": "role=option[name=\"{optionLabel}\"]",
+      "module": "shell",
+      "confidence": "medium",
+      "note": "the second half of the two-click `select` workaround — see Contract gaps"
+    },
+    "v2-finance.payment-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-finance.payment-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))",
+      "module": "v2-finance",
+      "confidence": "medium"
+    },
+    "v2-finance.payment-print-button": {
+      "selector": "role=button[name=\"Print\"]",
+      "module": "v2-finance",
+      "confidence": "medium"
+    },
+    "v2-finance.payment-override-button": {
+      "selector": "role=button[name=\"Override\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.payment-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override payment\"]",
+      "module": "v2-finance",
+      "confidence": "medium"
+    },
+    "v2-finance.payment-post-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Post payment\"]",
+      "module": "v2-finance",
+      "confidence": "medium",
+      "note": "posting is irreversible"
+    },
+    "v2-finance.cheque-bulk-create-button": {
+      "selector": "role=button[name=\"Bulk create checks\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.cheque-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "file picker **verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.cheque-quick-create-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Create Post-dated Check\"]",
+      "module": "v2-finance",
+      "confidence": "medium",
+      "note": "reads \"Save Changes\" when editing — a state-dependent label, not a busy state"
+    },
+    "v2-finance.cheque-bulk-submit-button": {
+      "selector": "role=dialog >> role=button[name=\"Submit\"]",
+      "module": "v2-finance",
+      "confidence": "medium"
+    },
+    "v2-finance.cheque-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.cheque-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-finance.bank-account-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.expense-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-finance.expense-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "file picker **verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.expense-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.expense-approve-button": {
+      "selector": "role=button[name=\"Approve\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "approver-gated and status-gated **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.expense-reject-button": {
+      "selector": "role=button[name=\"Reject\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.payment-tablist": {
+      "selector": "role=tablist[name=\"Order details tabs\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "shared string with the order records **verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.payment-tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "first tab is PAYMENTS, not DETAILS **verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.payment-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.payment-tab-audit-log": {
+      "selector": "role=tab[name=\"AUDIT LOG\"]",
+      "module": "v2-finance",
+      "confidence": "high",
+      "note": "**singular** — \"AUDIT LOGS\" will not match **verified 2026-09-17**: 1 match."
+    },
+    "v2-finance.expense-tablist": {
+      "selector": "role=tablist[name=\"Expense details tabs\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.expense-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.expense-tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]",
+      "module": "v2-finance",
+      "confidence": "medium"
+    },
+    "v2-finance.expense-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.expense-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-tablist": {
+      "selector": "role=tablist[name=\"Bank account details tabs\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-tab-collections": {
+      "selector": "role=tab[name=\"COLLECTIONS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-tab-post-dated-checks": {
+      "selector": "role=tab[name=\"POST DATED CHECKS\"]",
+      "module": "v2-finance",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-finance.bank-account-tab-expense-payments": {
+      "selector": "role=tab[name=\"EXPENSE PAYMENTS\"]",
+      "module": "v2-finance",
+      "confidence": "medium"
+    },
+    "v2-inventory.product-create-button": {
+      "selector": "role=button[name=\"Add product\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "labelled \"Add product\", not \"Create\" — the only list in v2 that differs **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "file picker **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.product-name-input": {
+      "selector": "input[id='name']",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "required **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-submit": {
+      "selector": "role=button[name=\"Save changes\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "disabled until the form is dirty **and** valid **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-delete-button": {
+      "selector": "role=button[name=\"Delete Product\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.stocktake-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.stocktake-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "file picker **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.stocktake-sync-xero-button": {
+      "selector": "role=button[name=\"Sync to Xero\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "Xero tenants only"
+    },
+    "v2-inventory.stocktake-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "draft; moves no stock"
+    },
+    "v2-inventory.stocktake-complete-button": {
+      "selector": "role=button[name=\"Complete\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "commits the count"
+    },
+    "v2-inventory.stocktake-print-button": {
+      "selector": "role=button[name=\"Print\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.adjustment-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.adjustment-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.adjustment-complete-button": {
+      "selector": "role=button[name=\"Complete\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "commits the adjustment"
+    },
+    "v2-inventory.adjustment-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.transfer-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.transfer-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "transfers submit with one button, not the pending/complete pair"
+    },
+    "v2-inventory.transfer-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "opens a dialog **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-cancel-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "**the dialog's confirm and its dismiss may both be \"Cancel\"** — see Open questions"
+    },
+    "v2-inventory.transfer-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.releasing-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-complete-button": {
+      "selector": "role=button[name=\"Complete\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "releases stock against a sales order"
+    },
+    "v2-inventory.releasing-override-button": {
+      "selector": "role=button[name=\"Override\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override releasing\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-create-sales-return-button": {
+      "selector": "role=button[name=\"Create sales return\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "crosses into `v2-sales`"
+    },
+    "v2-inventory.location-create-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Create\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "locations are created in a dialog, not on a page"
+    },
+    "v2-inventory.vehicle-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.vehicle-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.vehicle-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.assembly-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.assembly-complete-button": {
+      "selector": "role=button[name=\"Complete\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "builds the assembly and consumes components **verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.bom-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-inventory.bom-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.bom-create-po-button": {
+      "selector": "role=button[name=\"Create PO\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "crosses into `v2-purchasing` **verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.product-tablist": {
+      "selector": "role=tablist[name=\"Product details tabs\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-overview": {
+      "selector": "role=tab[name=\"OVERVIEW\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "disabled until the product loads **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-serials": {
+      "selector": "role=tab[name=\"SERIALS\"]",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "only when `inventoryType` is `SERIALIZED`"
+    },
+    "v2-inventory.product-tab-batches": {
+      "selector": "role=tab[name=\"BATCHES\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "only for batched products **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-locations": {
+      "selector": "role=tab[name=\"LOCATIONS\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "per-location on-hand **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-sales-orders": {
+      "selector": "role=tab[name=\"SALES ORDERS\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-purchase-orders": {
+      "selector": "role=tab[name=\"PURCHASE ORDERS\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-inventory-history": {
+      "selector": "role=tab[name=\"INVENTORY HISTORY\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-price-history": {
+      "selector": "role=tab[name=\"PRICE HISTORY\"]",
+      "module": "v2-inventory",
+      "confidence": "high"
+    },
+    "v2-inventory.product-tab-bill-of-materials": {
+      "selector": "role=tab[name=\"BILL OF MATERIALS\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "manufacturing tenants **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-assembly": {
+      "selector": "role=tab[name=\"ASSEMBLY\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-analytics": {
+      "selector": "role=tab[name=\"ANALYTICS\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-batch-edit-button": {
+      "selector": "role=button[name=\"Edit\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "per batch row; generic name, likely ambiguous **verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.product-batch-filter-button": {
+      "selector": "role=button[name=\"Filter\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-inventory.product-history-export-button": {
+      "selector": "role=button[name=\"Export\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "download"
+    },
+    "v2-inventory.stocktake-tablist": {
+      "selector": "role=tablist[name=\"Stocktake tabs\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.stocktake-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.stocktake-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.stocktake-tab-history": {
+      "selector": "role=tab[name=\"HISTORY\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.stocktake-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.adjustment-tablist": {
+      "selector": "role=tablist[name=\"Stock adjustment tabs\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.adjustment-tab-adjustments": {
+      "selector": "role=tab[name=\"ADJUSTMENTS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.adjustment-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.adjustment-tab-history": {
+      "selector": "role=tab[name=\"HISTORY\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.adjustment-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-tablist": {
+      "selector": "role=tablist[name=\"Stock transfer details tabs\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-tab-transfers": {
+      "selector": "role=tab[name=\"TRANSFERS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-tab-history": {
+      "selector": "role=tab[name=\"HISTORY\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.transfer-override-received-qty-button": {
+      "selector": "role=button[name=\"Override received quantity\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.transfer-override-save-button": {
+      "selector": "role=dialog >> role=button[name=\"Save\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-tablist": {
+      "selector": "role=tablist[name=\"Releasing details tabs\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-tab-delivery-receipts": {
+      "selector": "role=tab[name=\"DELIVERY RECEIPTS\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasing-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.releasings-list-tab-all": {
+      "selector": "role=tab[name=\"ALL\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.releasings-list-tab-pending": {
+      "selector": "role=tab[name=\"PENDING\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.releasings-list-tab-completed": {
+      "selector": "role=tab[name=\"COMPLETED\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.releasings-list-tab-cancelled": {
+      "selector": "role=tab[name=\"CANCELLED\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-masterdata.customer-export-button": {
+      "selector": "role=button[name=\"Export\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "triggers a download the plan cannot follow"
+    },
+    "v2-masterdata.customer-name-input": {
+      "selector": "input[id='name']",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "required **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-code-input": {
+      "selector": "input[id='code']",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-attach-file-button": {
+      "selector": "role=button[name=\"Attach file\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "file picker **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-group-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-masterdata.customer-group-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-group-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-masterdata.contact-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "file picker **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.contact-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.settings-user-create-button": {
+      "selector": "role=button[name=\"Create\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "adds a company user **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.settings-user-export-button": {
+      "selector": "role=button[name=\"Export\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "download"
+    },
+    "v2-masterdata.settings-xero-save-button": {
+      "selector": "role=button[name=\"Save Account Codes\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "only for Xero-connected tenants"
+    },
+    "v2-masterdata.audit-logs-download-button": {
+      "selector": "role=button[name=\"Download\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "download **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-tablist": {
+      "selector": "role=tablist[name=\"Supplier details tabs\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "mislabelled in the app — see above **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.customer-tab-sales-orders": {
+      "selector": "role=tab[name=\"SALES ORDERS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-product-codes": {
+      "selector": "role=tab[name=\"PRODUCT CODES\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "customer-specific product codes **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-receivables": {
+      "selector": "role=tab[name=\"RECEIVABLES\"]",
+      "module": "v2-masterdata",
+      "confidence": "high"
+    },
+    "v2-masterdata.customer-tab-collections": {
+      "selector": "role=tab[name=\"COLLECTIONS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high"
+    },
+    "v2-masterdata.customer-tab-refunds": {
+      "selector": "role=tab[name=\"REFUNDS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-returns": {
+      "selector": "role=tab[name=\"RETURNS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-post-dated-checks": {
+      "selector": "role=tab[name=\"POST DATED CHECKS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "no hyphen in the label **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-credits": {
+      "selector": "role=tab[name=\"CREDITS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "credit limit and transactions **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.customer-active-tabpanel": {
+      "selector": "role=tabpanel",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "only one exists at a time **verified 2026-09-17**: 1 match."
+    },
+    "v2-masterdata.contact-tablist": {
+      "selector": "role=tablist[name=\"Contact details tabs\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-releasings": {
+      "selector": "role=tab[name=\"RELEASINGS\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-receivings": {
+      "selector": "role=tab[name=\"RECEIVINGS\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-customers": {
+      "selector": "role=tab[name=\"CUSTOMERS\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-suppliers": {
+      "selector": "role=tab[name=\"SUPPLIERS\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-stock-adjustments": {
+      "selector": "role=tab[name=\"STOCK ADJUSTMENTS\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-masterdata.contact-tab-stocktakes": {
+      "selector": "role=tab[name=\"STOCKTAKES\"]",
+      "module": "v2-masterdata",
+      "confidence": "low",
+      "note": "medium **verified 2026-09-18**: 1 match."
+    },
+    "v2-purchase-order-record.tablist": {
+      "selector": "role=tablist[name=\"Order details tabs\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "same aria-label as the sales order page — but the two pages are never open at once **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-receivings": {
+      "selector": "role=tab[name=\"RECEIVINGS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "RECEIVING read **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "payments read **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-refunds": {
+      "selector": "role=tab[name=\"REFUNDS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "purchase-refunds read **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-returns": {
+      "selector": "role=tab[name=\"RETURNS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "PURCHASE_ORDER_RETURN read **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.active-tabpanel": {
+      "selector": "role=tabpanel",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "only one exists at a time **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.payment-date-input": {
+      "selector": "input[id='paymentDate']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "date picker"
+    },
+    "v2-purchase-order-record.payment-currency-input": {
+      "selector": "input[id='currency']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium"
+    },
+    "v2-purchase-order-record.payment-remarks-input": {
+      "selector": "input[id='remarks']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "id shared with the refund form; never co-mounted"
+    },
+    "v2-purchase-order-record.payment-entry-type-input": {
+      "selector": "input[id='paymentEntries.0.type']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "first entry row"
+    },
+    "v2-purchase-order-record.payment-entry-amount-input": {
+      "selector": "input[id='paymentEntries.0.amount']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "money input"
+    },
+    "v2-purchase-order-record.payment-entry-method-input": {
+      "selector": "input[id='paymentEntries.0.paymentMethod']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium"
+    },
+    "v2-purchase-order-record.payment-entry-bank-account-input": {
+      "selector": "input[id='paymentEntries.0.bankAccountId']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium"
+    },
+    "v2-purchase-order-record.payment-entry-reference-input": {
+      "selector": "input[id='paymentEntries.0.referenceNumber']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium"
+    },
+    "v2-purchase-order-record.payment-add-source-button": {
+      "selector": "role=button[name=\"Add Another Source\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "adds entry row index 1, which has no target"
+    },
+    "v2-purchase-order-record.payment-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "**panel-scoped** — returns and refunds also use \"Submit\""
+    },
+    "v2-purchase-order-record.payment-post-confirm-checkbox": {
+      "selector": "input[id='confirmPost']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "gates the continue button"
+    },
+    "v2-purchase-order-record.payment-post-continue-button": {
+      "selector": "role=dialog >> role=button[name=\"Continue\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "posting is irreversible"
+    },
+    "v2-purchase-order-record.receiving-add-location-button": {
+      "selector": "role=button[name=\"Add location\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.receiving-apply-location-to-all-button": {
+      "selector": "role=dialog >> role=button[name=\"Apply to All\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium"
+    },
+    "v2-purchase-order-record.receiving-complete-dismiss-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "low",
+      "note": "the dialog's **dismiss**; its confirm was not identified — see Open questions"
+    },
+    "v2-purchase-order-record.return-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "panel-scoped"
+    },
+    "v2-purchase-order-record.return-dummy-receiving-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "low",
+      "note": "**same selector as the row above** — the two forms are alternatives, so only one is mounted, but a plan cannot tell which"
+    },
+    "v2-purchase-order-record.return-complete-dismiss-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "low",
+      "note": "dismiss only"
+    },
+    "v2-purchase-order-record.refund-type-input": {
+      "selector": "input[id='refundType']",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.refund-amount-input": {
+      "selector": "input[id='amount']",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "money input **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.refund-date-input": {
+      "selector": "input[id='refundDate']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "date picker"
+    },
+    "v2-purchase-order-record.refund-reference-input": {
+      "selector": "input[id='referenceNumber']",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "label is \"Reference #\", not \"Reference number\" **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.refund-payment-method-input": {
+      "selector": "input[id='paymentMethod']",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.refund-remarks-input": {
+      "selector": "input[id='remarks']",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium"
+    },
+    "v2-purchase-order-record.refund-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "high",
+      "note": "panel-scoped. **This is the target the sales refund flow is missing** — the purchase side has it, sales does not **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchase-order-record.refund-warning-continue-button": {
+      "selector": "role=dialog >> role=button[name=\"Continue\"]",
+      "module": "v2-purchase-order-record",
+      "confidence": "medium",
+      "note": "a confirmation step before the refund commits"
+    },
+    "v2-purchasing.po-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-purchasing.po-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-export-button": {
+      "selector": "role=button[name=\"Export\"]",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "only for tenants with the Helios integration"
+    },
+    "v2-purchasing.po-ovision-button": {
+      "selector": "role=button[name*=\"oVision\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "same duplicated-alt problem as sales **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.po-supplier-input": {
+      "selector": "input[id='supplierId']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "autocomplete — `fill`, then click the option **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-invoice-number-input": {
+      "selector": "input[id='payment.invoiceNumber']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-reference-number-input": {
+      "selector": "input[id='payment.referenceNumber']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-invoice-date-input": {
+      "selector": "input[id='payment.invoiceAt']",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "date picker — typing a date string may not commit; unverified"
+    },
+    "v2-purchasing.po-payment-due-input": {
+      "selector": "input[id='payment.paymentDueAt']",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "date picker"
+    },
+    "v2-purchasing.po-expected-delivery-input": {
+      "selector": "input[id='payment.expectedDeliveryAt']",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "date picker"
+    },
+    "v2-purchasing.po-attention-input": {
+      "selector": "input[id='attention']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "same label on create and update, unlike sales **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-save-as-requisition-button": {
+      "selector": "role=button[name=\"Save as Requisition\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "create only **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "opens a dialog **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-override-button": {
+      "selector": "role=button[name=\"Override\"]",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.po-lock-button": {
+      "selector": "role=button[name=\"Lock\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.po-cancel-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel order\"]",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.po-lock-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Lock\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**must stay scoped** — the page trigger is also \"Lock\" **verified 2026-09-18**: 1 match."
+    },
+    "v2-purchasing.po-lock-confirm-checkbox": {
+      "selector": "input[id='confirmLock']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "the confirm button stays disabled until this is ticked **verified 2026-09-18**: 1 match."
+    },
+    "v2-purchasing.po-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override purchase order\"]",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.po-override-confirm-checkbox": {
+      "selector": "input[id='confirmOverride']",
+      "module": "v2-purchasing",
+      "confidence": "medium",
+      "note": "gates the confirm button"
+    },
+    "v2-purchasing.po-delete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Delete\"]",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.receiving-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-purchasing.receiving-sync-xero-button": {
+      "selector": "role=button[name=\"Sync to Xero\"]",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "only for tenants with Xero connected"
+    },
+    "v2-purchasing.receiving-delivery-receipt-input": {
+      "selector": "input[id='deliveryReceiptNumber']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.receiving-location-input": {
+      "selector": "input[id='inventoryLocationId']",
+      "module": "v2-purchasing",
+      "confidence": "medium",
+      "note": "autocomplete"
+    },
+    "v2-purchasing.receiving-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.receiving-complete-button": {
+      "selector": "role=button[name=\"Complete\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "completing a receiving moves stock **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.receiving-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override receiving\"]",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.requisition-submit": {
+      "selector": "role=button[name=\"Save Requisition\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.requisition-approve-button": {
+      "selector": "role=button[name=\"Approve\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "role-gated and status-gated **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.requisition-reject-button": {
+      "selector": "role=button[name=\"Reject\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.requisition-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested."
+    },
+    "v2-purchasing.supplier-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "opens a file picker **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-code-input": {
+      "selector": "input[id='code']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-address-input": {
+      "selector": "input[id='address']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-email-input": {
+      "selector": "input[id='primaryEmail']",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-submit": {
+      "selector": "role=button[name=\"Submit\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-delete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Delete Supplier\"]",
+      "module": "v2-purchasing",
+      "confidence": "medium"
+    },
+    "v2-purchasing.supplier-tablist": {
+      "selector": "role=tablist[name=\"Supplier details tabs\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "shared string with the customer record **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-tab-products": {
+      "selector": "role=tab[name=\"PRODUCTS\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-tab-purchase-orders": {
+      "selector": "role=tab[name=\"PURCHASE ORDERS\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-tab-credits": {
+      "selector": "role=tab[name=\"CREDITS\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-tab-payables": {
+      "selector": "role=tab[name=\"PAYABLES\"]",
+      "module": "v2-purchasing",
+      "confidence": "high"
+    },
+    "v2-purchasing.supplier-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.supplier-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-purchasing",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.receiving-tablist": {
+      "selector": "role=tablist[name=\"Receiving tabs\"]",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.receiving-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-purchasing.receiving-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-purchasing",
+      "confidence": "low",
+      "note": "high **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tablist": {
+      "selector": "role=tablist[name=\"Order details tabs\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tab-collections": {
+      "selector": "role=tab[name=\"COLLECTIONS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high"
+    },
+    "v2-sales-order-record.tab-releasings": {
+      "selector": "role=tab[name=\"RELEASINGS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tab-returns": {
+      "selector": "role=tab[name=\"RETURNS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tab-refunds": {
+      "selector": "role=tab[name=\"REFUNDS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "two words, one space **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.active-tabpanel": {
+      "selector": "role=tabpanel",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "only one exists at a time — use it to scope an ambiguous control **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.collection-date-input": {
+      "selector": "input[id='collectionDate']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "date picker"
+    },
+    "v2-sales-order-record.collection-currency-input": {
+      "selector": "input[id='currency']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.collection-remarks-input": {
+      "selector": "input[id='remarks']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "id is shared with the refund form, but never mounted at the same time"
+    },
+    "v2-sales-order-record.collection-entry-type-input": {
+      "selector": "input[id='collectionEntries.0.type']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "first entry row **verified 2026-09-18**: 1 match."
+    },
+    "v2-sales-order-record.collection-entry-amount-input": {
+      "selector": "input[id='collectionEntries.0.amount']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "money input; disabled when the entry type is a post-dated cheque **verified 2026-09-18**: 1 match."
+    },
+    "v2-sales-order-record.collection-entry-payment-method-input": {
+      "selector": "input[id='collectionEntries.0.paymentMethod']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-sales-order-record.collection-entry-reference-input": {
+      "selector": "input[id='collectionEntries.0.referenceNumber']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-sales-order-record.collection-create-pdc-button": {
+      "selector": "role=button[name=\"Create Post-dated Check\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "only when the entry type is a post-dated cheque"
+    },
+    "v2-sales-order-record.collection-edit-pdc-button": {
+      "selector": "role=button[name=\"Edit Post-dated Check\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.collection-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**scoped to the panel** — \"Submit\" is used by the returns and refunds forms too **verified 2026-09-18**: 1 match."
+    },
+    "v2-sales-order-record.releasing-delivered-at-input": {
+      "selector": "input[id='deliveredAt']",
+      "module": "v2-sales-order-record",
+      "confidence": "low",
+      "note": "rendered twice in the same form (two layouts); may match more than one"
+    },
+    "v2-sales-order-record.releasing-driver-input": {
+      "selector": "input[id='contactDriverIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "high"
+    },
+    "v2-sales-order-record.releasing-checker-input": {
+      "selector": "input[id='contactCheckerIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "as above **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.releasing-helper-input": {
+      "selector": "input[id='contactHelperIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "as above **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.releasing-dispatcher-input": {
+      "selector": "input[id='contactDispatcherIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "as above **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.releasing-add-location-button": {
+      "selector": "role=button[name=\"Add location\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.releasing-apply-location-to-all-button": {
+      "selector": "role=dialog >> role=button[name=\"Apply to All\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.releasing-complete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Submit\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "confirms completion; dialog-scoped"
+    },
+    "v2-sales-order-record.return-dummy-releasing-toggle": {
+      "selector": "role=checkbox[name=\"Return with dummy releasing\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "low",
+      "note": "a `FormControlLabel`; may resolve as `switch` rather than `checkbox`"
+    },
+    "v2-sales-order-record.return-driver-input": {
+      "selector": "input[id='contactDriverIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "low",
+      "note": "same inference as releasings"
+    },
+    "v2-sales-order-record.return-checker-input": {
+      "selector": "input[id='contactCheckerIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "low"
+    },
+    "v2-sales-order-record.return-helper-input": {
+      "selector": "input[id='contactHelperIds']",
+      "module": "v2-sales-order-record",
+      "confidence": "low"
+    },
+    "v2-sales-order-record.return-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "panel-scoped"
+    },
+    "v2-sales-order-record.return-discard-item-button": {
+      "selector": "role=button[name=\"Discard Item\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "per line"
+    },
+    "v2-sales-order-record.return-open-button": {
+      "selector": "role=button[name=\"Open\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "opens the return record"
+    },
+    "v2-sales-order-record.refund-type-input": {
+      "selector": "input[id='refundType']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.refund-amount-input": {
+      "selector": "input[id='amount']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "money input **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.refund-date-input": {
+      "selector": "input[id='refundDate']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "date picker"
+    },
+    "v2-sales-order-record.refund-bank-account-input": {
+      "selector": "input[id='bankAccountId']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.refund-remarks-input": {
+      "selector": "input[id='remarks']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium",
+      "note": "same id as the collection remarks; never co-mounted"
+    },
+    "v2-sales-order-record.print-dialog": {
+      "selector": "role=dialog",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "header reads \"Print\" **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.print-template-input": {
+      "selector": "input[id='specId']",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "the printout template; labelled \"Title\", not \"Template\" **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.print-discount-option-input": {
+      "selector": "input[id='discountOption']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.print-brand-name-option-input": {
+      "selector": "input[id='brandNameOption']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.print-sku-option-input": {
+      "selector": "input[id='skuOption']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.print-price-option-input": {
+      "selector": "input[id='priceOption']",
+      "module": "v2-sales-order-record",
+      "confidence": "medium"
+    },
+    "v2-sales-order-record.print-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Print\"]",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "**must stay scoped** — the page header button is also \"Print\". Reads \"Preparing...\" while it renders **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales-order-record.attachments-heading": {
+      "selector": "text=Upload New File",
+      "module": "v2-sales-order-record",
+      "confidence": "high",
+      "note": "a heading, **not** a button — the control beneath it is a file input the plan cannot drive **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.orders-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "module": "v2-sales",
+      "confidence": "high"
+    },
+    "v2-sales.orders-import-button": {
+      "selector": "role=button[name=\"Import\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "opens a menu of channel importers **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.orders-ovision-button": {
+      "selector": "role=button[name*=\"oVision\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "the icon is `<img alt=\"oVision\">`, so the name is \"oVision oVision\" — substring is deliberate **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.orders-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "content-scoped; the plan vocabulary has no row indexing **verified 2026-09-18**: 1 match."
+    },
+    "v2-sales.orders-empty-state": {
+      "selector": "text=No sales orders found",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "pairs with a search that matches nothing"
+    },
+    "v2-sales.bulk-collect-button": {
+      "selector": "role=button[name=\"Collect\"]",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "**`SHOW_PRICES` only** — the action is registered with `enabled: showPrices` (`OrdersTable/index.tsx:689`)"
+    },
+    "v2-sales.bulk-release-button": {
+      "selector": "role=button[name=\"Release\"]",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "releases stock for every selected order"
+    },
+    "v2-sales.bulk-print-button": {
+      "selector": "role=button[name=\"Print\"]",
+      "module": "v2-sales",
+      "confidence": "low",
+      "note": "shares its name with the record page's Print button, but the two are never on screen together"
+    },
+    "v2-sales.bulk-lock-button": {
+      "selector": "role=button[name=\"Lock\"]",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.bulk-delete-button": {
+      "selector": "role=button[name=\"Delete\"]",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "soft delete"
+    },
+    "v2-sales.bulk-collect-date-input": {
+      "selector": "input[id='collectionDate']",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "in the bulk collect dialog"
+    },
+    "v2-sales.bulk-collect-reference-input": {
+      "selector": "input[id='referenceNumber']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.filter-status-input": {
+      "selector": "input[id='status']",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "multi-select"
+    },
+    "v2-sales.filter-delivery-status-input": {
+      "selector": "input[id='deliveryStatus']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.filter-payment-status-input": {
+      "selector": "input[id='paymentStatus']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.filter-customer-input": {
+      "selector": "input[id='customerIds']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.filter-product-input": {
+      "selector": "input[id='productIds']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.filter-payment-method-input": {
+      "selector": "input[id='paymentMethod']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.filter-sales-channel-input": {
+      "selector": "input[id='salesChannelIds']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.order-customer-input": {
+      "selector": "input[id='billing.customerId']",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "MUI Autocomplete — `fill` to filter, then click the option **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-delivery-receipt-input": {
+      "selector": "input[id='billing.deliveryReceiptNumber']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.order-remarks-input": {
+      "selector": "input[id='billing.remarks']",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.order-invoice-number-input": {
+      "selector": "input[id='payment.invoiceNumber']",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-reference-number-input": {
+      "selector": "input[id='payment.referenceNumber']",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-payment-terms-select": {
+      "selector": "div[id='payment.terms']",
+      "module": "v2-sales",
+      "confidence": "low",
+      "note": "MUI Select renders a div, not an input — needs the two-click workaround and Phase 4 must confirm the element"
+    },
+    "v2-sales.order-add-product-button": {
+      "selector": "role=button[name=\"Add product\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-submit-create": {
+      "selector": "role=button[name=\"Save as Pending\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "label is state-derived: create → \"Save as Pending\" **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-submit-update": {
+      "selector": "role=button[name=\"Save changes\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "update → \"Save changes\" **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-submit-saving": {
+      "selector": "role=button[name=\"Saving...\"]",
+      "module": "v2-sales",
+      "confidence": "low",
+      "note": "transient; only assertable mid-submit"
+    },
+    "v2-sales.order-save-as-quotation-button": {
+      "selector": "role=button[name=\"Save as Quotation\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "create only, hidden in Lite and without quotation WRITE **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "opens `CancelOrderDialog`, does not cancel directly **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-duplicate-button": {
+      "selector": "role=button[name=\"Duplicate\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-override-button": {
+      "selector": "role=button[name=\"Override\"]",
+      "module": "v2-sales",
+      "confidence": "medium"
+    },
+    "v2-sales.order-lock-button": {
+      "selector": "role=button[name=\"Lock\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-print-button": {
+      "selector": "role=button[name=\"Print\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-attach-file-button": {
+      "selector": "role=button[name=\"Attach file\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "opens a file picker the plan cannot drive **verified 2026-09-17**: 1 match."
+    },
+    "v2-sales.order-cancel-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel order\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "reads \"Cancelling...\" mid-flight **verified 2026-09-18**: 1 match."
+    },
+    "v2-sales.order-delete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Delete\"]",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "**must stay scoped** — the page trigger has the same name"
+    },
+    "v2-sales.order-lock-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Lock order\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "gated behind a confirmation checkbox in the same dialog **verified 2026-09-18**: 1 match."
+    },
+    "v2-sales.order-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override order\"]",
+      "module": "v2-sales",
+      "confidence": "medium",
+      "note": "gated behind a confirmation checkbox"
+    },
+    "v2-sales.order-duplicate-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Duplicate order\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match."
+    },
+    "v2-sales.dialog-dismiss-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "the dismiss, shared by every dialog in this module **verified 2026-09-18**: 1 match."
+    },
+    "v3-analytics.tab-overview": {
+      "selector": "role=tab[name=\"OVERVIEW\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.tab-inventory": {
+      "selector": "role=tab[name=\"INVENTORY\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.tab-sales": {
+      "selector": "role=tab[name=\"SALES\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.tab-purchasing": {
+      "selector": "role=tab[name=\"PURCHASING\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.tab-logistics": {
+      "selector": "role=tab[name=\"LOGISTICS\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.tab-finances": {
+      "selector": "role=tab[name=\"FINANCES\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.tab-production": {
+      "selector": "role=tab[name=\"PRODUCTION\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.vat-mode-button": {
+      "selector": "role=button[name=\"VAT presentation mode\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "toggles VAT-inclusive / VAT-exclusive figures"
+    },
+    "v3-analytics.vat-inclusive-option": {
+      "selector": "role=menuitem[name=\"Show VAT-inclusive amounts\"]",
+      "module": "v3-analytics",
+      "confidence": "low",
+      "note": "the element's role was not confirmed"
+    },
+    "v3-analytics.vat-exclusive-option": {
+      "selector": "role=menuitem[name=\"Show VAT-exclusive amounts\"]",
+      "module": "v3-analytics",
+      "confidence": "low",
+      "note": "as above"
+    },
+    "v3-analytics.drawer-next-page-button": {
+      "selector": "role=button[name=\"Next page\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "inside a drill-in drawer"
+    },
+    "v3-analytics.drawer-previous-page-button": {
+      "selector": "role=button[name=\"Previous page\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    },
+    "v3-analytics.report-close-drawer-button": {
+      "selector": "role=button[name=\"Close drawer\"]",
+      "module": "v3-analytics",
+      "confidence": "medium"
+    }
+  },
+  "selectorTemplates": true,
+  "unresolvedTargets": {
+    "v2-finance.cheque-create-button": {
+      "module": "v2-finance",
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
+      "reason": "**verified 2026-09-17**: the plain `role=button[name=\"Create\"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name=\"Create\"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested. **verified 2026-09-18: AMBIGUOUS — 2 matches.** Needs scoping."
+    },
+    "v2-inventory.location-view-qr-button": {
+      "module": "v2-inventory",
+      "selector": "role=button[name=\"View QR\"]",
+      "reason": "**verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use."
+    },
+    "v2-masterdata.customer-row": {
+      "module": "v2-masterdata",
+      "selector": "tr:has(td:has-text('{recordCode}'))",
+      "reason": "**verified 2026-09-18: AMBIGUOUS — 8 matches.** Needs scoping."
+    },
+    "v2-sales-order-record.releasing-print-button": {
+      "module": "v2-sales-order-record",
+      "selector": "role=button[name=\"Print\"]",
+      "reason": "per releasing row **verified 2026-09-17: AMBIGUOUS — 2 matches.** Will throw on click. Needs scoping before use."
+    },
+    "v2-sales-order-record.releasing-open-button": {
+      "module": "v2-sales-order-record",
+      "selector": "role=button[name=\"Open\"]",
+      "reason": "opens the releasing record in `v2-inventory` **verified 2026-09-17: AMBIGUOUS — 9 matches.** Will throw on click. Needs scoping before use."
+    },
+    "v2-sales-order-record.attachments-files-heading": {
+      "module": "v2-sales-order-record",
+      "selector": "text=Files",
+      "reason": "short generic string; may match elsewhere on the page **verified 2026-09-17: AMBIGUOUS — 3 matches.** Will throw on click. Needs scoping before use."
+    },
+    "v2-sales.order-delete-button": {
+      "module": "v2-sales",
+      "selector": "role=button[name=\"Delete\"]",
+      "reason": "opens `SalesOrderDeleteModal` **verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use."
+    }
+  }
+}

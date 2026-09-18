@@ -1,0 +1,1407 @@
+{
+ "results": {
+  "shell.sidenav": {
+   "count": 1,
+   "where": "/companies/{companyId}/v3",
+   "selector": "nav:not([aria-label='breadcrumb'])"
+  },
+  "shell.breadcrumb": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=navigation[name=\"breadcrumb\"]"
+  },
+  "v2-sales.orders-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-sales.orders-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-sales.orders-ovision-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=button[name*=\"oVision\"]"
+  },
+  "shell.table-search": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=textbox[name=\"Search\"]"
+  },
+  "shell.table-sort-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=button[name=\"Sort\"]"
+  },
+  "shell.table": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "role=table"
+  },
+  "shell.table-select-all-checkbox": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "thead >> role=checkbox"
+  },
+  "v2-sales.order-customer-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders/create",
+   "selector": "input[id='billing.customerId']"
+  },
+  "v2-sales.order-invoice-number-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders/create",
+   "selector": "input[id='payment.invoiceNumber']"
+  },
+  "v2-sales.order-reference-number-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders/create",
+   "selector": "input[id='payment.referenceNumber']"
+  },
+  "v2-sales.order-add-product-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders/create",
+   "selector": "role=button[name=\"Add product\"]"
+  },
+  "v2-sales.order-submit-create": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders/create",
+   "selector": "role=button[name=\"Save as Pending\"]"
+  },
+  "v2-sales.order-submit-update": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Save changes\"]"
+  },
+  "v2-sales.order-save-as-quotation-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders/create",
+   "selector": "role=button[name=\"Save as Quotation\"]"
+  },
+  "v2-sales.order-cancel-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Cancel\"]"
+  },
+  "v2-sales.order-delete-button": {
+   "count": 4,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-sales.order-duplicate-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Duplicate\"]"
+  },
+  "v2-sales.order-lock-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Lock\"]"
+  },
+  "v2-sales.order-print-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Print\"]"
+  },
+  "v2-sales.order-attach-file-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Attach file\"]"
+  },
+  "v2-sales.order-cancel-confirm-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Cancel order\"]"
+  },
+  "v2-sales.order-lock-confirm-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Lock order\"]"
+  },
+  "v2-sales.order-duplicate-confirm-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Duplicate order\"]"
+  },
+  "v2-purchasing.po-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/purchase-orders",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-purchasing.po-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-purchasing.po-ovision-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders",
+   "selector": "role=button[name*=\"oVision\"]"
+  },
+  "v2-purchasing.po-row": {
+   "count": "needs:recordCode",
+   "where": "/companies/{companyId}/v2/purchase-orders"
+  },
+  "v2-purchasing.po-supplier-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders/create",
+   "selector": "input[id='supplierId']"
+  },
+  "v2-purchasing.po-invoice-number-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders/create",
+   "selector": "input[id='payment.invoiceNumber']"
+  },
+  "v2-purchasing.po-reference-number-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders/create",
+   "selector": "input[id='payment.referenceNumber']"
+  },
+  "v2-purchasing.po-attention-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders/create",
+   "selector": "input[id='attention']"
+  },
+  "v2-purchasing.po-submit": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders/create",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-purchasing.po-save-as-requisition-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders/create",
+   "selector": "role=button[name=\"Save as Requisition\"]"
+  },
+  "v2-purchasing.po-cancel-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=button[name=\"Cancel\"]"
+  },
+  "v2-purchasing.po-lock-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=button[name=\"Lock\"]"
+  },
+  "v2-purchasing.po-lock-confirm-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Lock\"]"
+  },
+  "v2-purchasing.po-lock-confirm-checkbox": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='confirmLock']"
+  },
+  "v2-inventory.product-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/products",
+   "selector": "role=button[name=\"Add product\"]"
+  },
+  "v2-inventory.product-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/products",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-inventory.product-row": {
+   "count": "needs:recordCode",
+   "where": "/companies/{companyId}/v2/products"
+  },
+  "v2-inventory.product-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "input[id='name']"
+  },
+  "v2-inventory.product-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=button[name=\"Save changes\"]"
+  },
+  "v2-inventory.product-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=button[name=\"Delete Product\"]"
+  },
+  "v2-inventory.product-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tablist[name=\"Product details tabs\"]"
+  },
+  "v2-inventory.product-tab-overview": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"OVERVIEW\"]"
+  },
+  "v2-inventory.product-tab-batches": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"BATCHES\"]"
+  },
+  "v2-inventory.product-tab-locations": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"LOCATIONS\"]"
+  },
+  "v2-inventory.product-tab-sales-orders": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"SALES ORDERS\"]"
+  },
+  "v2-inventory.product-tab-purchase-orders": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"PURCHASE ORDERS\"]"
+  },
+  "v2-inventory.product-tab-inventory-history": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"INVENTORY HISTORY\"]"
+  },
+  "v2-inventory.product-tab-price-history": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"PRICE HISTORY\"]"
+  },
+  "v2-inventory.product-tab-bill-of-materials": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"BILL OF MATERIALS\"]"
+  },
+  "v2-inventory.product-tab-assembly": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"ASSEMBLY\"]"
+  },
+  "v2-inventory.product-tab-analytics": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"ANALYTICS\"]"
+  },
+  "v2-inventory.product-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-inventory.product-batch-edit-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=button[name=\"Edit\"]"
+  },
+  "v2-inventory.product-batch-filter-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/44687/update",
+   "selector": "role=button[name=\"Filter\"]"
+  },
+  "v2-masterdata.customer-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/customers",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-masterdata.customer-row": {
+   "count": 8,
+   "where": "/companies/10004/v2/customers",
+   "selector": "tr:has(td:has-text('a'))"
+  },
+  "v2-masterdata.customer-name-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "input[id='name']"
+  },
+  "v2-masterdata.customer-code-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "input[id='code']"
+  },
+  "v2-masterdata.customer-submit": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-masterdata.customer-group-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/customers",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-masterdata.customer-group-submit": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-masterdata.customer-tablist": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "role=tablist[name=\"Supplier details tabs\"]"
+  },
+  "v2-masterdata.customer-tab-details": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-masterdata.customer-active-tabpanel": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers/create",
+   "selector": "role=tabpanel"
+  },
+  "v2-purchasing.supplier-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/suppliers",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-purchasing.supplier-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-purchasing.supplier-code-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "input[id='code']"
+  },
+  "v2-purchasing.supplier-address-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "input[id='address']"
+  },
+  "v2-purchasing.supplier-email-input": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "input[id='primaryEmail']"
+  },
+  "v2-purchasing.supplier-submit": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-purchasing.supplier-tablist": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tablist[name=\"Supplier details tabs\"]"
+  },
+  "v2-purchasing.supplier-tab-details": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-purchasing.supplier-tab-products": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"PRODUCTS\"]"
+  },
+  "v2-purchasing.supplier-tab-purchase-orders": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"PURCHASE ORDERS\"]"
+  },
+  "v2-purchasing.supplier-tab-credits": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"CREDITS\"]"
+  },
+  "v2-purchasing.supplier-tab-payables": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"PAYABLES\"]"
+  },
+  "v2-purchasing.supplier-tab-attachments": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-purchasing.supplier-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers/create",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-inventory.stocktake-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/stocktakes",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.stocktake-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/stocktakes",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-inventory.stocktake-print-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/907/update",
+   "selector": "role=button[name=\"Print\"]"
+  },
+  "v2-inventory.stocktake-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/907/update",
+   "selector": "role=tablist[name=\"Stocktake tabs\"]"
+  },
+  "v2-inventory.stocktake-tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/907/update",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-inventory.stocktake-tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/907/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-inventory.stocktake-tab-history": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/907/update",
+   "selector": "role=tab[name=\"HISTORY\"]"
+  },
+  "v2-inventory.stocktake-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/907/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-inventory.adjustment-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/stock-adjustments",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.adjustment-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-adjustments/1493/update",
+   "selector": "role=tablist[name=\"Stock adjustment tabs\"]"
+  },
+  "v2-inventory.adjustment-tab-adjustments": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-adjustments/1493/update",
+   "selector": "role=tab[name=\"ADJUSTMENTS\"]"
+  },
+  "v2-inventory.adjustment-tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-adjustments/1493/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-inventory.adjustment-tab-history": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-adjustments/1493/update",
+   "selector": "role=tab[name=\"HISTORY\"]"
+  },
+  "v2-inventory.adjustment-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-adjustments/1493/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-inventory.transfer-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/stock-transfers",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.transfer-cancel-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/1306/update",
+   "selector": "role=button[name=\"Cancel\"]"
+  },
+  "v2-inventory.transfer-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/1306/update",
+   "selector": "role=tablist[name=\"Stock transfer details tabs\"]"
+  },
+  "v2-inventory.transfer-tab-transfers": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/1306/update",
+   "selector": "role=tab[name=\"TRANSFERS\"]"
+  },
+  "v2-inventory.transfer-tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/1306/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-inventory.transfer-tab-history": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/1306/update",
+   "selector": "role=tab[name=\"HISTORY\"]"
+  },
+  "v2-inventory.transfer-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/1306/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-inventory.releasing-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.releasings-list-tab-all": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"ALL\"]"
+  },
+  "v2-inventory.releasings-list-tab-pending": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"PENDING\"]"
+  },
+  "v2-inventory.releasings-list-tab-completed": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"COMPLETED\"]"
+  },
+  "v2-inventory.releasings-list-tab-cancelled": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"CANCELLED\"]"
+  },
+  "v2-purchasing.receiving-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/receivings",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-purchasing.receiving-delivery-receipt-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "input[id='deliveryReceiptNumber']"
+  },
+  "v2-purchasing.receiving-save-pending-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=button[name=\"Save as Pending\"]"
+  },
+  "v2-purchasing.receiving-complete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=button[name=\"Complete\"]"
+  },
+  "v2-purchasing.receiving-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=tablist[name=\"Receiving tabs\"]"
+  },
+  "v2-purchasing.receiving-tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-purchasing.receiving-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-purchasing.requisition-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/requisitions/126/update",
+   "selector": "role=button[name=\"Save Requisition\"]"
+  },
+  "v2-purchasing.requisition-approve-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/requisitions/126/update",
+   "selector": "role=button[name=\"Approve\"]"
+  },
+  "v2-purchasing.requisition-reject-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/requisitions/126/update",
+   "selector": "role=button[name=\"Reject\"]"
+  },
+  "v2-purchasing.requisition-cancel-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/requisitions/126/update",
+   "selector": "role=button[name=\"Cancel\"]"
+  },
+  "v2-finance.payment-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/payments",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-finance.payment-row": {
+   "count": "needs:recordCode",
+   "where": "/companies/{companyId}/v2/payments"
+  },
+  "v2-finance.payment-override-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/2531/update",
+   "selector": "role=button[name=\"Override\"]"
+  },
+  "v2-finance.payment-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/2531/update",
+   "selector": "role=tablist[name=\"Order details tabs\"]"
+  },
+  "v2-finance.payment-tab-payments": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/2531/update",
+   "selector": "role=tab[name=\"PAYMENTS\"]"
+  },
+  "v2-finance.payment-tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/2531/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-finance.payment-tab-audit-log": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/2531/update",
+   "selector": "role=tab[name=\"AUDIT LOG\"]"
+  },
+  "v2-finance.bank-account-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/bank-accounts",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-finance.expense-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/expenses",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-finance.expense-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/expenses",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-finance.cheque-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/post-dated-cheques",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-finance.cheque-bulk-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/post-dated-cheques",
+   "selector": "role=button[name=\"Bulk create checks\"]"
+  },
+  "v2-finance.cheque-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/post-dated-cheques",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-finance.cheque-cancel-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/591/update",
+   "selector": "role=button[name=\"Cancel\"]"
+  },
+  "v2-finance.cheque-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/591/update",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-masterdata.contact-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/contacts",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-masterdata.contact-import-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/contacts",
+   "selector": "role=button[name=\"Import\"]"
+  },
+  "v2-inventory.vehicle-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/vehicles",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.vehicle-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/193/update",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-inventory.vehicle-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/193/update",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-inventory.assembly-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/assemblies",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.bom-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/bill-of-materials",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-inventory.location-view-qr-button": {
+   "count": 4,
+   "where": "/companies/{companyId}/v2/inventory-locations",
+   "selector": "role=button[name=\"View QR\"]"
+  },
+  "v2-masterdata.settings-user-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/settings",
+   "selector": "role=button[name=\"Create\"]"
+  },
+  "v2-masterdata.audit-logs-download-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/audit-logs",
+   "selector": "role=button[name=\"Download\"]"
+  },
+  "v2-sales-order-record.tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tablist[name=\"Order details tabs\"]"
+  },
+  "v2-sales-order-record.tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-sales-order-record.tab-collections": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"COLLECTIONS\"]"
+  },
+  "v2-sales-order-record.tab-releasings": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"RELEASINGS\"]"
+  },
+  "v2-sales-order-record.tab-returns": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"RETURNS\"]"
+  },
+  "v2-sales-order-record.tab-refunds": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"REFUNDS\"]"
+  },
+  "v2-sales-order-record.tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-sales-order-record.tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-sales-order-record.active-tabpanel": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tabpanel"
+  },
+  "shell.toast": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=alert"
+  },
+  "v2-sales-order-record.collection-entry-type-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='collectionEntries.0.type']"
+  },
+  "v2-sales-order-record.collection-entry-amount-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='collectionEntries.0.amount']"
+  },
+  "v2-sales-order-record.collection-entry-payment-method-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='collectionEntries.0.paymentMethod']"
+  },
+  "v2-sales-order-record.collection-entry-reference-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='collectionEntries.0.referenceNumber']"
+  },
+  "v2-sales-order-record.collection-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+  },
+  "v2-sales-order-record.releasing-driver-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactDriverIds']"
+  },
+  "v2-sales-order-record.releasing-checker-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactCheckerIds']"
+  },
+  "v2-sales-order-record.releasing-helper-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactHelperIds']"
+  },
+  "v2-sales-order-record.releasing-dispatcher-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactDispatcherIds']"
+  },
+  "v2-sales-order-record.releasing-add-location-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Add location\"]"
+  },
+  "v2-sales-order-record.releasing-print-button": {
+   "count": 2,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Print\"]"
+  },
+  "v2-sales-order-record.releasing-open-button": {
+   "count": 9,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Open\"]"
+  },
+  "v2-sales-order-record.refund-type-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='refundType']"
+  },
+  "v2-sales-order-record.refund-amount-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='amount']"
+  },
+  "v2-sales-order-record.refund-bank-account-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='bankAccountId']"
+  },
+  "v2-sales-order-record.attachments-heading": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "text=Upload New File"
+  },
+  "v2-sales-order-record.attachments-files-heading": {
+   "count": 3,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "text=Files"
+  },
+  "v2-sales-order-record.print-dialog": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog"
+  },
+  "v2-sales-order-record.print-template-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='specId']"
+  },
+  "v2-sales-order-record.print-confirm-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Print\"]"
+  },
+  "v2-purchase-order-record.tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tablist[name=\"Order details tabs\"]"
+  },
+  "v2-purchase-order-record.tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-purchase-order-record.tab-receivings": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"RECEIVINGS\"]"
+  },
+  "v2-purchase-order-record.tab-payments": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"PAYMENTS\"]"
+  },
+  "v2-purchase-order-record.tab-refunds": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"REFUNDS\"]"
+  },
+  "v2-purchase-order-record.tab-returns": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"RETURNS\"]"
+  },
+  "v2-purchase-order-record.tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-purchase-order-record.tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-purchase-order-record.active-tabpanel": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tabpanel"
+  },
+  "v2-purchase-order-record.receiving-add-location-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=button[name=\"Add location\"]"
+  },
+  "v2-purchase-order-record.refund-type-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='refundType']"
+  },
+  "v2-purchase-order-record.refund-amount-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='amount']"
+  },
+  "v2-purchase-order-record.refund-reference-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='referenceNumber']"
+  },
+  "v2-purchase-order-record.refund-payment-method-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentMethod']"
+  },
+  "v2-purchase-order-record.refund-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+  },
+  "shell.nav-sales-orders": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Sales Orders\"]"
+  },
+  "shell.nav-collections": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Collections\"]"
+  },
+  "shell.nav-quotations": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Quotations\"]"
+  },
+  "shell.nav-customers": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Customers\"]"
+  },
+  "shell.nav-purchase-orders": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Purchase Orders\"]"
+  },
+  "shell.nav-requisitions": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Requisitions\"]"
+  },
+  "shell.nav-receivings": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Receivings\"]"
+  },
+  "shell.nav-suppliers": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Suppliers\"]"
+  },
+  "shell.sign-out-menu-item": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=menuitem[name=\"Sign-out\"]"
+  },
+  "v2-sales.dialog-dismiss-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+  },
+  "shell.sidenav-home": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Home\"]"
+  },
+  "shell.sidenav-search-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name*=\"Search\"]"
+  },
+  "shell.sidenav-sales": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Sales\"]"
+  },
+  "shell.sidenav-purchasing": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Purchasing\"]"
+  },
+  "shell.sidenav-inventory": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Inventory\"]"
+  },
+  "shell.sidenav-finance": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Finance\"]"
+  },
+  "shell.sidenav-logistics": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Logistics\"]"
+  },
+  "shell.sidenav-reports": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Reports\"]"
+  },
+  "shell.sidenav-settings": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Settings\"]"
+  },
+  "shell.sidenav-help": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=link[name=\"Help\"]"
+  },
+  "shell.account-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name*=\"Account\"]"
+  },
+  "shell.company-switcher": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name*=\"Dhin Company\"]"
+  },
+  "shell.table-filter-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Filter\"]"
+  },
+  "shell.table-columns-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Columns\"]"
+  },
+  "shell.table-row-checkbox": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "tr:has(td:has-text('DHIN-OR-00395')) >> role=checkbox"
+  },
+  "shell.table-select-all-matching-link": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "text=Select all"
+  },
+  "shell.table-clear-selection-link": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "text=Clear selection"
+  },
+  "v2-sales.orders-row": {
+   "count": 1,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "tr:has(td:has-text('DHIN-OR-00395'))"
+  },
+  "v2-sales.orders-empty-state": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "text=No sales orders found"
+  },
+  "v3-analytics.tab-overview": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"OVERVIEW\"]"
+  },
+  "v3-analytics.tab-inventory": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"INVENTORY\"]"
+  },
+  "v3-analytics.tab-sales": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"SALES\"]"
+  },
+  "v3-analytics.tab-purchasing": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"PURCHASING\"]"
+  },
+  "v3-analytics.tab-logistics": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"LOGISTICS\"]"
+  },
+  "v3-analytics.tab-finances": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"FINANCES\"]"
+  },
+  "v3-analytics.tab-production": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=tab[name=\"PRODUCTION\"]"
+  },
+  "v3-analytics.vat-mode-button": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=button[name=\"VAT presentation mode\"]"
+  },
+  "v3-analytics.vat-inclusive-option": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=menuitem[name=\"Show VAT-inclusive amounts\"]"
+  },
+  "v3-analytics.vat-exclusive-option": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=menuitem[name=\"Show VAT-exclusive amounts\"]"
+  },
+  "v3-analytics.drawer-next-page-button": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=button[name=\"Next page\"]"
+  },
+  "v3-analytics.drawer-previous-page-button": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=button[name=\"Previous page\"]"
+  },
+  "v3-analytics.report-close-drawer-button": {
+   "count": 0,
+   "where": "/companies/10004/v3",
+   "selector": "role=button[name=\"Close drawer\"]"
+  },
+  "v2-masterdata.customer-export-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=button[name=\"Export\"]"
+  },
+  "v2-masterdata.customer-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-masterdata.customer-attach-file-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=button[name=\"Attach file\"]"
+  },
+  "v2-masterdata.customer-group-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-masterdata.customer-tab-sales-orders": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"SALES ORDERS\"]"
+  },
+  "v2-masterdata.customer-tab-product-codes": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"PRODUCT CODES\"]"
+  },
+  "v2-masterdata.customer-tab-receivables": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"RECEIVABLES\"]"
+  },
+  "v2-masterdata.customer-tab-collections": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"COLLECTIONS\"]"
+  },
+  "v2-masterdata.customer-tab-refunds": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"REFUNDS\"]"
+  },
+  "v2-masterdata.customer-tab-returns": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"RETURNS\"]"
+  },
+  "v2-masterdata.customer-tab-post-dated-checks": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"POST DATED CHECKS\"]"
+  },
+  "v2-masterdata.customer-tab-credits": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"CREDITS\"]"
+  },
+  "v2-masterdata.customer-tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-masterdata.customer-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/9572/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-purchasing.supplier-delete-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/suppliers",
+   "selector": "role=dialog >> role=button[name=\"Delete Supplier\"]"
+  },
+  "v2-masterdata.contact-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-masterdata.contact-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-masterdata.contact-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tablist[name=\"Contact details tabs\"]"
+  },
+  "v2-masterdata.contact-tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-masterdata.contact-tab-releasings": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"RELEASINGS\"]"
+  },
+  "v2-masterdata.contact-tab-receivings": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"RECEIVINGS\"]"
+  },
+  "v2-masterdata.contact-tab-customers": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"CUSTOMERS\"]"
+  },
+  "v2-masterdata.contact-tab-suppliers": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"SUPPLIERS\"]"
+  },
+  "v2-masterdata.contact-tab-stock-adjustments": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"STOCK ADJUSTMENTS\"]"
+  },
+  "v2-masterdata.contact-tab-stocktakes": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/433/update",
+   "selector": "role=tab[name=\"STOCKTAKES\"]"
+  },
+  "v2-finance.expense-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-finance.expense-approve-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=button[name=\"Approve\"]"
+  },
+  "v2-finance.expense-reject-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=button[name=\"Reject\"]"
+  },
+  "v2-finance.expense-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=tablist[name=\"Expense details tabs\"]"
+  },
+  "v2-finance.expense-tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-finance.expense-tab-payments": {
+   "count": 0,
+   "where": "/companies/10004/v2/expenses",
+   "selector": "role=tab[name=\"PAYMENTS\"]"
+  },
+  "v2-finance.expense-tab-attachments": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=tab[name=\"ATTACHMENTS\"]"
+  },
+  "v2-finance.expense-tab-audit-logs": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/687/update",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-finance.bank-account-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-finance.bank-account-delete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-finance.bank-account-tablist": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=tablist[name=\"Bank account details tabs\"]"
+  },
+  "v2-finance.bank-account-tab-details": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-finance.bank-account-tab-collections": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=tab[name=\"COLLECTIONS\"]"
+  },
+  "v2-finance.bank-account-tab-payments": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=tab[name=\"PAYMENTS\"]"
+  },
+  "v2-finance.bank-account-tab-post-dated-checks": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/109",
+   "selector": "role=tab[name=\"POST DATED CHECKS\"]"
+  },
+  "v2-finance.bank-account-tab-expense-payments": {
+   "count": 0,
+   "where": "/companies/10004/v2/bank-accounts",
+   "selector": "role=tab[name=\"EXPENSE PAYMENTS\"]"
+  },
+  "v2-inventory.assembly-complete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/assemblies/629/update",
+   "selector": "role=button[name=\"Complete\"]"
+  },
+  "v2-inventory.bom-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/bill-of-materials/299/update",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-inventory.bom-create-po-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/bill-of-materials/299/update",
+   "selector": "role=button[name=\"Create PO\"]"
+  },
+  "v2-inventory.location-create-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/inventory-locations",
+   "selector": "role=dialog >> role=button[name=\"Create\"]"
+  },
+  "v2-finance.cheque-quick-create-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/post-dated-cheques",
+   "selector": "role=dialog >> role=button[name=\"Create Post-dated Check\"]"
+  },
+  "v2-finance.cheque-bulk-submit-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/post-dated-cheques",
+   "selector": "role=dialog >> role=button[name=\"Submit\"]"
+  },
+  "v2-masterdata.settings-user-export-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/settings",
+   "selector": "role=button[name=\"Export\"]"
+  },
+  "v2-masterdata.settings-xero-save-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/settings",
+   "selector": "role=button[name=\"Save Account Codes\"]"
+  }
+ },
+ "notes": []
+}
