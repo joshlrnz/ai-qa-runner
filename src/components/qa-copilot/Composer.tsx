@@ -1,6 +1,6 @@
 'use client'
 
-import type { FormEvent } from 'react'
+import type { FormEvent, KeyboardEvent } from 'react'
 import { Button } from '@/components/ui/Button'
 import { useQaCopilot } from './QaCopilotContext'
 
@@ -12,25 +12,41 @@ export function Composer() {
     submitDraft(draft)
   }
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      if (!isPlanning && draft.trim().length > 0) {
+        submitDraft(draft)
+      }
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-      <input
+    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8, alignItems: 'flex-end' }}>
+      <textarea
         value={draft}
         onChange={(event) => setDraft(event.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder='Describe what you want to check...'
         aria-label='Describe what you want to check'
+        rows={1}
         style={{
           flex: 1,
           minWidth: 0,
-          height: 40,
-          padding: '0 12px',
+          minHeight: 40,
+          maxHeight: 160,
+          padding: '10px 12px',
           font: '400 14px var(--font-sans)',
           color: 'var(--neutral-900)',
           background: 'var(--neutral-white)',
           border: 'none',
           borderRadius: 'var(--radius-lg)',
           boxShadow: 'inset 0 0 0 1px rgba(207,216,220,.7)',
-          outline: 'none'
+          outline: 'none',
+          resize: 'none',
+          overflowY: 'auto',
+          lineHeight: '1.5',
+          fieldSizing: 'content' as never,
         }}
       />
       <Button type='submit' hierarchy='primary' disabled={isPlanning || draft.trim().length === 0}>

@@ -13,7 +13,9 @@ export function ChatBubble({ message }: { message: ChatMessage }) {
             borderRadius: '14px 14px 4px 14px',
             background: 'var(--brand-50)',
             color: 'var(--brand-800)',
-            lineHeight: 1.5
+            lineHeight: 1.5,
+            wordBreak: 'break-word',
+            whiteSpace: 'pre-wrap'
           }}
         >
           {message.text}
