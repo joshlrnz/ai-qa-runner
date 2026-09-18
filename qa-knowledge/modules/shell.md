@@ -68,6 +68,12 @@ engine registers with `internal=false`, so the substring coercion `getByRole` ap
 (`playwright-core` role engine, `_engines.set("role", Hb(!1))`). `role=button[name="Sign in"]`
 therefore does **not** match "Sign in with email". Use `[name*="…"]` for a deliberate substring.
 
+**Picking the visible one of several matches**: append `>> visible=true`, never a `:visible`
+pseudo-class. `:visible` is CSS-engine syntax; the `role=` engine takes attribute filters only,
+so `role=button[name="Delete"]:visible` is not a valid selector. Write
+`role=button[name="Delete"] >> visible=true`. This matters most for the bulk action bar, whose
+buttons share names with the record-page actions and are only mounted once rows are selected.
+
 ### Sign-in
 
 | name | role / accessible name | selector | source | confidence | notes |

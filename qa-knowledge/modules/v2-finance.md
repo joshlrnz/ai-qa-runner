@@ -2,7 +2,7 @@
 module: v2-finance
 routes: 15
 targets: 61
-flows: 14
+flows: 15
 status: drafted
 lastUpdated: 2026-09-17
 ---

@@ -12,12 +12,12 @@ running app) has not been done.**
 | v2-purchasing | 23 | 52 | 15 | drafted | 2026-09-18 |
 | v2-purchase-order-record | 1 | 35 | 9 | drafted | 2026-09-18 |
 | v2-inventory | 35 | 109 | 25 | drafted | 2026-09-18 |
-| v2-finance | 15 | 61 | 14 | drafted | 2026-09-18 |
+| v2-finance | 15 | 61 | 15 | drafted | 2026-09-18 |
 | v2-masterdata | 29 | 65 | 13 | drafted | 2026-09-18 |
 | v3-analytics | 6 | 13 | 6 | drafted | 2026-09-18 |
 | lite | 77 | 12 | 6 | drafted | 2026-09-18 |
 
-**234 routes, 482 targets, 125 named flows** — plus a route-flow table in every module giving the three-step shape for all 234 pages. Coverage is audited, not assumed: `scripts/audit.mjs` reports **234/234 pages** reachable by a flow and `scripts/validate.mjs` reports **0 of 169 action targets uninvoked**. Status values: `pending` → `recon` → `drafted` →
+**234 routes, 482 targets, 126 named flows** — plus a route-flow table in every module giving the three-step shape for all 234 pages. Coverage is audited, not assumed: `scripts/audit.mjs` reports **234/234 pages** reachable by a flow and `scripts/validate.mjs` reports **0 of 169 action targets uninvoked**. Status values: `pending` → `recon` → `drafted` →
 `verified`. **Every module is `drafted`: nothing here has been run against the application.**
 Only Phase 4 verification may promote a module to `verified`, and until it does, every selector
 is a hypothesis derived by reading the source.

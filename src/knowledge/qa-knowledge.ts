@@ -469,6 +469,11 @@ export function findAmbiguousMatch(selector: string): UnresolvedTarget | null {
   return null
 }
 
+// A flow is a numbered step list in the plan vocabulary. Other headings live under
+// Flows too - the route-flow table, the "actions with no flow" register - and citing
+// one of those as a source would silence the composed-ordering warning for free.
+const flowStepPattern = /^\s*\d+\.\s+`(navigate|click|fill|assertVisible|assertText)`/m
+
 export function listFlowEntries(module: string): FlowEntry[] {
   const section = getModuleSection(module, 'Flows')
 
@@ -484,8 +489,10 @@ export function listFlowEntries(module: string): FlowEntry[] {
       const name = (lineBreak < 0 ? part : part.slice(0, lineBreak)).trim()
       const body = lineBreak < 0 ? '' : part.slice(lineBreak + 1)
 
-      return { name, superseded: /\*\*superseded\*\*/i.test(body) }
+      return { name, body, superseded: /\*\*superseded\*\*/i.test(body) }
     })
+    .filter((flow) => flowStepPattern.test(flow.body))
+    .map((flow) => ({ name: flow.name, superseded: flow.superseded }))
 }
 
 // A flow kept for history is still a heading in the markdown. Prose alone does not

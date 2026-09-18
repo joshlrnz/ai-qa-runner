@@ -37,6 +37,11 @@ authoritative list. Two consequences:
 \`role=\` selectors in this application are EXACT and CASE-SENSITIVE. \`role=button[name="Sign in"]\`
 does not match "Sign in with email". Use \`[name*="..."]\` only for a deliberate substring match.
 
+To pick the visible one of several matches, append \`>> visible=true\`. Never write a \`:visible\`
+pseudo-class: that is CSS-engine syntax and the \`role=\` engine takes attribute filters only, so
+\`role=button[name="Delete"]:visible\` is not a valid selector. Write
+\`role=button[name="Delete"] >> visible=true\`.
+
 ## Parameters
 
 A path, selector or value may contain {paramName} placeholders. The plan declares them in
