@@ -1,0 +1,1222 @@
+{
+  "pages": {
+    "shell.home": "/",
+    "shell._offline": "/_offline",
+    "shell.403": "/403",
+    "shell.404": "/404",
+    "shell.account-deleted": "/account-deleted",
+    "shell.auth-callback": "/auth-callback",
+    "shell.companies-list": "/companies",
+    "shell.company-deleted": "/company-deleted",
+    "shell.delete-account": "/delete-account",
+    "shell.lite-check-email": "/lite/check-email",
+    "shell.lite-signup": "/lite/signup",
+    "shell.lite-signup-complete": "/lite/signup/complete",
+    "shell.lite-thank-you": "/lite/thank-you",
+    "shell.lite-verify-email": "/lite/verify-email",
+    "shell.no-company-access": "/no-company-access",
+    "shell.privacy-policy": "/privacy-policy",
+    "shell.redirect": "/redirect",
+    "shell.sign-in": "/sign-in",
+    "shell.sign-out": "/sign-out",
+    "shell.sign-up": "/sign-up",
+    "shell.temporary-print-on-top": "/temporary-print-on-top",
+    "shell.unauthorized": "/unauthorized"
+  },
+  "targets": {
+    "lite.signup-company-name-input": {
+      "selector": "role=textbox[name=\"Company Name\"]"
+    },
+    "lite.login-email-input": {
+      "selector": "role=textbox[name=\"Email\"]"
+    },
+    "lite.login-password-input": {
+      "selector": "role=textbox[name=\"Password\"]"
+    },
+    "lite.profile-first-name-input": {
+      "selector": "role=textbox[name=\"First name\"]"
+    },
+    "lite.profile-last-name-input": {
+      "selector": "role=textbox[name=\"Last name\"]"
+    },
+    "lite.profile-phone-input": {
+      "selector": "role=textbox[name=\"Phone number (optional)\"]"
+    },
+    "lite.welcome-modal-close-button": {
+      "selector": "role=button[name=\"Close\"]"
+    },
+    "lite.onboarding-mark-completed-button": {
+      "selector": "role=button[name=\"Mark onboarding as completed\"]"
+    },
+    "lite.invite-full-name-input": {
+      "selector": "role=textbox[name=\"Full name\"]"
+    },
+    "lite.invite-confirm-password-input": {
+      "selector": "role=textbox[name=\"Confirm password\"]"
+    },
+    "lite.expert-call-dismiss-button": {
+      "selector": "role=button[name=\"Dismiss expert call invitation\"]"
+    },
+    "lite.import-help-dismiss-button": {
+      "selector": "role=button[name=\"Dismiss import help\"]"
+    },
+    "shell.sign-in-heading": {
+      "selector": "role=heading[name=\"Sign in to oboda\"]"
+    },
+    "shell.sign-in-with-email-button": {
+      "selector": "role=button[name=\"Sign in with email\"]"
+    },
+    "shell.sign-in-with-google-button": {
+      "selector": "role=button[name=\"Continue with Google\"]"
+    },
+    "shell.sign-in-with-apple-button": {
+      "selector": "role=button[name=\"Continue with Apple\"]"
+    },
+    "shell.email-input": {
+      "selector": "input[name='email']"
+    },
+    "shell.password-input": {
+      "selector": "input[name='password']"
+    },
+    "shell.sign-in-submit": {
+      "selector": "role=button[name=\"Sign in\"]"
+    },
+    "shell.sign-in-back-button": {
+      "selector": "role=button[name=\"Back\"]"
+    },
+    "shell.sidenav": {
+      "selector": "nav:not([aria-label='breadcrumb'])"
+    },
+    "shell.sidenav-home": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Home\"]"
+    },
+    "shell.sidenav-search-button": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name*=\"Search\"]"
+    },
+    "shell.sidenav-sales": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Sales\"]"
+    },
+    "shell.sidenav-purchasing": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Purchasing\"]"
+    },
+    "shell.sidenav-inventory": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Inventory\"]"
+    },
+    "shell.sidenav-finance": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Finance\"]"
+    },
+    "shell.sidenav-logistics": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=button[name=\"Logistics\"]"
+    },
+    "shell.sidenav-reports": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Reports\"]"
+    },
+    "shell.sidenav-settings": {
+      "selector": "nav:not([aria-label='breadcrumb']) >> role=link[name=\"Settings\"]"
+    },
+    "shell.sidenav-help": {
+      "selector": "role=link[name=\"Help\"]"
+    },
+    "shell.account-button": {
+      "selector": "role=button[name*=\"Account\"]"
+    },
+    "shell.company-switcher": {
+      "selector": "role=button[name*=\"{companyName}\"]"
+    },
+    "shell.sign-out-menu-item": {
+      "selector": "role=menuitem[name=\"Sign-out\"]"
+    },
+    "shell.nav-sales-orders": {
+      "selector": "role=link[name=\"Sales Orders\"]"
+    },
+    "shell.nav-collections": {
+      "selector": "role=link[name=\"Collections\"]"
+    },
+    "shell.nav-quotations": {
+      "selector": "role=link[name=\"Quotations\"]"
+    },
+    "shell.nav-customers": {
+      "selector": "role=link[name=\"Customers\"]"
+    },
+    "shell.nav-purchase-orders": {
+      "selector": "role=link[name=\"Purchase Orders\"]"
+    },
+    "shell.nav-requisitions": {
+      "selector": "role=link[name=\"Requisitions\"]"
+    },
+    "shell.nav-receivings": {
+      "selector": "role=link[name=\"Receivings\"]"
+    },
+    "shell.nav-suppliers": {
+      "selector": "role=link[name=\"Suppliers\"]"
+    },
+    "shell.breadcrumb": {
+      "selector": "role=navigation[name=\"breadcrumb\"]"
+    },
+    "shell.toast": {
+      "selector": "role=alert"
+    },
+    "shell.toast-close-button": {
+      "selector": "role=alert >> role=button[name=\"close\"]"
+    },
+    "shell.companies-list-item": {
+      "selector": "role=button[name=\"{companyName}\"]"
+    },
+    "shell.companies-sign-out-button": {
+      "selector": "role=button[name=\"Sign-out\"]"
+    },
+    "shell.table-search": {
+      "selector": "role=textbox[name=\"Search\"]"
+    },
+    "shell.table-sort-button": {
+      "selector": "role=button[name=\"Sort\"]"
+    },
+    "shell.table-filter-button": {
+      "selector": "role=button[name=\"Filter\"]"
+    },
+    "shell.filter-apply-button": {
+      "selector": "role=dialog >> role=button[name=\"Apply\"]"
+    },
+    "shell.table-columns-button": {
+      "selector": "role=button[name=\"Columns\"]"
+    },
+    "shell.table": {
+      "selector": "role=table"
+    },
+    "shell.table-select-all-checkbox": {
+      "selector": "thead >> role=checkbox"
+    },
+    "shell.table-row-checkbox": {
+      "selector": "tr:has(td:has-text('{recordCode}')) >> role=checkbox"
+    },
+    "shell.table-select-all-matching-link": {
+      "selector": "text=Select all"
+    },
+    "shell.table-clear-selection-link": {
+      "selector": "text=Clear selection"
+    },
+    "shell.select-option": {
+      "selector": "role=option[name=\"{optionLabel}\"]"
+    },
+    "v2-finance.payment-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-finance.payment-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))"
+    },
+    "v2-finance.payment-print-button": {
+      "selector": "role=button[name=\"Print\"]"
+    },
+    "v2-finance.payment-override-button": {
+      "selector": "role=button[name=\"Override\"]"
+    },
+    "v2-finance.payment-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override payment\"]"
+    },
+    "v2-finance.payment-post-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Post payment\"]"
+    },
+    "v2-finance.cheque-bulk-create-button": {
+      "selector": "role=button[name=\"Bulk create checks\"]"
+    },
+    "v2-finance.cheque-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-finance.cheque-quick-create-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Create Post-dated Check\"]"
+    },
+    "v2-finance.cheque-bulk-submit-button": {
+      "selector": "role=dialog >> role=button[name=\"Submit\"]"
+    },
+    "v2-finance.cheque-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]"
+    },
+    "v2-finance.cheque-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-finance.bank-account-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-finance.bank-account-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-finance.bank-account-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-finance.expense-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-finance.expense-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-finance.expense-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-finance.expense-approve-button": {
+      "selector": "role=button[name=\"Approve\"]"
+    },
+    "v2-finance.expense-reject-button": {
+      "selector": "role=button[name=\"Reject\"]"
+    },
+    "v2-finance.payment-tablist": {
+      "selector": "role=tablist[name=\"Order details tabs\"]"
+    },
+    "v2-finance.payment-tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]"
+    },
+    "v2-finance.payment-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-finance.payment-tab-audit-log": {
+      "selector": "role=tab[name=\"AUDIT LOG\"]"
+    },
+    "v2-finance.expense-tablist": {
+      "selector": "role=tablist[name=\"Expense details tabs\"]"
+    },
+    "v2-finance.expense-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-finance.expense-tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]"
+    },
+    "v2-finance.expense-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-finance.expense-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-finance.bank-account-tablist": {
+      "selector": "role=tablist[name=\"Bank account details tabs\"]"
+    },
+    "v2-finance.bank-account-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-finance.bank-account-tab-collections": {
+      "selector": "role=tab[name=\"COLLECTIONS\"]"
+    },
+    "v2-finance.bank-account-tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]"
+    },
+    "v2-finance.bank-account-tab-post-dated-checks": {
+      "selector": "role=tab[name=\"POST DATED CHECKS\"]"
+    },
+    "v2-finance.bank-account-tab-expense-payments": {
+      "selector": "role=tab[name=\"EXPENSE PAYMENTS\"]"
+    },
+    "v2-inventory.product-create-button": {
+      "selector": "role=button[name=\"Add product\"]"
+    },
+    "v2-inventory.product-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-inventory.product-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))"
+    },
+    "v2-inventory.product-name-input": {
+      "selector": "input[id='name']"
+    },
+    "v2-inventory.product-submit": {
+      "selector": "role=button[name=\"Save changes\"]"
+    },
+    "v2-inventory.product-delete-button": {
+      "selector": "role=button[name=\"Delete Product\"]"
+    },
+    "v2-inventory.stocktake-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.stocktake-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-inventory.stocktake-sync-xero-button": {
+      "selector": "role=button[name=\"Sync to Xero\"]"
+    },
+    "v2-inventory.stocktake-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]"
+    },
+    "v2-inventory.stocktake-complete-button": {
+      "selector": "role=button[name=\"Complete\"]"
+    },
+    "v2-inventory.stocktake-print-button": {
+      "selector": "role=button[name=\"Print\"]"
+    },
+    "v2-inventory.adjustment-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.adjustment-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]"
+    },
+    "v2-inventory.adjustment-complete-button": {
+      "selector": "role=button[name=\"Complete\"]"
+    },
+    "v2-inventory.adjustment-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-inventory.transfer-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.transfer-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-inventory.transfer-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]"
+    },
+    "v2-inventory.transfer-cancel-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+    },
+    "v2-inventory.transfer-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-inventory.releasing-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.releasing-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]"
+    },
+    "v2-inventory.releasing-complete-button": {
+      "selector": "role=button[name=\"Complete\"]"
+    },
+    "v2-inventory.releasing-override-button": {
+      "selector": "role=button[name=\"Override\"]"
+    },
+    "v2-inventory.releasing-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override releasing\"]"
+    },
+    "v2-inventory.releasing-create-sales-return-button": {
+      "selector": "role=button[name=\"Create sales return\"]"
+    },
+    "v2-inventory.location-create-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Create\"]"
+    },
+    "v2-inventory.vehicle-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.vehicle-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-inventory.vehicle-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-inventory.assembly-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.assembly-complete-button": {
+      "selector": "role=button[name=\"Complete\"]"
+    },
+    "v2-inventory.bom-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-inventory.bom-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-inventory.bom-create-po-button": {
+      "selector": "role=button[name=\"Create PO\"]"
+    },
+    "v2-inventory.product-tablist": {
+      "selector": "role=tablist[name=\"Product details tabs\"]"
+    },
+    "v2-inventory.product-tab-overview": {
+      "selector": "role=tab[name=\"OVERVIEW\"]"
+    },
+    "v2-inventory.product-tab-serials": {
+      "selector": "role=tab[name=\"SERIALS\"]"
+    },
+    "v2-inventory.product-tab-batches": {
+      "selector": "role=tab[name=\"BATCHES\"]"
+    },
+    "v2-inventory.product-tab-locations": {
+      "selector": "role=tab[name=\"LOCATIONS\"]"
+    },
+    "v2-inventory.product-tab-sales-orders": {
+      "selector": "role=tab[name=\"SALES ORDERS\"]"
+    },
+    "v2-inventory.product-tab-purchase-orders": {
+      "selector": "role=tab[name=\"PURCHASE ORDERS\"]"
+    },
+    "v2-inventory.product-tab-inventory-history": {
+      "selector": "role=tab[name=\"INVENTORY HISTORY\"]"
+    },
+    "v2-inventory.product-tab-price-history": {
+      "selector": "role=tab[name=\"PRICE HISTORY\"]"
+    },
+    "v2-inventory.product-tab-bill-of-materials": {
+      "selector": "role=tab[name=\"BILL OF MATERIALS\"]"
+    },
+    "v2-inventory.product-tab-assembly": {
+      "selector": "role=tab[name=\"ASSEMBLY\"]"
+    },
+    "v2-inventory.product-tab-analytics": {
+      "selector": "role=tab[name=\"ANALYTICS\"]"
+    },
+    "v2-inventory.product-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-inventory.product-batch-edit-button": {
+      "selector": "role=button[name=\"Edit\"]"
+    },
+    "v2-inventory.product-batch-filter-button": {
+      "selector": "role=button[name=\"Filter\"]"
+    },
+    "v2-inventory.product-history-export-button": {
+      "selector": "role=button[name=\"Export\"]"
+    },
+    "v2-inventory.stocktake-tablist": {
+      "selector": "role=tablist[name=\"Stocktake tabs\"]"
+    },
+    "v2-inventory.stocktake-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-inventory.stocktake-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-inventory.stocktake-tab-history": {
+      "selector": "role=tab[name=\"HISTORY\"]"
+    },
+    "v2-inventory.stocktake-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-inventory.adjustment-tablist": {
+      "selector": "role=tablist[name=\"Stock adjustment tabs\"]"
+    },
+    "v2-inventory.adjustment-tab-adjustments": {
+      "selector": "role=tab[name=\"ADJUSTMENTS\"]"
+    },
+    "v2-inventory.adjustment-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-inventory.adjustment-tab-history": {
+      "selector": "role=tab[name=\"HISTORY\"]"
+    },
+    "v2-inventory.adjustment-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-inventory.transfer-tablist": {
+      "selector": "role=tablist[name=\"Stock transfer details tabs\"]"
+    },
+    "v2-inventory.transfer-tab-transfers": {
+      "selector": "role=tab[name=\"TRANSFERS\"]"
+    },
+    "v2-inventory.transfer-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-inventory.transfer-tab-history": {
+      "selector": "role=tab[name=\"HISTORY\"]"
+    },
+    "v2-inventory.transfer-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-inventory.transfer-override-received-qty-button": {
+      "selector": "role=button[name=\"Override received quantity\"]"
+    },
+    "v2-inventory.transfer-override-save-button": {
+      "selector": "role=dialog >> role=button[name=\"Save\"]"
+    },
+    "v2-inventory.releasing-tablist": {
+      "selector": "role=tablist[name=\"Releasing details tabs\"]"
+    },
+    "v2-inventory.releasing-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-inventory.releasing-tab-delivery-receipts": {
+      "selector": "role=tab[name=\"DELIVERY RECEIPTS\"]"
+    },
+    "v2-inventory.releasing-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-inventory.releasings-list-tab-all": {
+      "selector": "role=tab[name=\"ALL\"]"
+    },
+    "v2-inventory.releasings-list-tab-pending": {
+      "selector": "role=tab[name=\"PENDING\"]"
+    },
+    "v2-inventory.releasings-list-tab-completed": {
+      "selector": "role=tab[name=\"COMPLETED\"]"
+    },
+    "v2-inventory.releasings-list-tab-cancelled": {
+      "selector": "role=tab[name=\"CANCELLED\"]"
+    },
+    "v2-masterdata.customer-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-masterdata.customer-export-button": {
+      "selector": "role=button[name=\"Export\"]"
+    },
+    "v2-masterdata.customer-name-input": {
+      "selector": "input[id='name']"
+    },
+    "v2-masterdata.customer-code-input": {
+      "selector": "input[id='code']"
+    },
+    "v2-masterdata.customer-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-masterdata.customer-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-masterdata.customer-attach-file-button": {
+      "selector": "role=button[name=\"Attach file\"]"
+    },
+    "v2-masterdata.customer-group-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-masterdata.customer-group-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-masterdata.customer-group-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-masterdata.contact-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-masterdata.contact-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-masterdata.contact-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-masterdata.contact-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-masterdata.settings-user-create-button": {
+      "selector": "role=button[name=\"Create\"]"
+    },
+    "v2-masterdata.settings-user-export-button": {
+      "selector": "role=button[name=\"Export\"]"
+    },
+    "v2-masterdata.settings-xero-save-button": {
+      "selector": "role=button[name=\"Save Account Codes\"]"
+    },
+    "v2-masterdata.audit-logs-download-button": {
+      "selector": "role=button[name=\"Download\"]"
+    },
+    "v2-masterdata.customer-tablist": {
+      "selector": "role=tablist[name=\"Supplier details tabs\"]"
+    },
+    "v2-masterdata.customer-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-masterdata.customer-tab-sales-orders": {
+      "selector": "role=tab[name=\"SALES ORDERS\"]"
+    },
+    "v2-masterdata.customer-tab-product-codes": {
+      "selector": "role=tab[name=\"PRODUCT CODES\"]"
+    },
+    "v2-masterdata.customer-tab-receivables": {
+      "selector": "role=tab[name=\"RECEIVABLES\"]"
+    },
+    "v2-masterdata.customer-tab-collections": {
+      "selector": "role=tab[name=\"COLLECTIONS\"]"
+    },
+    "v2-masterdata.customer-tab-refunds": {
+      "selector": "role=tab[name=\"REFUNDS\"]"
+    },
+    "v2-masterdata.customer-tab-returns": {
+      "selector": "role=tab[name=\"RETURNS\"]"
+    },
+    "v2-masterdata.customer-tab-post-dated-checks": {
+      "selector": "role=tab[name=\"POST DATED CHECKS\"]"
+    },
+    "v2-masterdata.customer-tab-credits": {
+      "selector": "role=tab[name=\"CREDITS\"]"
+    },
+    "v2-masterdata.customer-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-masterdata.customer-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-masterdata.customer-active-tabpanel": {
+      "selector": "role=tabpanel"
+    },
+    "v2-masterdata.contact-tablist": {
+      "selector": "role=tablist[name=\"Contact details tabs\"]"
+    },
+    "v2-masterdata.contact-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-masterdata.contact-tab-releasings": {
+      "selector": "role=tab[name=\"RELEASINGS\"]"
+    },
+    "v2-masterdata.contact-tab-receivings": {
+      "selector": "role=tab[name=\"RECEIVINGS\"]"
+    },
+    "v2-masterdata.contact-tab-customers": {
+      "selector": "role=tab[name=\"CUSTOMERS\"]"
+    },
+    "v2-masterdata.contact-tab-suppliers": {
+      "selector": "role=tab[name=\"SUPPLIERS\"]"
+    },
+    "v2-masterdata.contact-tab-stock-adjustments": {
+      "selector": "role=tab[name=\"STOCK ADJUSTMENTS\"]"
+    },
+    "v2-masterdata.contact-tab-stocktakes": {
+      "selector": "role=tab[name=\"STOCKTAKES\"]"
+    },
+    "v2-purchase-order-record.tablist": {
+      "selector": "role=tablist[name=\"Order details tabs\"]"
+    },
+    "v2-purchase-order-record.tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-purchase-order-record.tab-receivings": {
+      "selector": "role=tab[name=\"RECEIVINGS\"]"
+    },
+    "v2-purchase-order-record.tab-payments": {
+      "selector": "role=tab[name=\"PAYMENTS\"]"
+    },
+    "v2-purchase-order-record.tab-refunds": {
+      "selector": "role=tab[name=\"REFUNDS\"]"
+    },
+    "v2-purchase-order-record.tab-returns": {
+      "selector": "role=tab[name=\"RETURNS\"]"
+    },
+    "v2-purchase-order-record.tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-purchase-order-record.tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-purchase-order-record.active-tabpanel": {
+      "selector": "role=tabpanel"
+    },
+    "v2-purchase-order-record.payment-date-input": {
+      "selector": "input[id='paymentDate']"
+    },
+    "v2-purchase-order-record.payment-currency-input": {
+      "selector": "input[id='currency']"
+    },
+    "v2-purchase-order-record.payment-remarks-input": {
+      "selector": "input[id='remarks']"
+    },
+    "v2-purchase-order-record.payment-entry-type-input": {
+      "selector": "input[id='paymentEntries.0.type']"
+    },
+    "v2-purchase-order-record.payment-entry-amount-input": {
+      "selector": "input[id='paymentEntries.0.amount']"
+    },
+    "v2-purchase-order-record.payment-entry-method-input": {
+      "selector": "input[id='paymentEntries.0.paymentMethod']"
+    },
+    "v2-purchase-order-record.payment-entry-bank-account-input": {
+      "selector": "input[id='paymentEntries.0.bankAccountId']"
+    },
+    "v2-purchase-order-record.payment-entry-reference-input": {
+      "selector": "input[id='paymentEntries.0.referenceNumber']"
+    },
+    "v2-purchase-order-record.payment-add-source-button": {
+      "selector": "role=button[name=\"Add Another Source\"]"
+    },
+    "v2-purchase-order-record.payment-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+    },
+    "v2-purchase-order-record.payment-post-confirm-checkbox": {
+      "selector": "input[id='confirmPost']"
+    },
+    "v2-purchase-order-record.payment-post-continue-button": {
+      "selector": "role=dialog >> role=button[name=\"Continue\"]"
+    },
+    "v2-purchase-order-record.receiving-add-location-button": {
+      "selector": "role=button[name=\"Add location\"]"
+    },
+    "v2-purchase-order-record.receiving-apply-location-to-all-button": {
+      "selector": "role=dialog >> role=button[name=\"Apply to All\"]"
+    },
+    "v2-purchase-order-record.receiving-complete-dismiss-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+    },
+    "v2-purchase-order-record.return-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+    },
+    "v2-purchase-order-record.return-dummy-receiving-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+    },
+    "v2-purchase-order-record.return-complete-dismiss-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+    },
+    "v2-purchase-order-record.refund-type-input": {
+      "selector": "input[id='refundType']"
+    },
+    "v2-purchase-order-record.refund-amount-input": {
+      "selector": "input[id='amount']"
+    },
+    "v2-purchase-order-record.refund-date-input": {
+      "selector": "input[id='refundDate']"
+    },
+    "v2-purchase-order-record.refund-reference-input": {
+      "selector": "input[id='referenceNumber']"
+    },
+    "v2-purchase-order-record.refund-payment-method-input": {
+      "selector": "input[id='paymentMethod']"
+    },
+    "v2-purchase-order-record.refund-remarks-input": {
+      "selector": "input[id='remarks']"
+    },
+    "v2-purchase-order-record.refund-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+    },
+    "v2-purchase-order-record.refund-warning-continue-button": {
+      "selector": "role=dialog >> role=button[name=\"Continue\"]"
+    },
+    "v2-purchasing.po-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-purchasing.po-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-purchasing.po-export-button": {
+      "selector": "role=button[name=\"Export\"]"
+    },
+    "v2-purchasing.po-ovision-button": {
+      "selector": "role=button[name*=\"oVision\"]"
+    },
+    "v2-purchasing.po-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))"
+    },
+    "v2-purchasing.po-supplier-input": {
+      "selector": "input[id='supplierId']"
+    },
+    "v2-purchasing.po-invoice-number-input": {
+      "selector": "input[id='payment.invoiceNumber']"
+    },
+    "v2-purchasing.po-reference-number-input": {
+      "selector": "input[id='payment.referenceNumber']"
+    },
+    "v2-purchasing.po-invoice-date-input": {
+      "selector": "input[id='payment.invoiceAt']"
+    },
+    "v2-purchasing.po-payment-due-input": {
+      "selector": "input[id='payment.paymentDueAt']"
+    },
+    "v2-purchasing.po-expected-delivery-input": {
+      "selector": "input[id='payment.expectedDeliveryAt']"
+    },
+    "v2-purchasing.po-attention-input": {
+      "selector": "input[id='attention']"
+    },
+    "v2-purchasing.po-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-purchasing.po-save-as-requisition-button": {
+      "selector": "role=button[name=\"Save as Requisition\"]"
+    },
+    "v2-purchasing.po-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]"
+    },
+    "v2-purchasing.po-override-button": {
+      "selector": "role=button[name=\"Override\"]"
+    },
+    "v2-purchasing.po-lock-button": {
+      "selector": "role=button[name=\"Lock\"]"
+    },
+    "v2-purchasing.po-cancel-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel order\"]"
+    },
+    "v2-purchasing.po-lock-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Lock\"]"
+    },
+    "v2-purchasing.po-lock-confirm-checkbox": {
+      "selector": "input[id='confirmLock']"
+    },
+    "v2-purchasing.po-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override purchase order\"]"
+    },
+    "v2-purchasing.po-override-confirm-checkbox": {
+      "selector": "input[id='confirmOverride']"
+    },
+    "v2-purchasing.po-delete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Delete\"]"
+    },
+    "v2-purchasing.receiving-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-purchasing.receiving-sync-xero-button": {
+      "selector": "role=button[name=\"Sync to Xero\"]"
+    },
+    "v2-purchasing.receiving-delivery-receipt-input": {
+      "selector": "input[id='deliveryReceiptNumber']"
+    },
+    "v2-purchasing.receiving-location-input": {
+      "selector": "input[id='inventoryLocationId']"
+    },
+    "v2-purchasing.receiving-save-pending-button": {
+      "selector": "role=button[name=\"Save as Pending\"]"
+    },
+    "v2-purchasing.receiving-complete-button": {
+      "selector": "role=button[name=\"Complete\"]"
+    },
+    "v2-purchasing.receiving-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override receiving\"]"
+    },
+    "v2-purchasing.requisition-submit": {
+      "selector": "role=button[name=\"Save Requisition\"]"
+    },
+    "v2-purchasing.requisition-approve-button": {
+      "selector": "role=button[name=\"Approve\"]"
+    },
+    "v2-purchasing.requisition-reject-button": {
+      "selector": "role=button[name=\"Reject\"]"
+    },
+    "v2-purchasing.requisition-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]"
+    },
+    "v2-purchasing.supplier-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-purchasing.supplier-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-purchasing.supplier-code-input": {
+      "selector": "input[id='code']"
+    },
+    "v2-purchasing.supplier-address-input": {
+      "selector": "input[id='address']"
+    },
+    "v2-purchasing.supplier-email-input": {
+      "selector": "input[id='primaryEmail']"
+    },
+    "v2-purchasing.supplier-submit": {
+      "selector": "role=button[name=\"Submit\"]"
+    },
+    "v2-purchasing.supplier-delete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Delete Supplier\"]"
+    },
+    "v2-purchasing.supplier-tablist": {
+      "selector": "role=tablist[name=\"Supplier details tabs\"]"
+    },
+    "v2-purchasing.supplier-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-purchasing.supplier-tab-products": {
+      "selector": "role=tab[name=\"PRODUCTS\"]"
+    },
+    "v2-purchasing.supplier-tab-purchase-orders": {
+      "selector": "role=tab[name=\"PURCHASE ORDERS\"]"
+    },
+    "v2-purchasing.supplier-tab-credits": {
+      "selector": "role=tab[name=\"CREDITS\"]"
+    },
+    "v2-purchasing.supplier-tab-payables": {
+      "selector": "role=tab[name=\"PAYABLES\"]"
+    },
+    "v2-purchasing.supplier-tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-purchasing.supplier-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-purchasing.receiving-tablist": {
+      "selector": "role=tablist[name=\"Receiving tabs\"]"
+    },
+    "v2-purchasing.receiving-tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-purchasing.receiving-tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-sales-order-record.tablist": {
+      "selector": "role=tablist[name=\"Order details tabs\"]"
+    },
+    "v2-sales-order-record.tab-details": {
+      "selector": "role=tab[name=\"DETAILS\"]"
+    },
+    "v2-sales-order-record.tab-collections": {
+      "selector": "role=tab[name=\"COLLECTIONS\"]"
+    },
+    "v2-sales-order-record.tab-releasings": {
+      "selector": "role=tab[name=\"RELEASINGS\"]"
+    },
+    "v2-sales-order-record.tab-returns": {
+      "selector": "role=tab[name=\"RETURNS\"]"
+    },
+    "v2-sales-order-record.tab-refunds": {
+      "selector": "role=tab[name=\"REFUNDS\"]"
+    },
+    "v2-sales-order-record.tab-audit-logs": {
+      "selector": "role=tab[name=\"AUDIT LOGS\"]"
+    },
+    "v2-sales-order-record.tab-attachments": {
+      "selector": "role=tab[name=\"ATTACHMENTS\"]"
+    },
+    "v2-sales-order-record.active-tabpanel": {
+      "selector": "role=tabpanel"
+    },
+    "v2-sales-order-record.collection-date-input": {
+      "selector": "input[id='collectionDate']"
+    },
+    "v2-sales-order-record.collection-currency-input": {
+      "selector": "input[id='currency']"
+    },
+    "v2-sales-order-record.collection-remarks-input": {
+      "selector": "input[id='remarks']"
+    },
+    "v2-sales-order-record.collection-entry-type-input": {
+      "selector": "input[id='collectionEntries.0.type']"
+    },
+    "v2-sales-order-record.collection-entry-amount-input": {
+      "selector": "input[id='collectionEntries.0.amount']"
+    },
+    "v2-sales-order-record.collection-entry-payment-method-input": {
+      "selector": "input[id='collectionEntries.0.paymentMethod']"
+    },
+    "v2-sales-order-record.collection-entry-reference-input": {
+      "selector": "input[id='collectionEntries.0.referenceNumber']"
+    },
+    "v2-sales-order-record.collection-create-pdc-button": {
+      "selector": "role=button[name=\"Create Post-dated Check\"]"
+    },
+    "v2-sales-order-record.collection-edit-pdc-button": {
+      "selector": "role=button[name=\"Edit Post-dated Check\"]"
+    },
+    "v2-sales-order-record.collection-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+    },
+    "v2-sales-order-record.releasing-delivered-at-input": {
+      "selector": "input[id='deliveredAt']"
+    },
+    "v2-sales-order-record.releasing-driver-input": {
+      "selector": "input[id='contactDriverIds']"
+    },
+    "v2-sales-order-record.releasing-checker-input": {
+      "selector": "input[id='contactCheckerIds']"
+    },
+    "v2-sales-order-record.releasing-helper-input": {
+      "selector": "input[id='contactHelperIds']"
+    },
+    "v2-sales-order-record.releasing-dispatcher-input": {
+      "selector": "input[id='contactDispatcherIds']"
+    },
+    "v2-sales-order-record.releasing-add-location-button": {
+      "selector": "role=button[name=\"Add location\"]"
+    },
+    "v2-sales-order-record.releasing-apply-location-to-all-button": {
+      "selector": "role=dialog >> role=button[name=\"Apply to All\"]"
+    },
+    "v2-sales-order-record.releasing-complete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Submit\"]"
+    },
+    "v2-sales-order-record.return-dummy-releasing-toggle": {
+      "selector": "role=checkbox[name=\"Return with dummy releasing\"]"
+    },
+    "v2-sales-order-record.return-driver-input": {
+      "selector": "input[id='contactDriverIds']"
+    },
+    "v2-sales-order-record.return-checker-input": {
+      "selector": "input[id='contactCheckerIds']"
+    },
+    "v2-sales-order-record.return-helper-input": {
+      "selector": "input[id='contactHelperIds']"
+    },
+    "v2-sales-order-record.return-submit": {
+      "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+    },
+    "v2-sales-order-record.return-discard-item-button": {
+      "selector": "role=button[name=\"Discard Item\"]"
+    },
+    "v2-sales-order-record.return-open-button": {
+      "selector": "role=button[name=\"Open\"]"
+    },
+    "v2-sales-order-record.refund-type-input": {
+      "selector": "input[id='refundType']"
+    },
+    "v2-sales-order-record.refund-amount-input": {
+      "selector": "input[id='amount']"
+    },
+    "v2-sales-order-record.refund-date-input": {
+      "selector": "input[id='refundDate']"
+    },
+    "v2-sales-order-record.refund-bank-account-input": {
+      "selector": "input[id='bankAccountId']"
+    },
+    "v2-sales-order-record.refund-remarks-input": {
+      "selector": "input[id='remarks']"
+    },
+    "v2-sales-order-record.print-dialog": {
+      "selector": "role=dialog"
+    },
+    "v2-sales-order-record.print-template-input": {
+      "selector": "input[id='specId']"
+    },
+    "v2-sales-order-record.print-discount-option-input": {
+      "selector": "input[id='discountOption']"
+    },
+    "v2-sales-order-record.print-brand-name-option-input": {
+      "selector": "input[id='brandNameOption']"
+    },
+    "v2-sales-order-record.print-sku-option-input": {
+      "selector": "input[id='skuOption']"
+    },
+    "v2-sales-order-record.print-price-option-input": {
+      "selector": "input[id='priceOption']"
+    },
+    "v2-sales-order-record.print-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Print\"]"
+    },
+    "v2-sales-order-record.attachments-heading": {
+      "selector": "text=Upload New File"
+    },
+    "v2-sales.orders-create-button": {
+      "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+    },
+    "v2-sales.orders-import-button": {
+      "selector": "role=button[name=\"Import\"]"
+    },
+    "v2-sales.orders-ovision-button": {
+      "selector": "role=button[name*=\"oVision\"]"
+    },
+    "v2-sales.orders-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))"
+    },
+    "v2-sales.orders-empty-state": {
+      "selector": "text=No sales orders found"
+    },
+    "v2-sales.bulk-collect-button": {
+      "selector": "role=button[name=\"Collect\"]"
+    },
+    "v2-sales.bulk-release-button": {
+      "selector": "role=button[name=\"Release\"]"
+    },
+    "v2-sales.bulk-print-button": {
+      "selector": "role=button[name=\"Print\"]"
+    },
+    "v2-sales.bulk-lock-button": {
+      "selector": "role=button[name=\"Lock\"]"
+    },
+    "v2-sales.bulk-delete-button": {
+      "selector": "role=button[name=\"Delete\"]"
+    },
+    "v2-sales.bulk-collect-date-input": {
+      "selector": "input[id='collectionDate']"
+    },
+    "v2-sales.bulk-collect-reference-input": {
+      "selector": "input[id='referenceNumber']"
+    },
+    "v2-sales.filter-status-input": {
+      "selector": "input[id='status']"
+    },
+    "v2-sales.filter-delivery-status-input": {
+      "selector": "input[id='deliveryStatus']"
+    },
+    "v2-sales.filter-payment-status-input": {
+      "selector": "input[id='paymentStatus']"
+    },
+    "v2-sales.filter-customer-input": {
+      "selector": "input[id='customerIds']"
+    },
+    "v2-sales.filter-product-input": {
+      "selector": "input[id='productIds']"
+    },
+    "v2-sales.filter-payment-method-input": {
+      "selector": "input[id='paymentMethod']"
+    },
+    "v2-sales.filter-sales-channel-input": {
+      "selector": "input[id='salesChannelIds']"
+    },
+    "v2-sales.order-customer-input": {
+      "selector": "input[id='billing.customerId']"
+    },
+    "v2-sales.order-delivery-receipt-input": {
+      "selector": "input[id='billing.deliveryReceiptNumber']"
+    },
+    "v2-sales.order-remarks-input": {
+      "selector": "input[id='billing.remarks']"
+    },
+    "v2-sales.order-invoice-number-input": {
+      "selector": "input[id='payment.invoiceNumber']"
+    },
+    "v2-sales.order-reference-number-input": {
+      "selector": "input[id='payment.referenceNumber']"
+    },
+    "v2-sales.order-payment-terms-select": {
+      "selector": "div[id='payment.terms']"
+    },
+    "v2-sales.order-add-product-button": {
+      "selector": "role=button[name=\"Add product\"]"
+    },
+    "v2-sales.order-submit-create": {
+      "selector": "role=button[name=\"Save as Pending\"]"
+    },
+    "v2-sales.order-submit-update": {
+      "selector": "role=button[name=\"Save changes\"]"
+    },
+    "v2-sales.order-submit-saving": {
+      "selector": "role=button[name=\"Saving...\"]"
+    },
+    "v2-sales.order-save-as-quotation-button": {
+      "selector": "role=button[name=\"Save as Quotation\"]"
+    },
+    "v2-sales.order-cancel-button": {
+      "selector": "role=button[name=\"Cancel\"]"
+    },
+    "v2-sales.order-duplicate-button": {
+      "selector": "role=button[name=\"Duplicate\"]"
+    },
+    "v2-sales.order-override-button": {
+      "selector": "role=button[name=\"Override\"]"
+    },
+    "v2-sales.order-lock-button": {
+      "selector": "role=button[name=\"Lock\"]"
+    },
+    "v2-sales.order-print-button": {
+      "selector": "role=button[name=\"Print\"]"
+    },
+    "v2-sales.order-attach-file-button": {
+      "selector": "role=button[name=\"Attach file\"]"
+    },
+    "v2-sales.order-cancel-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel order\"]"
+    },
+    "v2-sales.order-delete-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Delete\"]"
+    },
+    "v2-sales.order-lock-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Lock order\"]"
+    },
+    "v2-sales.order-override-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Override order\"]"
+    },
+    "v2-sales.order-duplicate-confirm-button": {
+      "selector": "role=dialog >> role=button[name=\"Duplicate order\"]"
+    },
+    "v2-sales.dialog-dismiss-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+    },
+    "v3-analytics.tab-overview": {
+      "selector": "role=tab[name=\"OVERVIEW\"]"
+    },
+    "v3-analytics.tab-inventory": {
+      "selector": "role=tab[name=\"INVENTORY\"]"
+    },
+    "v3-analytics.tab-sales": {
+      "selector": "role=tab[name=\"SALES\"]"
+    },
+    "v3-analytics.tab-purchasing": {
+      "selector": "role=tab[name=\"PURCHASING\"]"
+    },
+    "v3-analytics.tab-logistics": {
+      "selector": "role=tab[name=\"LOGISTICS\"]"
+    },
+    "v3-analytics.tab-finances": {
+      "selector": "role=tab[name=\"FINANCES\"]"
+    },
+    "v3-analytics.tab-production": {
+      "selector": "role=tab[name=\"PRODUCTION\"]"
+    },
+    "v3-analytics.vat-mode-button": {
+      "selector": "role=button[name=\"VAT presentation mode\"]"
+    },
+    "v3-analytics.vat-inclusive-option": {
+      "selector": "role=menuitem[name=\"Show VAT-inclusive amounts\"]"
+    },
+    "v3-analytics.vat-exclusive-option": {
+      "selector": "role=menuitem[name=\"Show VAT-exclusive amounts\"]"
+    },
+    "v3-analytics.drawer-next-page-button": {
+      "selector": "role=button[name=\"Next page\"]"
+    },
+    "v3-analytics.drawer-previous-page-button": {
+      "selector": "role=button[name=\"Previous page\"]"
+    },
+    "v3-analytics.report-close-drawer-button": {
+      "selector": "role=button[name=\"Close drawer\"]"
+    }
+  }
+}

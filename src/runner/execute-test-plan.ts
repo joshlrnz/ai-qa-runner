@@ -1,6 +1,7 @@
 import { expect, type Page } from '@playwright/test'
 import type { PlanParams, TestStep } from '@/contracts/test-plan'
 import { substituteParams } from './substitute-params'
+import { describeTestStep } from '@/lib/describe-test-step'
 
 export async function executeTestStep(page: Page, step: TestStep, params: PlanParams) {
   switch (step.action) {
@@ -25,17 +26,4 @@ export async function executeTestStep(page: Page, step: TestStep, params: PlanPa
   }
 }
 
-export function describeTestStep(step: TestStep) {
-  switch (step.action) {
-    case 'navigate':
-      return `Navigate to ${step.path}`
-    case 'click':
-      return `Click ${step.selector}`
-    case 'fill':
-      return `Fill ${step.selector}`
-    case 'assertVisible':
-      return `Verify ${step.selector} is visible`
-    case 'assertText':
-      return `Verify ${step.selector} contains expected text`
-  }
-}
+export { describeTestStep }
