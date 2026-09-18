@@ -405,16 +405,25 @@ export function findSelectors(query: string, limit = 12) {
     }))
 }
 
-export function lookupSelector(selector: string): SelectorCandidate | null {
+function normaliseSelector(selector: string) {
+  return selector.replace(/\s+/g, ' ').replace(/["\u2018\u2019\u201c\u201d]/g, "'").trim()
+}
+
+// A selector can belong to several targets: the same DETAILS tab exists on ten
+// record pages, scoped by which page the plan is on. Returning one arbitrarily
+// reports another page's confidence, so callers get all of them.
+export function lookupSelectors(selector: string): SelectorCandidate[] {
   const { compiled, groupByTarget } = load()
   const unresolved = new Set(Object.keys(compiled.unresolvedTargets))
+  const wanted = normaliseSelector(selector)
+  const matches: SelectorCandidate[] = []
 
   for (const [name, target] of Object.entries(compiled.targets)) {
-    if (target.selector !== selector || unresolved.has(name)) {
+    if (normaliseSelector(target.selector) !== wanted || unresolved.has(name)) {
       continue
     }
 
-    return {
+    matches.push({
       name,
       selector: target.selector,
       module: target.module,
@@ -422,10 +431,35 @@ export function lookupSelector(selector: string): SelectorCandidate | null {
       group: groupByTarget.get(name) ?? null,
       note: target.note ?? null,
       params: readParams(target.selector)
+    })
+  }
+
+  return matches.sort((a, b) => confidenceRank[a.confidence] - confidenceRank[b.confidence])
+}
+
+// Excluding the known-ambiguous targets by name does not stop a selector being
+// rebuilt from parts, so plans are checked against their selectors too.
+export function findAmbiguousMatch(selector: string): UnresolvedTarget | null {
+  const { compiled } = load()
+  const wanted = normaliseSelector(selector)
+
+  for (const [name, entry] of Object.entries(compiled.unresolvedTargets)) {
+    if (normaliseSelector(entry.selector) === wanted) {
+      return { name, module: entry.module, selector: entry.selector, reason: entry.reason }
     }
   }
 
   return null
+}
+
+export function listFlows(module: string): string[] {
+  const section = getModuleSection(module, 'Flows')
+
+  if (!section) {
+    return []
+  }
+
+  return [...section.content.matchAll(/^###\s+(.+)$/gm)].map((match) => match[1].trim())
 }
 
 export function lookupPath(pagePath: string): PageEntry | null {

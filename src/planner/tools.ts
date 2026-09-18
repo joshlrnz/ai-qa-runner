@@ -4,7 +4,8 @@ import {
   blockedResultSchema,
   clarificationAnswersSchema,
   clarificationRequestSchema,
-  plannedResultSchema
+  plannedResultSchema,
+  sourceFlowSchema
 } from '../contracts/plan-request'
 import { testPlanSchema } from '../contracts/test-plan'
 import { validatePlan } from './validate-plan'
@@ -12,6 +13,7 @@ import {
   findPages,
   findSelectors,
   getModuleSection,
+  listFlows,
   listModules,
   listParams,
   listUnresolvedTargets,
@@ -156,17 +158,29 @@ export const listUnresolvedTargetsTool = createTool({
   execute: async () => ({ targets: listUnresolvedTargets() })
 })
 
+export const listFlowsTool = createTool({
+  id: 'list_flows',
+  description:
+    'List the documented flow names in a module. Cite the ones you reproduce in create_plan, so a reader can tell a recorded sequence from one you composed.',
+  inputSchema: z.object({ module: z.string() }),
+  outputSchema: z.object({ flows: z.array(z.string()) }),
+  execute: async ({ module }) => ({ flows: listFlows(module) })
+})
+
 export const validatePlanTool = createTool({
   id: 'validate_plan',
   description:
     'Check a candidate plan before committing to it. Returns errors that must be fixed and warnings you should explain. Call this whenever you are unsure, as often as you like.',
-  inputSchema: z.object({ plan: testPlanSchema }),
+  inputSchema: z.object({
+    plan: testPlanSchema,
+    sourceFlows: z.array(sourceFlowSchema).optional()
+  }),
   outputSchema: z.object({
     valid: z.boolean(),
     errors: z.array(z.string()),
     warnings: z.array(z.string())
   }),
-  execute: async ({ plan }) => validatePlan(plan)
+  execute: async ({ plan, sourceFlows }) => validatePlan(plan, { sourceFlows })
 })
 
 export const createPlanTool = createTool({
@@ -181,6 +195,11 @@ export const createPlanTool = createTool({
     sourceModules: z
       .array(z.string())
       .describe('Knowledge base modules this plan was built from.'),
+    sourceFlows: z
+      .array(sourceFlowSchema)
+      .describe(
+        'Documented flows this plan reproduces, by module and exact flow heading. Empty when you composed the steps yourself from targets.'
+      ),
     warnings: z
       .array(z.string())
       .describe('Anything the reader should distrust, including selectors you derived yourself.')
@@ -191,8 +210,8 @@ export const createPlanTool = createTool({
     warnings: z.array(z.string()),
     planned: plannedResultSchema.nullable()
   }),
-  execute: async ({ plan, assumptions, sourceModules, warnings }) => {
-    const validation = validatePlan(plan)
+  execute: async ({ plan, assumptions, sourceModules, sourceFlows, warnings }) => {
+    const validation = validatePlan(plan, { sourceFlows })
     const allWarnings = [...warnings, ...validation.warnings]
 
     if (!validation.valid) {
@@ -213,6 +232,7 @@ export const createPlanTool = createTool({
         plan: testPlanSchema.parse(plan),
         assumptions,
         sourceModules,
+        sourceFlows,
         warnings: allWarnings
       }
     }
@@ -262,7 +282,8 @@ export const readOnlyPlannerTools = {
   findPagesTool,
   findSelectorsTool,
   listParamsTool,
-  listUnresolvedTargetsTool
+  listUnresolvedTargetsTool,
+  listFlowsTool
 }
 
 export const plannerTools = {

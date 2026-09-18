@@ -1,11 +1,17 @@
 import { z } from 'zod'
 import { testPlanSchema } from './test-plan'
 
+export const sourceFlowSchema = z.object({
+  module: z.string().min(1),
+  flow: z.string().min(1)
+})
+
 export const plannedResultSchema = z.object({
   status: z.literal('planned'),
   plan: testPlanSchema,
   assumptions: z.array(z.string()),
   sourceModules: z.array(z.string()),
+  sourceFlows: z.array(sourceFlowSchema),
   warnings: z.array(z.string())
 })
 

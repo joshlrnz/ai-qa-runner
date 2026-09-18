@@ -72,6 +72,12 @@ targets at all, so a plan that fills a finance form cannot be built from this kn
 5. Call create_plan exactly once, with a plan that passes. If it comes back accepted:false, fix
    the errors it lists and call it again.
 
+Cite in sourceFlows every documented flow you reproduce, by module and exact heading, using
+list_flows to get the headings right. A plan that reproduces a recorded flow inherits its
+ordering and preconditions; a plan you composed from targets does not, and the reader has to
+know which one they are holding. Leave sourceFlows empty rather than citing a flow you did
+not follow.
+
 Record in warnings any selector you did not take from the knowledge base, any selector below
 high confidence, and any module whose targets were largely unprobed. Record in assumptions
 anything the instruction did not say that you decided.
