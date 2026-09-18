@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { BarChart3, Library, MessageSquarePlus, Package, PlayCircle, Truck } from 'lucide-react'
+import { Library, MessageSquarePlus, PlayCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { SidebarNavItem } from './SidebarNavItem'
 import { KnowledgeBaseCard } from './KnowledgeBaseCard'
@@ -40,13 +40,6 @@ export function Sidebar() {
         style={{ margin: '4px 8px 0', alignSelf: 'flex-start' }}
         priority
       />
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <div style={SECTION_LABEL_STYLE}>Operations</div>
-        <SidebarNavItem icon={<BarChart3 size={18} />} label='Sales' active={false} />
-        <SidebarNavItem icon={<Package size={18} />} label='Inventory' active={false} />
-        <SidebarNavItem icon={<Truck size={18} />} label='Suppliers' active={false} />
-      </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <div style={SECTION_LABEL_STYLE}>Quality</div>
