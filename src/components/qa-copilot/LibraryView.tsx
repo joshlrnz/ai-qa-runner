@@ -1,8 +1,9 @@
 'use client'
 
-import { Library } from 'lucide-react'
+import { Download, Library } from 'lucide-react'
 import type { RunStatus } from '@/contracts/test-run'
 import type { SavedTest } from '@/contracts/saved-test'
+import { createPlaywrightTestFile } from '@/export/playwright-test-file'
 import { Badge, type BadgeTone } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -43,6 +44,21 @@ function describeParams(savedTest: SavedTest) {
   }
 
   return `Needs ${names.join(', ')}`
+}
+
+function downloadPlaywrightTest(savedTest: SavedTest) {
+  const { fileName, source } = createPlaywrightTestFile(savedTest)
+  const url = URL.createObjectURL(
+    new Blob([source], { type: 'text/typescript;charset=utf-8' })
+  )
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = fileName
+  document.body.append(link)
+  link.click()
+  link.remove()
+  window.setTimeout(() => URL.revokeObjectURL(url), 0)
 }
 
 export function LibraryView() {
@@ -141,7 +157,7 @@ export function LibraryView() {
                     ...CELL_STYLE,
                     textAlign: 'right',
                     fontWeight: 600,
-                    width: 120
+                    width: 240
                   }}
                 />
               </tr>
@@ -173,9 +189,20 @@ export function LibraryView() {
                     )}
                   </td>
                   <td style={{ ...CELL_STYLE, textAlign: 'right' }}>
-                    <Button hierarchy="secondary" size="sm" onClick={() => openSavedTest(savedTest)}>
-                      Open
-                    </Button>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
+                      <Button
+                        hierarchy="secondary"
+                        size="sm"
+                        aria-label={`Download ${savedTest.name} as a Playwright test`}
+                        onClick={() => downloadPlaywrightTest(savedTest)}
+                      >
+                        <Download size={14} aria-hidden="true" />
+                        Playwright
+                      </Button>
+                      <Button hierarchy="secondary" size="sm" onClick={() => openSavedTest(savedTest)}>
+                        Open
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
