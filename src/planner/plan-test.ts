@@ -37,8 +37,59 @@ export class UnknownPlanRunError extends Error {
 }
 
 // Research, clarification and validation run well past Mastra's default of 5 steps.
+// Each step is one HTTP call carrying the whole history, so fewer steps means fewer
+// chances of a dropped connection. Raise QA_PLANNER_MAX_STEPS if plans come back thin.
 export function getPlannerMaxSteps() {
-  return Number(process.env.QA_PLANNER_MAX_STEPS ?? 40)
+  return Number(process.env.QA_PLANNER_MAX_STEPS ?? 20)
+}
+
+function getPlannerAttempts() {
+  return Number(process.env.QA_PLANNER_ATTEMPTS ?? 3)
+}
+
+// The upstream call returns 200 and then dies mid-body, which the AI SDK marks
+// isRetryable: false. It is a dropped socket, not a rejected request, so it is worth retrying.
+function isDroppedConnection(error: unknown) {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  if (error.message.includes('Failed to process successful response')) {
+    return true
+  }
+
+  let cause: unknown = error.cause
+
+  while (cause instanceof Error) {
+    const code = (cause as Error & { code?: string }).code
+
+    if (code === 'ETIMEDOUT' || code === 'ECONNRESET' || cause.message === 'terminated') {
+      return true
+    }
+
+    cause = cause.cause
+  }
+
+  return false
+}
+
+async function withRetry<T>(operation: () => Promise<T>): Promise<T> {
+  const attempts = getPlannerAttempts()
+  let lastError: unknown = null
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await operation()
+    } catch (error) {
+      lastError = error
+
+      if (!isDroppedConnection(error) || attempt === attempts) {
+        throw error
+      }
+    }
+  }
+
+  throw lastError
 }
 
 function getPlannerAgent() {
@@ -106,44 +157,8 @@ function toAttempt(run: AgentRun): PlanAttempt {
   return attempt
 }
 
-// Model calls fail at the network layer now and then: a stalled read while the
-// response body streams (read ETIMEDOUT), a reset, a dropped keep-alive. The
-// provider has already done the work, so a short retry is cheap and usually
-// enough. Anything that is not a transport error is rethrown as is.
-const transportErrorPattern = /ETIMEDOUT|ECONNRESET|ECONNREFUSED|EAI_AGAIN|terminated|socket hang up|fetch failed|Cannot connect to API/i
-
-function isTransportError(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return false
-  }
-
-  return transportErrorPattern.test(error.message) || isTransportError(error.cause)
-}
-
-export function getPlannerTransportRetries() {
-  return Number(process.env.QA_PLANNER_TRANSPORT_RETRIES ?? 2)
-}
-
-async function withTransportRetry<T>(label: string, call: () => Promise<T>): Promise<T> {
-  const retries = getPlannerTransportRetries()
-
-  for (let attempt = 0; ; attempt += 1) {
-    try {
-      return await call()
-    } catch (error) {
-      if (!isTransportError(error) || attempt >= retries) {
-        throw error
-      }
-
-      const delayMs = 2000 * (attempt + 1)
-      console.warn(`[planner] ${label}: transport error, retrying in ${delayMs}ms (${attempt + 1}/${retries})`)
-      await new Promise((resolve) => setTimeout(resolve, delayMs))
-    }
-  }
-}
-
 export async function planTest(instruction: string): Promise<PlanAttempt> {
-  const run = await withTransportRetry('generate', () =>
+  const run = await withRetry(() =>
     getPlannerAgent().generate(instruction, { maxSteps: getPlannerMaxSteps() })
   )
   return toAttempt(run as AgentRun)
@@ -154,7 +169,7 @@ export async function resumePlanTest(
   answers: ClarificationAnswers
 ): Promise<PlanAttempt> {
   try {
-    const run = await withTransportRetry('resume', () =>
+    const run = await withRetry(() =>
       getPlannerAgent().resumeGenerate(answers, {
         runId,
         maxSteps: getPlannerMaxSteps()

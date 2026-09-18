@@ -94,6 +94,11 @@ requiredParams; the values are supplied per run, never by you.
   Treat "the X page" as the \`/companies/{companyId}/v2/...\` page.
 - companyId is supplied by the run environment. Declare it (almost every path needs it) but never
   ask the user about it in request_clarification and never list it under inferredParams.
+- Parameters are INPUTS, never expectations. A value the application itself produces — toast copy,
+  generated codes, computed totals, status words — must never become a parameter. A plan whose
+  expected value is supplied at run time can never fail: whatever the user types becomes the
+  assertion. If you do not know the expected text, assert the element's presence with
+  assertVisible, or assert a structural outcome the knowledge base does name.
 
 ## Trusting the knowledge base
 

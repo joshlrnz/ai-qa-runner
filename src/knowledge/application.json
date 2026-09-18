@@ -366,10 +366,10 @@
       "selector": "role=navigation[name=\"breadcrumb\"]"
     },
     "shell.toast": {
-      "selector": "role=alert"
+      "selector": "[role=\"alert\"]:not(#__next-route-announcer__)"
     },
     "shell.toast-close-button": {
-      "selector": "role=alert >> role=button[name=\"close\"]"
+      "selector": "[role=\"alert\"]:not(#__next-route-announcer__) >> role=button[name=\"close\"]"
     },
     "shell.dialog-cancel-button": {
       "selector": "role=dialog >> role=button[name=\"Cancel\"]"
