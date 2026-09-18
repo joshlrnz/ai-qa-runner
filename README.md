@@ -53,7 +53,7 @@ curl -X POST http://localhost:3000/api/runs \
     "name": "Open the authenticated oboda dashboard",
     "steps": [
       { "action": "navigate", "path": "/" },
-      { "action": "assertText", "target": "inventory-alerts-heading", "value": "Inventory Alerts" }
+      { "action": "assertText", "selector": "h2:has-text('Inventory Alerts')", "value": "Inventory Alerts" }
     ]
   }
 }
@@ -75,11 +75,30 @@ When the run finishes, open the returned `reportUrl` in the browser.
 - `navigate`
 - `click`
 - `fill`
-- `select`
 - `assertVisible`
 - `assertText`
 
-The runner resolves logical target names through `src/knowledge/application.json`. It rejects unknown targets and paths.
+Steps carry Playwright selector strings directly. The runner performs no name lookup and reads no
+knowledge file.
+
+`select` is not part of the contract. The application renders dropdowns as MUI comboboxes rather
+than native `<select>` elements, and Playwright's `selectOption()` throws on those. Drive a
+dropdown by clicking the combobox and then clicking the option.
+
+## Parameters
+
+A path, selector or value may contain `{paramName}` placeholders. A plan declares what it needs:
+
+```json
+{
+  "requiredParams": {
+    "companyId": { "description": "Company the run operates in.", "secret": false }
+  }
+}
+```
+
+The runner substitutes bound values before each step. A referenced parameter with no bound value
+throws `Unbound plan parameter: <name>`.
 
 ## Checks
 

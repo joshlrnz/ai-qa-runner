@@ -1,5 +1,6 @@
 {
   "name": "Open the authenticated oboda dashboard",
+  "requiredParams": {},
   "steps": [
     {
       "action": "navigate",
@@ -7,7 +8,7 @@
     },
     {
       "action": "assertText",
-      "target": "inventory-alerts-heading",
+      "selector": "h2:has-text('Inventory Alerts')",
       "value": "Inventory Alerts"
     }
   ]

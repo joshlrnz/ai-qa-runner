@@ -6,11 +6,12 @@ import { describeTestStep, executeTestStep } from '@/runner/execute-test-plan'
 
 const planPath = path.resolve(process.env.TEST_PLAN_PATH ?? path.join('plans', 'smoke.json'))
 const plan = testPlanSchema.parse(JSON.parse(readFileSync(planPath, 'utf8')))
+const params = {}
 
 test(plan.name, async ({ page }) => {
   for (const step of plan.steps) {
     await test.step(describeTestStep(step), async () => {
-      await executeTestStep(page, step)
+      await executeTestStep(page, step, params)
     })
   }
 })

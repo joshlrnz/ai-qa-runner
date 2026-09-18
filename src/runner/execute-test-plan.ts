@@ -1,45 +1,27 @@
 import { expect, type Page } from '@playwright/test'
-import applicationKnowledge from '@/knowledge/application.json'
-import type { TestStep } from '@/contracts/test-plan'
+import type { PlanParams, TestStep } from '@/contracts/test-plan'
+import { substituteParams } from './substitute-params'
 
-type TargetName = keyof typeof applicationKnowledge.targets
-
-function resolveTarget(target: string) {
-  if (!(target in applicationKnowledge.targets)) {
-    throw new Error(`Unknown target: ${target}`)
-  }
-
-  return applicationKnowledge.targets[target as TargetName].selector
-}
-
-function assertKnownPath(path: string) {
-  const knownPaths = new Set(Object.values(applicationKnowledge.pages))
-
-  if (!knownPaths.has(path)) {
-    throw new Error(`Unknown application path: ${path}`)
-  }
-}
-
-export async function executeTestStep(page: Page, step: TestStep) {
+export async function executeTestStep(page: Page, step: TestStep, params: PlanParams) {
   switch (step.action) {
     case 'navigate':
-      assertKnownPath(step.path)
-      await page.goto(step.path)
+      await page.goto(substituteParams(step.path, params))
       return
     case 'click':
-      await page.locator(resolveTarget(step.target)).click()
+      await page.locator(substituteParams(step.selector, params)).click()
       return
     case 'fill':
-      await page.locator(resolveTarget(step.target)).fill(step.value)
-      return
-    case 'select':
-      await page.locator(resolveTarget(step.target)).selectOption({ label: step.value })
+      await page
+        .locator(substituteParams(step.selector, params))
+        .fill(substituteParams(step.value, params))
       return
     case 'assertVisible':
-      await expect(page.locator(resolveTarget(step.target))).toBeVisible()
+      await expect(page.locator(substituteParams(step.selector, params))).toBeVisible()
       return
     case 'assertText':
-      await expect(page.locator(resolveTarget(step.target))).toContainText(step.value)
+      await expect(page.locator(substituteParams(step.selector, params))).toContainText(
+        substituteParams(step.value, params)
+      )
   }
 }
 
@@ -48,14 +30,12 @@ export function describeTestStep(step: TestStep) {
     case 'navigate':
       return `Navigate to ${step.path}`
     case 'click':
-      return `Click ${step.target}`
+      return `Click ${step.selector}`
     case 'fill':
-      return `Fill ${step.target}`
-    case 'select':
-      return `Select ${step.value} in ${step.target}`
+      return `Fill ${step.selector}`
     case 'assertVisible':
-      return `Verify ${step.target} is visible`
+      return `Verify ${step.selector} is visible`
     case 'assertText':
-      return `Verify ${step.target} contains expected text`
+      return `Verify ${step.selector} contains expected text`
   }
 }
