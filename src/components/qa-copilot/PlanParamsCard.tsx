@@ -3,8 +3,12 @@
 import { useQaCopilot } from './QaCopilotContext'
 
 export function PlanParamsCard() {
-  const { plan, paramValues, setParamValue } = useQaCopilot()
-  const requirements = plan ? Object.entries(plan.requiredParams) : []
+  const { plan, paramValues, setParamValue, environmentParams } = useQaCopilot()
+  // Parameters the server binds from its environment (the configured test
+  // account) are not asked for; the card only lists what nobody else can supply.
+  const requirements = plan
+    ? Object.entries(plan.requiredParams).filter(([name]) => !environmentParams.includes(name))
+    : []
 
   if (requirements.length === 0) {
     return null

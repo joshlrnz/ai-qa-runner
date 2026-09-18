@@ -6,7 +6,7 @@ running app) has not been done.**
 
 | module | routes | targets | named flows | status | lastUpdated |
 | --- | --- | --- | --- | --- | --- |
-| shell | 23 | 51 | 10 | drafted | 2026-09-18 |
+| shell | 23 | 57 | 11 | drafted | 2026-09-18 |
 | v2-sales | 26 | 44 | 16 | drafted | 2026-09-18 |
 | v2-sales-order-record | 1 | 47 | 14 | drafted | 2026-09-18 |
 | v2-purchasing | 23 | 52 | 15 | drafted | 2026-09-18 |

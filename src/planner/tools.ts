@@ -233,7 +233,8 @@ export const createPlanTool = createTool({
         assumptions,
         sourceModules,
         sourceFlows,
-        warnings: allWarnings
+        warnings: allWarnings,
+        environmentParams: []
       }
     }
   }

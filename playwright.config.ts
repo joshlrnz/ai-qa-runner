@@ -43,6 +43,8 @@ export default defineConfig({
   outputDir: path.join(runOutputDirectory, 'test-results'),
   reporter: [
     ['list'],
+    // Per-step outcomes for the run API: which step failed and with what error.
+    ['json', { outputFile: path.join(runOutputDirectory, 'results.json') }],
     [
       'html',
       {

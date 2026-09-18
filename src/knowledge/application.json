@@ -371,6 +371,9 @@
     "shell.toast-close-button": {
       "selector": "role=alert >> role=button[name=\"close\"]"
     },
+    "shell.dialog-cancel-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+    },
     "shell.companies-list-item": {
       "selector": "role=button[name=\"{companyName}\"]"
     },
@@ -415,6 +418,21 @@
     },
     "shell.table-first-row-with-text-link": {
       "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> a >> nth=0"
+    },
+    "shell.table-first-row-action": {
+      "selector": "role=table >> tbody tr >> nth=0 >> text={actionLabel}"
+    },
+    "shell.table-first-row-with-text-action": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> text={actionLabel}"
+    },
+    "shell.dialog-field-prefilled": {
+      "selector": "role=dialog >> [data-field='{fieldName}'] input[value]:not([value=''])"
+    },
+    "shell.dialog-field-value-contains": {
+      "selector": "role=dialog >> [data-field='{fieldName}'] input[value*='{valueText}']"
+    },
+    "shell.dialog-field-value-without": {
+      "selector": "role=dialog >> [data-field='{fieldName}'] input[value]:not([value*='{valueText}'])"
     },
     "shell.table-select-all-matching-link": {
       "selector": "text=Select all"

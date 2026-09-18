@@ -12,7 +12,10 @@ export const plannedResultSchema = z.object({
   assumptions: z.array(z.string()),
   sourceModules: z.array(z.string()),
   sourceFlows: z.array(sourceFlowSchema),
-  warnings: z.array(z.string())
+  warnings: z.array(z.string()),
+  // Declared parameters the server binds from its environment (QA_PARAM_*),
+  // so the UI need not ask for them. Filled in by the API routes.
+  environmentParams: z.array(z.string()).default([])
 })
 
 export const blockedResultSchema = z.object({
@@ -51,7 +54,8 @@ export const needsInputResultSchema = z.object({
   status: z.literal('needs_input'),
   runId: z.string().min(1),
   questions: z.array(clarificationQuestionSchema),
-  inferredParams: z.array(inferredParamSchema)
+  inferredParams: z.array(inferredParamSchema),
+  environmentParams: z.array(z.string()).default([])
 })
 
 export const planResultSchema = z.discriminatedUnion('status', [

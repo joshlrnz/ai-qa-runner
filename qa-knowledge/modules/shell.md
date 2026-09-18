@@ -1,8 +1,8 @@
 ---
 module: shell
 routes: 23
-targets: 51
-flows: 10
+targets: 57
+flows: 11
 status: drafted
 lastUpdated: 2026-09-18
 ---
@@ -143,6 +143,7 @@ click the section tile immediately beforehand.
 | `shell.breadcrumb` | navigation "breadcrumb" | `role=navigation[name="breadcrumb"]` | `Navbar/Breadcrumbs.tsx:14` | high | last crumb is the page name — `assertText` against this is the cheapest "am I on the right page" check **verified 2026-09-17**: 1 match. |
 | `shell.toast` | alert | `role=alert` | `Toast/Toast.tsx:54` | high | MUI `Alert`; carries both success and error copy **verified 2026-09-17**: 1 match. |
 | `shell.toast-close-button` | button "close" | `role=alert >> role=button[name="close"]` | `Toast/Toast.tsx:90` | medium | |
+| `shell.dialog-cancel-button` | button "Cancel" inside any open dialog | `role=dialog >> role=button[name="Cancel"]` | MUI `Dialog` actions | high | **verified 2026-09-18** on the product quick-adjust dialog: 1 match. Closes without saving; the read-only way out of any dialog a flow opened |
 
 ### Company picker (`/companies`)
 
@@ -171,6 +172,11 @@ targets are defined once here and referenced by module files rather than redefin
 | `shell.table-first-row-with-text` | first row whose cells contain `{rowText}` | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0` | `_common/DataGrid/index.tsx` | high | **verified 2026-09-18** on `/v2/quotations` with `rowText` = `rejected`: 1 match. `has-text` is a case-insensitive substring, so a status word from the instruction works as typed. **`rowText` comes from the instruction, not from the caller**: "observe the rejected quotations" binds `rejected` |
 | `shell.table-first-row-with-text-checkbox` | that row's checkbox | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> role=checkbox` | `_common/DataGrid/index.tsx:170` | high | **verified 2026-09-18**: 1 match, enabled, checks on click and the bulk action bar appears |
 | `shell.table-first-row-with-text-link` | that row's record link | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> a >> nth=0` | `_common/DataGrid/index.tsx` | medium | opens the record on lists whose code cell is a link (sales orders, quotations, customers). Not on products — see `v2-inventory.product-row` |
+| `shell.table-first-row-action` | a control inside the first row, by its visible label | `role=table >> tbody tr >> nth=0 >> text={actionLabel}` | `_common/DataGrid` row action cells | high | **verified 2026-09-18** on `/v2/products` with `actionLabel` = `Subtract`: 1 match, opens the quick-adjust dialog. Row actions are plain text spans, not `role=button`, so `text=` is the only handle. `actionLabel` comes from the instruction |
+| `shell.table-first-row-with-text-action` | a control inside the first row matching `{rowText}`, by its label | `role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> text={actionLabel}` | `_common/DataGrid` row action cells | high | same, for a row picked by status or name |
+| `shell.dialog-field-prefilled` | a dialog form field that already holds a value | `role=dialog >> [data-field='{fieldName}'] input[value]:not([value=''])` | `_common/Form` | high | **verified 2026-09-18** with `fieldName` = `locationId`: 1 match. For "the field should default to …" checks when the expected value is not known up front. `fieldName` is the `data-field` from the module's form-field table |
+| `shell.dialog-field-value-contains` | a dialog field whose value contains `{valueText}` | `role=dialog >> [data-field='{fieldName}'] input[value*='{valueText}']` | `_common/Form` | high | **verified 2026-09-18** with `locationId` / `Manila Warehouse`: 1 match. `assertText` cannot read an input, so the value is matched in the selector |
+| `shell.dialog-field-value-without` | a dialog field whose value does **not** contain `{valueText}` | `role=dialog >> [data-field='{fieldName}'] input[value]:not([value*='{valueText}'])` | `_common/Form` | high | for "should not default to X" checks — `valueText` is the wrong value named in the bug report, e.g. `Unit(s)` |
 | `shell.table-select-all-matching-link` | text "Select all N" | `text=Select all` | `_common/DataGrid/SelectionBar.tsx:100` | low | a clickable `Typography`, **not a button** — no role. The visible text embeds a live count, so the selector matches on a prefix |
 | `shell.table-clear-selection-link` | text "Clear selection" | `text=Clear selection` | `_common/DataGrid/SelectionBar.tsx:103` | low | as above; label unconfirmed |
 | `shell.select-option` | option, name = `{optionLabel}` | `role=option[name="{optionLabel}"]` | `_common/Form/Select.tsx:41` | medium | the second half of the two-click `select` workaround — see Contract gaps |
@@ -277,6 +283,23 @@ action bar; nothing is clicked in it.
 Step 3 fails with a selector error when no such row is on the page, which is the honest outcome
 for an empty fixture. Use `shell.table-first-row-with-text-link` in place of step 4 to open the
 record instead. **verified 2026-09-18** end to end on `/v2/quotations` with `rejected`.
+
+### Open a row action on any record and check a dialog field
+
+Preconditions: a v2 list page whose rows carry text actions (products: Add / Subtract /
+Transfer). `<actionLabel>`, `<fieldName>` and `<valueText>` come from the instruction and the
+module's form-field table, never from the caller. Read-only: the dialog is cancelled.
+
+1. `navigate` → `<list path>`
+2. `assertText` → `shell.breadcrumb` contains `<page name>`
+3. `click` → `shell.table-first-row-action` with `actionLabel` = `<the action named>`
+4. `assertVisible` → `shell.dialog-field-prefilled` with `fieldName` = `<the field under test>`
+5. `assertVisible` → `shell.dialog-field-value-without` with `valueText` = `<the wrong value the report names>`
+6. `click` → `shell.dialog-cancel-button`
+
+Use `shell.table-first-row-with-text-action` at step 3 when the instruction restricts the record
+by status or name. **verified 2026-09-18** end to end on `/v2/products` with Subtract /
+`locationId` / `Unit(s)`.
 
 ### Sort and configure columns on a list
 

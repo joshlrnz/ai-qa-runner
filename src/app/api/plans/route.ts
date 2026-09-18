@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { planTest } from '@/planner/plan-test'
+import { withEnvironmentParams } from '@/runner/environment-params'
 
 export const runtime = 'nodejs'
 export const maxDuration = 300
@@ -32,5 +33,5 @@ export async function POST(request: Request) {
     )
   }
 
-  return NextResponse.json(attempt.result)
+  return NextResponse.json(withEnvironmentParams(attempt.result))
 }

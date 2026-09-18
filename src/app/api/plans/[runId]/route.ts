@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { clarificationAnswersSchema } from '@/contracts/plan-request'
 import { resumePlanTest, UnknownPlanRunError } from '@/planner/plan-test'
+import { withEnvironmentParams } from '@/runner/environment-params'
 
 export const runtime = 'nodejs'
 export const maxDuration = 300
@@ -37,7 +38,7 @@ export async function POST(request: Request, context: RouteContext) {
       )
     }
 
-    return NextResponse.json(attempt.result)
+    return NextResponse.json(withEnvironmentParams(attempt.result))
   } catch (error) {
     if (error instanceof UnknownPlanRunError) {
       return NextResponse.json({ error: error.message }, { status: 404 })

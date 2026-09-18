@@ -203,6 +203,21 @@
       "description": "Visible text that picks a row in a list — a status word such as rejected, or a name. Case-insensitive substring. Taken from the instruction, not supplied by the caller.",
       "source": "instruction",
       "scope": "flow"
+    },
+    "actionLabel": {
+      "description": "Visible label of a row action or button named in the instruction, e.g. Subtract. Taken from the instruction, not supplied by the caller.",
+      "source": "instruction",
+      "scope": "flow"
+    },
+    "fieldName": {
+      "description": "The data-field of a form field under test, from the module's form-field table, e.g. locationId. Taken from the knowledge base, not supplied by the caller.",
+      "source": "instruction",
+      "scope": "flow"
+    },
+    "valueText": {
+      "description": "Text expected in, or absent from, a field value, e.g. the wrong default a bug report names. Taken from the instruction, not supplied by the caller.",
+      "source": "instruction",
+      "scope": "flow"
     }
   },
   "pages": {
@@ -704,6 +719,12 @@
       "module": "shell",
       "confidence": "medium"
     },
+    "shell.dialog-cancel-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18** on the product quick-adjust dialog: 1 match. Closes without saving; the read-only way out of any dialog a flow opened"
+    },
     "shell.companies-list-item": {
       "selector": "role=button[name=\"{companyName}\"]",
       "module": "shell",
@@ -790,6 +811,36 @@
       "module": "shell",
       "confidence": "medium",
       "note": "opens the record on lists whose code cell is a link (sales orders, quotations, customers). Not on products — see `v2-inventory.product-row`"
+    },
+    "shell.table-first-row-action": {
+      "selector": "role=table >> tbody tr >> nth=0 >> text={actionLabel}",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18** on `/v2/products` with `actionLabel` = `Subtract`: 1 match, opens the quick-adjust dialog. Row actions are plain text spans, not `role=button`, so `text=` is the only handle. `actionLabel` comes from the instruction"
+    },
+    "shell.table-first-row-with-text-action": {
+      "selector": "role=table >> tr:has(td:has-text('{rowText}')) >> nth=0 >> text={actionLabel}",
+      "module": "shell",
+      "confidence": "high",
+      "note": "same, for a row picked by status or name"
+    },
+    "shell.dialog-field-prefilled": {
+      "selector": "role=dialog >> [data-field='{fieldName}'] input[value]:not([value=''])",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18** with `fieldName` = `locationId`: 1 match. For \"the field should default to …\" checks when the expected value is not known up front. `fieldName` is the `data-field` from the module's form-field table"
+    },
+    "shell.dialog-field-value-contains": {
+      "selector": "role=dialog >> [data-field='{fieldName}'] input[value*='{valueText}']",
+      "module": "shell",
+      "confidence": "high",
+      "note": "**verified 2026-09-18** with `locationId` / `Manila Warehouse`: 1 match. `assertText` cannot read an input, so the value is matched in the selector"
+    },
+    "shell.dialog-field-value-without": {
+      "selector": "role=dialog >> [data-field='{fieldName}'] input[value]:not([value*='{valueText}'])",
+      "module": "shell",
+      "confidence": "high",
+      "note": "for \"should not default to X\" checks — `valueText` is the wrong value named in the bug report, e.g. `Unit(s)`"
     },
     "shell.table-select-all-matching-link": {
       "selector": "text=Select all",

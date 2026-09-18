@@ -60,6 +60,16 @@ export async function answerPlanQuestions(
   return planResultSchema.parse(await postJson(`/api/plans/${runId}`, answers))
 }
 
+export type RunFailure = { stepIndex: number; title: string; error: string | null }
+
+export async function repairPlan(
+  instruction: string,
+  plan: TestPlan,
+  failure: RunFailure
+): Promise<PlanResult> {
+  return planResultSchema.parse(await postJson('/api/plans/repair', { instruction, plan, failure }))
+}
+
 export async function startTestRun(plan: TestPlan, params: PlanParams) {
   return startRunResponseSchema.parse(await postJson('/api/runs', { plan, params }))
 }

@@ -13,7 +13,7 @@ import type { PlanParams, TestPlan } from '@/contracts/test-plan'
 import type { ClarificationQuestion, PlanResult } from '@/contracts/plan-request'
 import type { TestRun } from '@/contracts/test-run'
 import type { ChatMessage, SavedCase, WorkspaceView } from '@/contracts/qa-copilot'
-import { answerPlanQuestions, createPlan, fetchTestRun, startTestRun } from '@/lib/qa-client'
+import { answerPlanQuestions, createPlan, fetchTestRun, repairPlan, startTestRun } from '@/lib/qa-client'
 
 const POLL_INTERVAL_MS = 900
 
@@ -47,8 +47,11 @@ type QaCopilotState = {
   planApproved: boolean
   questions: ClarificationQuestion[]
   paramValues: PlanParams
+  environmentParams: string[]
   missingParamNames: string[]
   isStartingRun: boolean
+  isRepairing: boolean
+  canSuggestFix: boolean
   run: TestRun | null
   selectedStepIndex: number | null
   savedCases: SavedCase[]
@@ -58,6 +61,7 @@ type QaCopilotState = {
   submitDraft: (text: string) => void
   submitAnswers: (answers: Record<string, string>) => void
   setParamValue: (name: string, value: string) => void
+  suggestFix: () => void
   approvePlan: () => void
   runPlan: () => void
   selectStep: (index: number) => void
@@ -82,6 +86,11 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([])
   const [planRunId, setPlanRunId] = useState<string | null>(null)
   const [paramValues, setParamValues] = useState<PlanParams>({})
+  const [environmentParams, setEnvironmentParams] = useState<string[]>([])
+  // The instruction the current plan was drafted from, kept so a failed run
+  // can be sent back to the planner together with the failing step.
+  const [instruction, setInstruction] = useState<string | null>(null)
+  const [isRepairing, setIsRepairing] = useState(false)
   const [isStartingRun, setIsStartingRun] = useState(false)
   const [runId, setRunId] = useState<string | null>(null)
   const [run, setRun] = useState<TestRun | null>(null)
@@ -98,6 +107,7 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       if (result.status === 'needs_input') {
         setQuestions(result.questions)
         setPlanRunId(result.runId)
+        setEnvironmentParams(result.environmentParams)
         appendMessage(
           agentMessage(
             'I need a couple of details before I can draft this properly.',
@@ -122,6 +132,7 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
 
       setQuestions([])
       setPlan(result.plan)
+      setEnvironmentParams(result.environmentParams)
       setPlanApproved(false)
       setPlanMeta({
         assumptions: result.assumptions,
@@ -168,6 +179,8 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       setSuggestions([])
       setIsPlanning(true)
       appendMessage({ id: `user-${Date.now()}`, role: 'user', text: trimmed, details: [] })
+
+      setInstruction(trimmed)
 
       createPlan(trimmed)
         .then(applyPlanResult)
@@ -216,13 +229,13 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
     const missing: string[] = []
 
     for (const name of Object.keys(plan.requiredParams)) {
-      if (!paramValues[name]) {
+      if (!paramValues[name] && !environmentParams.includes(name)) {
         missing.push(name)
       }
     }
 
     return missing
-  }, [paramValues, plan])
+  }, [environmentParams, paramValues, plan])
 
   const approvePlan = useCallback(() => {
     if (!plan) {
@@ -300,6 +313,37 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
 
   const selectStep = useCallback((index: number) => setSelectedStepIndex(index), [])
 
+  const failedStep = useMemo(() => run?.steps?.find((step) => step.status === 'failed') ?? null, [run])
+  const canSuggestFix = Boolean(
+    run && run.status === 'failed' && plan && instruction && !isRepairing && !isPlanning
+  )
+
+  // Sends the failing step and its error back to the planner, which re-plans
+  // against the knowledge base. The result lands as a new draft in the plan
+  // panel; nothing runs until it is approved again.
+  const suggestFix = useCallback(() => {
+    if (!run || !plan || !instruction || isRepairing || isPlanning) {
+      return
+    }
+
+    const failure = failedStep
+      ? { stepIndex: failedStep.index, title: failedStep.title, error: failedStep.error }
+      : { stepIndex: Math.max(0, plan.steps.length - 1), title: 'the run', error: run.error }
+
+    setIsRepairing(true)
+    setView('author')
+    appendMessage(
+      agentMessage(
+        `The run failed at ${failure.title}${failure.error ? `: ${failure.error}` : ''}. Re-planning against the knowledge base.`
+      )
+    )
+
+    repairPlan(instruction, plan, failure)
+      .then(applyPlanResult)
+      .catch(handleFailure)
+      .finally(() => setIsRepairing(false))
+  }, [appendMessage, applyPlanResult, failedStep, handleFailure, instruction, isPlanning, isRepairing, plan, run])
+
   const value = useMemo<QaCopilotState>(
     () => ({
       view,
@@ -312,8 +356,11 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       planApproved,
       questions,
       paramValues,
+      environmentParams,
       missingParamNames,
       isStartingRun,
+      isRepairing,
+      canSuggestFix,
       run,
       selectedStepIndex,
       savedCases,
@@ -323,6 +370,7 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       submitDraft,
       submitAnswers,
       setParamValue,
+      suggestFix,
       approvePlan,
       runPlan,
       selectStep,
@@ -330,11 +378,15 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
     }),
     [
       approvePlan,
+      canSuggestFix,
+      isRepairing,
+      suggestFix,
       draft,
       isPlanning,
       isStartingRun,
       messages,
       missingParamNames,
+      environmentParams,
       paramValues,
       plan,
       planApproved,

@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import { PlayCircle } from 'lucide-react'
 import { Badge, type BadgeTone } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { Spinner } from '@/components/ui/Spinner'
@@ -27,7 +28,7 @@ const STATUS_LABEL: Record<RunStatus, string> = {
 }
 
 export function RunsView({ environmentLabel }: { environmentLabel: string }) {
-  const { run, plan, selectedStepIndex, selectStep } = useQaCopilot()
+  const { run, plan, selectedStepIndex, selectStep, suggestFix, canSuggestFix, isRepairing } = useQaCopilot()
 
   const steps = useMemo(() => deriveRunSteps(plan, run), [plan, run])
   const totals = useMemo(() => countByStatus(steps), [steps])
@@ -126,6 +127,31 @@ export function RunsView({ environmentLabel }: { environmentLabel: string }) {
               Driving Chromium against {environmentLabel}...
             </div>
             <ProgressBar value={progress} />
+          </div>
+        ) : null}
+
+        {run.status === 'failed' ? (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 12,
+              marginBottom: 14,
+              padding: '12px 14px',
+              borderRadius: 'var(--radius-card)',
+              background: 'var(--neutral-white)',
+              boxShadow: 'var(--shadow-card)',
+              fontSize: 13,
+              color: 'var(--neutral-700)'
+            }}
+          >
+            <span>
+              {steps.find((step) => step.status === 'failed')?.error ?? run.error ?? 'The run failed.'}
+            </span>
+            <Button hierarchy='primary' size='sm' onClick={suggestFix} disabled={!canSuggestFix}>
+              {isRepairing ? 'Re-planning...' : 'Suggest a fix'}
+            </Button>
           </div>
         ) : null}
 

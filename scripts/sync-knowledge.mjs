@@ -13,8 +13,8 @@ for (const [name, routePath] of Object.entries(source.pages)) {
     continue
   }
 
-  // Templated paths ({companyId}, {orderId}, …) are kept: /api/generate
-  // declares their placeholders as plan parameters, bound at run time.
+  // Templated paths ({companyId}, {orderId}, …) are kept: placeholders are
+  // declared as plan parameters and bound at run time.
   pages[name] = routePath
 }
 

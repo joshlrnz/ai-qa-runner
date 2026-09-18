@@ -73,7 +73,8 @@ function toAttempt(run: AgentRun): PlanAttempt {
           status: 'needs_input',
           runId: run.runId,
           questions: clarification.data.questions,
-          inferredParams: clarification.data.inferredParams
+          inferredParams: clarification.data.inferredParams,
+          environmentParams: []
         }
       }
     }
