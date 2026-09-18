@@ -1,0 +1,16 @@
+[
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales.order-cancel-button"],"targets":["v2-sales.order-cancel-confirm-button","v2-sales.dialog-dismiss-button"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales.order-lock-button"],"targets":["v2-sales.order-lock-confirm-button"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales.order-duplicate-button"],"targets":["v2-sales.order-duplicate-confirm-button"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-collections"],"targets":["v2-sales-order-record.collection-*"]},
+ {"path":"/companies/10004/v2/sales-orders/26018/update","clicks":["v2-sales-order-record.tab-refunds"],"targets":["v2-sales-order-record.refund-*"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchasing.po-cancel-button"],"targets":["v2-purchasing.po-cancel-confirm-button"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchasing.po-lock-button"],"targets":["v2-purchasing.po-lock-confirm-button","v2-purchasing.po-lock-confirm-checkbox"]},
+ {"path":"/companies/10004/v2/purchase-orders/5791/update","clicks":["v2-purchase-order-record.tab-payments"],"targets":["v2-purchase-order-record.payment-*"]},
+ {"path":"/companies/10004/v2/products/44687/update","clicks":["v2-inventory.product-tab-batches"],"targets":["v2-inventory.product-batch-*"]},
+ {"path":"/companies/10004/v2/expenses/687/update","clicks":["v2-finance.expense-tab-payments"],"targets":["v2-finance.expense-tab-payments"]},
+ {"path":"/companies/10004/v2/bank-accounts/109","targets":["v2-finance.bank-account-tab-*"]},
+ {"path":"/companies/10004/v2/vehicles","targets":["v2-inventory.vehicle-*"],"discover":"/v2/vehicles/"},
+ {"path":"/companies/10004/v2/releasings","targets":["v2-inventory.releasing-*"],"discover":"/v2/releasings/"},
+ {"path":"/companies/10004/v2/post-dated-cheques","targets":["v2-finance.cheque-*"],"discover":"/v2/post-dated-cheques/"}
+]

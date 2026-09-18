@@ -1,0 +1,7 @@
+[
+ {"path":"/companies/10004/v3","targets":["v3-analytics.*","shell.sidenav*","shell.account-button"]},
+ {"path":"/companies/10004/v2/quotations","targets":["v2-sales.quotation-rejected-row"],"vars":{"recordCode":"DHIN-QT-00056"}},
+ {"path":"/companies/10004/v2/customers","targets":["v2-masterdata.customer-row"],"vars":{"recordCode":"nutri"}},
+ {"path":"/companies/10004/v2/products/44687","targets":["v2-inventory.product-quick-add-button","v2-inventory.product-quick-subtract-button","v2-inventory.product-quick-transfer-button"]},
+ {"path":"/companies/10004/v2/products/44687","clicks":["v2-inventory.product-quick-subtract-button"],"targets":["v2-inventory.product-quick-adjust-*"],"vars":{"locationName":"Manila Warehouse"}}
+]

@@ -2947,6 +2947,12 @@
       "confidence": "high",
       "note": "content-scoped; the plan vocabulary has no row indexing **verified 2026-09-18**: 1 match."
     },
+    "v2-sales.orders-row-code-link": {
+      "selector": "tr:has(td:has-text('{recordCode}')) >> a:has-text('{recordCode}')",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "the code cell is `Stack > a > Typography`; clicking it opens `/sales-orders/{orderId}/update`. **verified 2026-09-18**: 1 match and navigates, on DHIN-OR-00395. This is the only way to open an order when the caller has its code but not its id"
+    },
     "v2-sales.quotation-rejected-row": {
       "selector": "tr:has(td:has-text('{recordCode}')):has-text('rejected')",
       "module": "v2-sales",

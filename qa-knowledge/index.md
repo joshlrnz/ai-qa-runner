@@ -63,27 +63,47 @@ needs before binding one.
 
 ## Verification status (Phase 4)
 
-Run 2026-09-17/18 against **releasing.oboda.app**, Prime company **10004**, as an admin user.
-Harness and raw results in `scripts/verify/` (`report-2026-09-18.json`). Read-only: the probe
-navigates, clicks tabs and opens dialogs, and counts matches. It never clicks a submit, confirm
-or delete.
+Two runs against **releasing.oboda.app**, Prime company **10004**, as an admin user. Harness and
+raw results in `scripts/verify/` (`report-2026-09-18.json`, then `report-2026-09-18-run2.json`
+after the `data-field` and quick-adjustment additions). Read-only: the probe navigates, clicks
+tabs and opens dialogs, and counts matches. It never clicks a submit, confirm or delete.
+
+**Run 2 (2026-09-18, 501 targets incl. 6 held out):**
 
 | module | targets | verified (1 match) | ambiguous (>1) | 0 matches | not probed |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| shell | 46 | 29 | 0 | 16 | 1 |
-| v2-sales | 43 | 20 | 1 | 22 | 0 |
-| v2-sales-order-record | 50 | 26 | 3 | 21 | 0 |
-| v2-purchasing | 52 | 38 | 0 | 13 | 1 |
-| v2-purchase-order-record | 35 | 15 | 0 | 20 | 0 |
-| v2-inventory | 110 | 81 | 1 | 24 | 4 |
-| v2-finance | 62 | 48 | 1 | 12 | 1 |
-| v2-masterdata | 66 | 59 | 0 | 7 | 0 |
+| shell | 46 | 20 | 0 | 5 | 21 |
+| v2-sales | 45 | 21 | 0 | 8 | 16 |
+| v2-sales-order-record | 50 | 27 | 0 | 20 | 3 |
+| v2-purchasing | 52 | 41 | 0 | 10 | 1 |
+| v2-purchase-order-record | 35 | 17 | 0 | 18 | 0 |
+| v2-inventory | 120 | 90 | 0 | 28 | 2 |
+| v2-finance | 62 | 48 | 0 | 12 | 2 |
+| v2-masterdata | 66 | 59 | 1 | 6 | 0 |
 | v3-analytics | 13 | 0 | 0 | 13 | 0 |
 | lite | 12 | 0 | 0 | 0 | 12 |
-| **total** | **489** | **315** | **7** | **148** | **19** |
+| **total** | **501** | **323** | **1** | **120** | **57** |
 
-**315 of 489 selectors resolve to exactly one element; 7 are ambiguous.** The zeros are
-dominated by record state, unopened dialogs and tenant configuration — the breakdown is below.
+Read the two non-obvious rows before trusting them:
+
+- **`v3-analytics` 13 zeros are an account-state artefact, not 13 wrong selectors.** The test
+  account shows an "Accept Terms & Services" modal on `/v3` in some sessions (seen with the
+  API-created probe session; absent in a fresh UI sign-in that ran minutes later). The modal
+  aria-hides the page, so every `role=` selector counts 0. The seven tab and three VAT selectors
+  were corrected from `role=tab` / `role=menuitem` to the Chip and ToggleButton roles the DOM
+  actually has, and a generated plan clicking `role=button[name="SALES"]` passed end to end in a
+  session without the modal. Accept the terms on the account once and re-probe to promote them.
+- **`v2-masterdata` 1 ambiguous is `customer-row` probed with `recordCode` = `a`**, which
+  `has-text` substring-matches to 8 rows. With a real code it is 1 (`plan-final.json` now binds
+  `nutri`). The target is `high`.
+- The shell "not probed" count rose because the sign-in targets are verified by every generated
+  plan's first six steps rather than by the probe, and the rail flyout items need hover.
+
+Zeros elsewhere are dominated by confirms whose dialog the probe did not open, tabs behind other
+tabs, and state-dependent buttons (Complete on a completed record). `plan-dialogs.json` opens
+the sales- and purchase-order confirmation dialogs; extend it to close more.
+
+**Run 1 (2026-09-17/18)** is kept below for comparison.
 
 ### Form fields (added 2026-09-18)
 

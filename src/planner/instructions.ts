@@ -55,6 +55,14 @@ pseudo-class: that is CSS-engine syntax and the \`role=\` engine takes attribute
 \`role=button[name="Delete"]:visible\` is not a valid selector. Write
 \`role=button[name="Delete"] >> visible=true\`.
 
+\`visible=true\` and \`nth=\` are for the bulk action bar and similar cases the knowledge base
+documents. They are NOT a way around a target held out as ambiguous (list_unresolved_targets):
+several visible elements share that name on that page, so the suffix picks one blindly and the
+plan clicks the wrong thing. If a documented flow is blocked by an unresolved target and the
+knowledge base offers no scoped alternative, call report_blocked. This applies with double force
+to destructive instructions (delete, cancel, complete, release): never compose a destructive plan
+from a workaround. A user answer confirming your parameter list is not approval of a workaround.
+
 ## Parameters
 
 A path, selector or value may contain {paramName} placeholders. The plan declares them in

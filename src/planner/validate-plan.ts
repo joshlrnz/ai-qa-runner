@@ -36,6 +36,18 @@ function summariseReason(reason: string) {
   return sentence.replace(/\.$/, '')
 }
 
+function stripPickers(selector: string) {
+  let current = selector.trim()
+  let previous = ''
+
+  while (current !== previous) {
+    previous = current
+    current = current.replace(/\s*>>\s*(visible=true|nth=-?\d+)\s*$/, '').trim()
+  }
+
+  return current
+}
+
 function describeCandidates(names: string[]) {
   const shown = names.slice(0, 4).join(', ')
   return names.length > 4 ? `${shown}, and ${names.length - 4} more` : shown
@@ -86,11 +98,18 @@ export function validatePlan(
     }
   }
 
+  // The module of the most recent navigate step: ambiguity is per page, so the
+  // module a step runs in decides whether a held-out selector is an error.
+  let currentModule: string | null = null
+
   plan.steps.forEach((step, index) => {
     const position = `step ${index + 1} (${step.action})`
 
     if (step.action === 'navigate') {
-      if (!lookupPath(step.path)) {
+      const page = lookupPath(step.path)
+      currentModule = page?.module ?? null
+
+      if (!page) {
         warnings.push(
           `${position}: path ${step.path} is not in the knowledge base. Confirm it exists.`
         )
@@ -99,22 +118,32 @@ export function validatePlan(
       return
     }
 
-    const ambiguous = findAmbiguousMatch(step.selector)
+    // `>> visible=true` and `>> nth=N` do not make an ambiguous selector
+    // unambiguous, they pick one of the matches blindly, so the check runs
+    // against the selector with those suffixes removed.
+    const coreSelector = stripPickers(step.selector)
+    const ambiguous = findAmbiguousMatch(coreSelector)
     const matches = lookupSelectors(step.selector)
+    const onAmbiguousPage =
+      ambiguous !== null && (currentModule === null || ambiguous.module === currentModule)
 
-    if (ambiguous && matches.length === 0) {
+    if (ambiguous && (matches.length === 0 || onAmbiguousPage)) {
+      const suffixNote =
+        coreSelector === step.selector
+          ? ''
+          : ' Appending visible=true or nth= does not resolve it; it picks one match blindly.'
       errors.push(
-        `${position}: ${step.selector} is the selector recorded as ${ambiguous.name}, which was verified ambiguous and is unusable. ${summariseReason(ambiguous.reason)}. Scope it to a container, or pick a different element.`
+        `${position}: ${step.selector} is the selector recorded as ${ambiguous.name}, which was verified ambiguous on this page and is unusable. ${summariseReason(ambiguous.reason)}.${suffixNote} Use a container-scoped target, or report_blocked.`
       )
       return
     }
 
     if (ambiguous) {
       // The same selector string is verified on other pages (every list page's
-      // Create button, every list's row pattern). Ambiguity is per page, so a
-      // plan on one of the verified pages may still use it.
+      // Create button, every list's row pattern), and this step runs on one of
+      // those, not on the page where it is ambiguous.
       warnings.push(
-        `${position}: ${step.selector} is verified on ${describeCandidates(matches.map((match) => match.name))} but ambiguous on the page of ${ambiguous.name} (${summariseReason(ambiguous.reason)}). Do not use it on that page.`
+        `${position}: ${step.selector} is verified on ${describeCandidates(matches.map((match) => match.name))} but ambiguous on the page of ${ambiguous.name} (${summariseReason(ambiguous.reason)}). Do not use it there.`
       )
     }
 

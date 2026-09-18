@@ -68,10 +68,12 @@ navigates straight to the record:
 navigate → /companies/{companyId}/v2/sales-orders/{orderId}/update
 ```
 
-There is no need to open a list and search for the record first, and no mechanism in this
-knowledge base for resolving a human-readable code (`SO-0123`) to the id in its URL. If an
-instruction names a record only by its code and no id is bound, say so and ask for the id rather
-than composing a search-and-click detour.
+There is no need to open a list and search for the record first when the id is bound. When an
+instruction names a record only by its code (`SO-0123`) and no id is bound, use the module's
+documented open-by-code flow where one exists (`v2-sales` "Open a sales order by code": search
+the list, click the code link, guard on the update-only submit). Where a module has no such flow,
+say so and ask for the id rather than inventing a row click — on several lists (products, for
+one) the code cell is not a link and clicking the row does nothing.
 
 Every record flow follows the same four beats:
 

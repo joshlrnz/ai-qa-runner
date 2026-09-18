@@ -1,7 +1,7 @@
 [
  {"path":"/companies/10004/v2/sales-orders","targets":["shell.sidenav*","shell.account-button","shell.company-switcher","shell.table*","shell.breadcrumb","v2-sales.orders-*"],"vars":{"companyName":"Dhin Company","recordCode":"DHIN-OR-00395"}},
  {"path":"/companies/10004/v3","targets":["v3-analytics.*"]},
- {"path":"/companies/10004/v2/customers","targets":["v2-masterdata.customer-*"],"vars":{"recordCode":"a"}},
+ {"path":"/companies/10004/v2/customers","targets":["v2-masterdata.customer-*"],"vars":{"recordCode":"nutri"}},
  {"path":"/companies/10004/v2/customers/9572/update","targets":["v2-masterdata.customer-*"]},
  {"path":"/companies/10004/v2/suppliers/1053/update","targets":["v2-purchasing.supplier-*"]},
  {"path":"/companies/10004/v2/contacts/433/update","targets":["v2-masterdata.contact-*"]},

@@ -74,6 +74,7 @@ List-page chrome (`shell.table-*`) and the dropdown workaround (`shell.select-op
 | `v2-sales.orders-import-button` | button "Import" | `role=button[name="Import"]` | `OrdersTable/index.tsx:739` | high | opens a menu of channel importers **verified 2026-09-17**: 1 match. |
 | `v2-sales.orders-ovision-button` | button, name repeats "oVision" | `role=button[name*="oVision"]` | `OrdersTable/index.tsx:756` | high | the icon is `<img alt="oVision">`, so the name is "oVision oVision" — substring is deliberate **verified 2026-09-17**: 1 match. |
 | `v2-sales.orders-row` | row containing the order code | `tr:has(td:has-text('{recordCode}'))` | `OrdersTable/getColumns.tsx:43` | high | content-scoped; the plan vocabulary has no row indexing **verified 2026-09-18**: 1 match. |
+| `v2-sales.orders-row-code-link` | link showing the order code, inside its row | `tr:has(td:has-text('{recordCode}')) >> a:has-text('{recordCode}')` | `OrdersTable/getColumns.tsx:43` | high | the code cell is `Stack > a > Typography`; clicking it opens `/sales-orders/{orderId}/update`. **verified 2026-09-18**: 1 match and navigates, on DHIN-OR-00395. This is the only way to open an order when the caller has its code but not its id |
 | `v2-sales.quotation-rejected-row` | row containing the code **and** a rejected status chip | `tr:has(td:has-text('{recordCode}')):has-text('rejected')` | `QuotationsTable` | high | **verified 2026-09-18**: 1 match on `/v2/quotations`. Status chips hold **lowercase** text in the DOM (`rejected`) and are capitalised by CSS, so `assertText … "Rejected"` fails; `has-text()` matches case-insensitively, which is why the status lives in the selector |
 | `v2-sales.orders-empty-state` | text | `text=No sales orders found` | `OrdersTable/index.tsx:921` | medium | pairs with a search that matches nothing |
 
@@ -375,6 +376,22 @@ rejected chip, so a wrong-status fixture fails there with a clear selector error
 the assertion. Step 6 is the observable proxy for "selectable": the bulk action bar, including
 Delete, is only mounted once at least one row is checked. **verified 2026-09-18** end to end on
 DHIN-QT-00056: the checkbox is enabled, checks, and the bar appears.
+
+### Open a sales order by code
+
+Preconditions: SALES READ; `{recordCode}` bound to an existing order's code. Use this when the
+caller knows the code but not the `{orderId}`; otherwise "Open a specific sales order" is shorter.
+
+1. `navigate` → `/companies/{companyId}/v2/sales-orders`
+2. `assertText` → `shell.breadcrumb` contains `Sales Orders`
+3. `fill` → `shell.table-search` = `<recordCode>`
+4. `assertVisible` → `v2-sales.orders-row`
+5. `click` → `v2-sales.orders-row-code-link`
+6. `assertVisible` → `v2-sales.order-submit-update`
+7. `assertText` → `shell.breadcrumb` contains `<recordCode>`
+
+Step 6 is the record-loaded guard ("Save changes" only renders on the update page). **verified
+2026-09-18** end to end on DHIN-OR-00395.
 
 ### Save a new order as a quotation
 
