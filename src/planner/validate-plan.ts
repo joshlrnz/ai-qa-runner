@@ -100,15 +100,23 @@ export function validatePlan(
     }
 
     const ambiguous = findAmbiguousMatch(step.selector)
+    const matches = lookupSelectors(step.selector)
 
-    if (ambiguous) {
+    if (ambiguous && matches.length === 0) {
       errors.push(
         `${position}: ${step.selector} is the selector recorded as ${ambiguous.name}, which was verified ambiguous and is unusable. ${summariseReason(ambiguous.reason)}. Scope it to a container, or pick a different element.`
       )
       return
     }
 
-    const matches = lookupSelectors(step.selector)
+    if (ambiguous) {
+      // The same selector string is verified on other pages (every list page's
+      // Create button, every list's row pattern). Ambiguity is per page, so a
+      // plan on one of the verified pages may still use it.
+      warnings.push(
+        `${position}: ${step.selector} is verified on ${describeCandidates(matches.map((match) => match.name))} but ambiguous on the page of ${ambiguous.name} (${summariseReason(ambiguous.reason)}). Do not use it on that page.`
+      )
+    }
 
     if (matches.length === 0) {
       warnings.push(

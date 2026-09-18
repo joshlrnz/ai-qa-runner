@@ -193,6 +193,11 @@
       "description": "Id of the vehicle record under test.",
       "source": "parameter",
       "scope": "flow"
+    },
+    "locationName": {
+      "description": "Display name of an inventory location, as shown in a Location autocomplete (e.g. the warehouse name). Substring-matched against the input value.",
+      "source": "parameter",
+      "scope": "flow"
     }
   },
   "pages": {
@@ -1119,7 +1124,8 @@
     "v2-inventory.product-row": {
       "selector": "tr:has(td:has-text('{recordCode}'))",
       "module": "v2-inventory",
-      "confidence": "medium"
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match. **The code cell is not a link and clicking the row does not navigate** (verified 2026-09-18) — open a product by `navigate` to `/v2/products/{productId}` with the id bound"
     },
     "v2-inventory.product-name-input": {
       "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])",
@@ -1138,6 +1144,65 @@
       "module": "v2-inventory",
       "confidence": "high",
       "note": "**verified 2026-09-17**: 1 match."
+    },
+    "v2-inventory.product-quick-add-button": {
+      "selector": "role=button[name=\"Add\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match on the detail page; 0 on the list"
+    },
+    "v2-inventory.product-quick-subtract-button": {
+      "selector": "role=button[name=\"Subtract\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match on the detail page"
+    },
+    "v2-inventory.product-quick-transfer-button": {
+      "selector": "role=button[name=\"Transfer\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match on the detail page"
+    },
+    "v2-inventory.product-quick-adjust-batch-input": {
+      "selector": "role=dialog >> [data-field='batchNumber'] :is(input,textarea):not([aria-hidden])",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "batched products only"
+    },
+    "v2-inventory.product-quick-adjust-location-input": {
+      "selector": "role=dialog >> [data-field='locationId'] :is(input,textarea):not([aria-hidden])",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match"
+    },
+    "v2-inventory.product-quick-adjust-location-selected": {
+      "selector": "role=dialog >> [data-field='locationId'] input[value*='{locationName}']",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match with `locationName` = `Manila Warehouse`. `assertText` cannot read an input's value, so the value is matched in the selector and asserted with `assertVisible`"
+    },
+    "v2-inventory.product-quick-adjust-quantity-input": {
+      "selector": "role=dialog >> [data-field='quantity'] :is(input,textarea):not([aria-hidden])",
+      "module": "v2-inventory",
+      "confidence": "medium",
+      "note": "label changes with the action"
+    },
+    "v2-inventory.product-quick-adjust-remarks-input": {
+      "selector": "role=dialog >> [data-field='remarks'] :is(input,textarea):not([aria-hidden])",
+      "module": "v2-inventory",
+      "confidence": "medium"
+    },
+    "v2-inventory.product-quick-adjust-cancel-button": {
+      "selector": "role=dialog >> role=button[name=\"Cancel\"]",
+      "module": "v2-inventory",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match"
+    },
+    "v2-inventory.product-quick-adjust-submit": {
+      "selector": "role=dialog >> role=button[name*=\"Subtract\"]",
+      "module": "v2-inventory",
+      "confidence": "low",
+      "note": "destructive — writes stock. Name follows the action; the Subtract variant is the only one seen"
     },
     "v2-inventory.stocktake-create-button": {
       "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')",
@@ -1723,6 +1788,12 @@
       "module": "v2-masterdata",
       "confidence": "low",
       "note": "triggers a download the plan cannot follow"
+    },
+    "v2-masterdata.customer-row": {
+      "selector": "tr:has(td:has-text('{recordCode}'))",
+      "module": "v2-masterdata",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match with a real customer code. The earlier \"8 matches\" came from probing with `recordCode` bound to the single letter `a`, which is substring-matched by `has-text`; bind a full code."
     },
     "v2-masterdata.customer-name-input": {
       "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])",
@@ -2876,6 +2947,12 @@
       "confidence": "high",
       "note": "content-scoped; the plan vocabulary has no row indexing **verified 2026-09-18**: 1 match."
     },
+    "v2-sales.quotation-rejected-row": {
+      "selector": "tr:has(td:has-text('{recordCode}')):has-text('rejected')",
+      "module": "v2-sales",
+      "confidence": "high",
+      "note": "**verified 2026-09-18**: 1 match on `/v2/quotations`. Status chips hold **lowercase** text in the DOM (`rejected`) and are capitalised by CSS, so `assertText … \"Rejected\"` fails; `has-text()` matches case-insensitively, which is why the status lives in the selector"
+    },
     "v2-sales.orders-empty-state": {
       "selector": "text=No sales orders found",
       "module": "v2-sales",
@@ -2906,10 +2983,10 @@
       "confidence": "medium"
     },
     "v2-sales.bulk-delete-button": {
-      "selector": "role=button[name=\"Delete\"]",
+      "selector": "role=button[name=\"Delete\"] >> visible=true",
       "module": "v2-sales",
-      "confidence": "medium",
-      "note": "soft delete"
+      "confidence": "high",
+      "note": "soft delete. **verified 2026-09-18** on `/v2/quotations` with one row selected: 1 visible match; unselected, 0. The `visible=true` filter keeps it distinct from the record page's Delete trigger (held out as ambiguous)"
     },
     "v2-sales.bulk-collect-date-input": {
       "selector": "[data-field='collectionDate'] :is(input,textarea):not([aria-hidden])",
@@ -3094,57 +3171,64 @@
       "note": "the dismiss, shared by every dialog in this module **verified 2026-09-18**: 1 match."
     },
     "v3-analytics.tab-overview": {
-      "selector": "role=tab[name=\"OVERVIEW\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.tab-inventory": {
-      "selector": "role=tab[name=\"INVENTORY\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.tab-sales": {
-      "selector": "role=tab[name=\"SALES\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.tab-purchasing": {
-      "selector": "role=tab[name=\"PURCHASING\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.tab-logistics": {
-      "selector": "role=tab[name=\"LOGISTICS\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.tab-finances": {
-      "selector": "role=tab[name=\"FINANCES\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.tab-production": {
-      "selector": "role=tab[name=\"PRODUCTION\"]",
-      "module": "v3-analytics",
-      "confidence": "medium"
-    },
-    "v3-analytics.vat-mode-button": {
-      "selector": "role=button[name=\"VAT presentation mode\"]",
+      "selector": "role=button[name=\"OVERVIEW\"]",
       "module": "v3-analytics",
       "confidence": "medium",
-      "note": "toggles VAT-inclusive / VAT-exclusive figures"
+      "note": "DOM-verified 2026-09-18: 1 chip"
+    },
+    "v3-analytics.tab-inventory": {
+      "selector": "role=button[name=\"INVENTORY\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "DOM-verified 2026-09-18: 1 chip. Exact-case, so it does not collide with the rail's \"Inventory\""
+    },
+    "v3-analytics.tab-sales": {
+      "selector": "role=button[name=\"SALES\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "DOM-verified 2026-09-18: 1 chip"
+    },
+    "v3-analytics.tab-purchasing": {
+      "selector": "role=button[name=\"PURCHASING\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "DOM-verified 2026-09-18: 1 chip"
+    },
+    "v3-analytics.tab-logistics": {
+      "selector": "role=button[name=\"LOGISTICS\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "DOM-verified 2026-09-18: 1 chip"
+    },
+    "v3-analytics.tab-finances": {
+      "selector": "role=button[name=\"FINANCES\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "DOM-verified 2026-09-18: 1 chip"
+    },
+    "v3-analytics.tab-production": {
+      "selector": "role=button[name=\"PRODUCTION\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "DOM-verified 2026-09-18: 1 chip"
+    },
+    "v3-analytics.vat-mode-button": {
+      "selector": "role=group[name=\"VAT presentation mode\"]",
+      "module": "v3-analytics",
+      "confidence": "medium",
+      "note": "**DOM-verified 2026-09-18**: a MUI `ToggleButtonGroup` (`div[role=group]`), not a menu button. Assert it; the two options below are clicked directly"
     },
     "v3-analytics.vat-inclusive-option": {
-      "selector": "role=menuitem[name=\"Show VAT-inclusive amounts\"]",
+      "selector": "role=button[name=\"Show VAT-inclusive amounts\"]",
       "module": "v3-analytics",
-      "confidence": "low",
-      "note": "the element's role was not confirmed"
+      "confidence": "medium",
+      "note": "**DOM-verified 2026-09-18**: a real `<button aria-label>` inside the group, visible text \"Incl. VAT\""
     },
     "v3-analytics.vat-exclusive-option": {
-      "selector": "role=menuitem[name=\"Show VAT-exclusive amounts\"]",
+      "selector": "role=button[name=\"Show VAT-exclusive amounts\"]",
       "module": "v3-analytics",
-      "confidence": "low",
-      "note": "as above"
+      "confidence": "medium",
+      "note": "**DOM-verified 2026-09-18**: as above, visible text \"Excl. VAT\""
     },
     "v3-analytics.drawer-next-page-button": {
       "selector": "role=button[name=\"Next page\"]",
@@ -3174,11 +3258,6 @@
       "module": "v2-inventory",
       "selector": "role=button[name=\"View QR\"]",
       "reason": "**verified 2026-09-17: AMBIGUOUS — 4 matches.** Will throw on click. Needs scoping before use."
-    },
-    "v2-masterdata.customer-row": {
-      "module": "v2-masterdata",
-      "selector": "tr:has(td:has-text('{recordCode}'))",
-      "reason": "**verified 2026-09-18: AMBIGUOUS — 8 matches.** Needs scoping."
     },
     "v2-sales-order-record.releasing-print-button": {
       "module": "v2-sales-order-record",

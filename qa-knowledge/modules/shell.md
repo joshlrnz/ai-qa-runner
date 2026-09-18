@@ -41,6 +41,13 @@ flows drafted yet.
   merely redirected. **A `v2-*` flow and a `lite` flow cannot use the same `companyId`.**
 - Sign-in does not land on a fixed path. `/` and the v1 layout both bounce onward, so the post
   sign-in URL is `/companies/{companyId}/v3` (Prime) or `/companies/{companyId}/lite` (Lite).
+- **The account must have accepted the Terms & Services.** An account that has not sees an
+  "Accept Terms & Services" MUI modal on the `/v3` dashboard (observed 2026-09-18 on
+  releasing, company 10004, test account). A MUI modal sets `aria-hidden` on the rest of the
+  page, so every `role=` selector on the dashboard — rail links, account button, dashboard tabs —
+  resolves to **0** while it is open, and its close button navigates away to `/`. Accepting is a
+  one-time account action outside the plan vocabulary; do it by hand before running dashboard
+  plans. The modal has not been seen on `/v2/*` pages.
 
 ## Where the chrome actually comes from
 

@@ -7,13 +7,13 @@ running app) has not been done.**
 | module | routes | targets | named flows | status | lastUpdated |
 | --- | --- | --- | --- | --- | --- |
 | shell | 23 | 46 | 9 | drafted | 2026-09-18 |
-| v2-sales | 26 | 42 | 14 | drafted | 2026-09-18 |
+| v2-sales | 26 | 43 | 15 | drafted | 2026-09-18 |
 | v2-sales-order-record | 1 | 47 | 14 | drafted | 2026-09-18 |
 | v2-purchasing | 23 | 52 | 15 | drafted | 2026-09-18 |
 | v2-purchase-order-record | 1 | 35 | 9 | drafted | 2026-09-18 |
-| v2-inventory | 35 | 109 | 25 | drafted | 2026-09-18 |
+| v2-inventory | 35 | 119 | 29 | drafted | 2026-09-18 |
 | v2-finance | 15 | 61 | 15 | drafted | 2026-09-18 |
-| v2-masterdata | 29 | 65 | 13 | drafted | 2026-09-18 |
+| v2-masterdata | 29 | 66 | 13 | drafted | 2026-09-18 |
 | v3-analytics | 6 | 13 | 6 | drafted | 2026-09-18 |
 | lite | 77 | 12 | 6 | drafted | 2026-09-18 |
 
@@ -77,7 +77,7 @@ or delete.
 | v2-purchase-order-record | 35 | 15 | 0 | 20 | 0 |
 | v2-inventory | 110 | 81 | 1 | 24 | 4 |
 | v2-finance | 62 | 48 | 1 | 12 | 1 |
-| v2-masterdata | 66 | 58 | 1 | 7 | 0 |
+| v2-masterdata | 66 | 59 | 0 | 7 | 0 |
 | v3-analytics | 13 | 0 | 0 | 13 | 0 |
 | lite | 12 | 0 | 0 | 0 | 12 |
 | **total** | **489** | **315** | **7** | **148** | **19** |

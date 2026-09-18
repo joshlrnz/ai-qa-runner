@@ -1,10 +1,10 @@
 ---
 module: v2-inventory
 routes: 35
-targets: 109
-flows: 25
+targets: 119
+flows: 29
 status: drafted
-lastUpdated: 2026-09-17
+lastUpdated: 2026-09-18
 ---
 
 # v2-inventory
@@ -60,10 +60,32 @@ List chrome (`shell.table-*`), `shell.select-option` and `shell.toast` come from
 | --- | --- | --- | --- | --- | --- |
 | `v2-inventory.product-create-button` | button "Add product" | `role=button[name="Add product"]` | `ProductsPage/index.tsx:383` | high | labelled "Add product", not "Create" — the only list in v2 that differs **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-import-button` | button "Import" | `role=button[name="Import"]` | `ProductsPage/index.tsx:371` | high | file picker **verified 2026-09-17**: 1 match. |
-| `v2-inventory.product-row` | row containing the code | `tr:has(td:has-text('{recordCode}'))` | `ProductsPage` | medium | |
+| `v2-inventory.product-row` | row containing the code | `tr:has(td:has-text('{recordCode}'))` | `ProductsPage` | high | **verified 2026-09-18**: 1 match. **The code cell is not a link and clicking the row does not navigate** (verified 2026-09-18) — open a product by `navigate` to `/v2/products/{productId}` with the id bound |
 | `v2-inventory.product-name-input` | textbox "Name*" | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/Overview/components/GeneralSection.tsx:59` | high | required **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-submit` | button "Save changes" | `role=button[name="Save changes"]` | `…/Overview/components/ProductDetailsCard.tsx:95` | high | disabled until the form is dirty **and** valid **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-delete-button` | button "Delete Product" | `role=button[name="Delete Product"]` | `…/Overview/components/SettingsSection.tsx:98` | high | **verified 2026-09-17**: 1 match. |
+
+### Product quick adjustment dialogs — `/v2/products/{productId}`
+
+The product **detail** page (not `/update`) carries three quick-action buttons that open a
+dialog each: Add, Subtract and Transfer. Verified 2026-09-18 on a batched product: the dialog
+for Subtract is titled "Subtract Batched Quantity", and its fields carry `data-field`
+attributes. The Location autocomplete's accessible name is `Location*` (required), and it is
+pre-filled with the product's applicable location plus its availability, e.g.
+`Manila Warehouse (Available: 5 unit(s))`. Batch number only renders for batched products.
+
+| name | role / accessible name | selector | source | confidence | notes |
+| --- | --- | --- | --- | --- | --- |
+| `v2-inventory.product-quick-add-button` | button "Add" | `role=button[name="Add"]` | `ProductDetail/QuickActions` | high | **verified 2026-09-18**: 1 match on the detail page; 0 on the list |
+| `v2-inventory.product-quick-subtract-button` | button "Subtract" | `role=button[name="Subtract"]` | `ProductDetail/QuickActions` | high | **verified 2026-09-18**: 1 match on the detail page |
+| `v2-inventory.product-quick-transfer-button` | button "Transfer" | `role=button[name="Transfer"]` | `ProductDetail/QuickActions` | high | **verified 2026-09-18**: 1 match on the detail page |
+| `v2-inventory.product-quick-adjust-batch-input` | combobox "Batch number*" | `role=dialog >> [data-field='batchNumber'] :is(input,textarea):not([aria-hidden])` | `QuickAdjustDialog` | medium | batched products only |
+| `v2-inventory.product-quick-adjust-location-input` | combobox "Location*" | `role=dialog >> [data-field='locationId'] :is(input,textarea):not([aria-hidden])` | `QuickAdjustDialog` | high | **verified 2026-09-18**: 1 match |
+| `v2-inventory.product-quick-adjust-location-selected` | the Location input showing `{locationName}` | `role=dialog >> [data-field='locationId'] input[value*='{locationName}']` | `QuickAdjustDialog` | high | **verified 2026-09-18**: 1 match with `locationName` = `Manila Warehouse`. `assertText` cannot read an input's value, so the value is matched in the selector and asserted with `assertVisible` |
+| `v2-inventory.product-quick-adjust-quantity-input` | "Quantity to subtract*" | `role=dialog >> [data-field='quantity'] :is(input,textarea):not([aria-hidden])` | `QuickAdjustDialog` | medium | label changes with the action |
+| `v2-inventory.product-quick-adjust-remarks-input` | "Remarks" | `role=dialog >> [data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `QuickAdjustDialog` | medium | |
+| `v2-inventory.product-quick-adjust-cancel-button` | button "Cancel" | `role=dialog >> role=button[name="Cancel"]` | `QuickAdjustDialog` | high | **verified 2026-09-18**: 1 match |
+| `v2-inventory.product-quick-adjust-submit` | button "Subtract" / "Add" / "Transfer" inside the dialog | `role=dialog >> role=button[name*="Subtract"]` | `QuickAdjustDialog` | low | destructive — writes stock. Name follows the action; the Subtract variant is the only one seen |
 
 ### Stocktakes
 
@@ -321,6 +343,54 @@ Preconditions: PRODUCT READ; `{recordCode}` bound.
 2. `assertText` → `shell.breadcrumb` contains `Products`
 3. `fill` → `shell.table-search` = `<recordCode>`
 4. `assertVisible` → `v2-inventory.product-row`
+
+### Open the quick Subtract dialog and check the default location
+
+Preconditions: PRODUCT READ; `{productId}` bound to a product with stock in one location;
+`{locationName}` bound to the display name of that location. Read-only — the dialog is cancelled.
+
+1. `navigate` → `/companies/{companyId}/v2/products/{productId}`
+2. `assertText` → `shell.breadcrumb` contains `Products`
+3. `assertVisible` → `v2-inventory.product-quick-subtract-button`
+4. `click` → `v2-inventory.product-quick-subtract-button`
+5. `assertVisible` → `v2-inventory.product-quick-adjust-location-input`
+6. `assertVisible` → `v2-inventory.product-quick-adjust-location-selected`
+7. `click` → `v2-inventory.product-quick-adjust-cancel-button`
+
+Step 6 is the check for the "Location defaults to Unit(s)" report: it only resolves when the
+Location input's value contains the bound location name. **verified 2026-09-18** end to end on
+product 44687 (`3RBL-CV8C`), where the default was `Manila Warehouse (Available: 5 unit(s))`.
+
+### Open the quick Add dialog
+
+Preconditions: PRODUCT READ; `{productId}` bound. Read-only — cancelled.
+
+1. `navigate` → `/companies/{companyId}/v2/products/{productId}`
+2. `click` → `v2-inventory.product-quick-add-button`
+3. `assertVisible` → `v2-inventory.product-quick-adjust-location-input`
+4. `click` → `v2-inventory.product-quick-adjust-cancel-button`
+
+### Open the quick Transfer dialog
+
+Preconditions: PRODUCT READ; `{productId}` bound. Read-only — cancelled.
+
+1. `navigate` → `/companies/{companyId}/v2/products/{productId}`
+2. `click` → `v2-inventory.product-quick-transfer-button`
+3. `assertVisible` → `v2-inventory.product-quick-adjust-location-input`
+4. `click` → `v2-inventory.product-quick-adjust-cancel-button`
+
+### Subtract stock with the quick dialog
+
+> Destructive. Writes a stock adjustment against real inventory. Do not run against a shared
+> environment.
+
+Preconditions: PRODUCT WRITE; `{productId}` bound; `{quantity}` is whatever the caller types.
+
+1. `navigate` → `/companies/{companyId}/v2/products/{productId}`
+2. `click` → `v2-inventory.product-quick-subtract-button`
+3. `fill` → `v2-inventory.product-quick-adjust-quantity-input` = `<quantity>`
+4. `click` → `v2-inventory.product-quick-adjust-submit`
+5. `assertVisible` → `shell.toast`
 
 ### Rename a product
 

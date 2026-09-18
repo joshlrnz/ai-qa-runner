@@ -53,23 +53,31 @@ role", not "did the number come out right".
 Tab labels are **uppercase in the markup**, and `role=` name matching is case-sensitive — the
 name must be `"OVERVIEW"`, not `"Overview"`.
 
+**The tabs are not `role=tab`.** Verified 2026-09-18 on releasing: the switcher renders MUI
+`Chip` components, each a `div[role="button"]` with the label inside `.MuiChip-label`, and the
+page has **zero** `[role=tab]` elements. The 2026-09-17 zero-match result for this module was
+misread as a permission gate; it was the wrong role. Each label below matched exactly one
+`role=button` in the DOM. The `role=` count could not be re-probed while the test account's
+Terms & Services modal covers the dashboard (see `shell.md` Preconditions), so these stay
+`medium` until a run on an account that has accepted it.
+
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v3-analytics.tab-overview` | tab "OVERVIEW" | `role=tab[name="OVERVIEW"]` | `…/navigation/ForecastingTabsSwitcher.tsx:55` | medium | |
-| `v3-analytics.tab-inventory` | tab "INVENTORY" | `role=tab[name="INVENTORY"]` | `…/ForecastingTabsSwitcher.tsx:60` | medium | |
-| `v3-analytics.tab-sales` | tab "SALES" | `role=tab[name="SALES"]` | `…/ForecastingTabsSwitcher.tsx:64` | medium | |
-| `v3-analytics.tab-purchasing` | tab "PURCHASING" | `role=tab[name="PURCHASING"]` | `…/ForecastingTabsSwitcher.tsx:68` | medium | |
-| `v3-analytics.tab-logistics` | tab "LOGISTICS" | `role=tab[name="LOGISTICS"]` | `…/ForecastingTabsSwitcher.tsx:72` | medium | |
-| `v3-analytics.tab-finances` | tab "FINANCES" | `role=tab[name="FINANCES"]` | `…/ForecastingTabsSwitcher.tsx:76` | medium | |
-| `v3-analytics.tab-production` | tab "PRODUCTION" | `role=tab[name="PRODUCTION"]` | `…/ForecastingTabsSwitcher.tsx:80` | medium | |
+| `v3-analytics.tab-overview` | button "OVERVIEW" (Chip) | `role=button[name="OVERVIEW"]` | `…/navigation/ForecastingTabsSwitcher.tsx:55` | medium | DOM-verified 2026-09-18: 1 chip |
+| `v3-analytics.tab-inventory` | button "INVENTORY" (Chip) | `role=button[name="INVENTORY"]` | `…/ForecastingTabsSwitcher.tsx:60` | medium | DOM-verified 2026-09-18: 1 chip. Exact-case, so it does not collide with the rail's "Inventory" |
+| `v3-analytics.tab-sales` | button "SALES" (Chip) | `role=button[name="SALES"]` | `…/ForecastingTabsSwitcher.tsx:64` | medium | DOM-verified 2026-09-18: 1 chip |
+| `v3-analytics.tab-purchasing` | button "PURCHASING" (Chip) | `role=button[name="PURCHASING"]` | `…/ForecastingTabsSwitcher.tsx:68` | medium | DOM-verified 2026-09-18: 1 chip |
+| `v3-analytics.tab-logistics` | button "LOGISTICS" (Chip) | `role=button[name="LOGISTICS"]` | `…/ForecastingTabsSwitcher.tsx:72` | medium | DOM-verified 2026-09-18: 1 chip |
+| `v3-analytics.tab-finances` | button "FINANCES" (Chip) | `role=button[name="FINANCES"]` | `…/ForecastingTabsSwitcher.tsx:76` | medium | DOM-verified 2026-09-18: 1 chip |
+| `v3-analytics.tab-production` | button "PRODUCTION" (Chip) | `role=button[name="PRODUCTION"]` | `…/ForecastingTabsSwitcher.tsx:80` | medium | DOM-verified 2026-09-18: 1 chip |
 
 ### Dashboard controls
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v3-analytics.vat-mode-button` | button "VAT presentation mode" | `role=button[name="VAT presentation mode"]` | `Dashboard/Layout/Header.tsx:415` | medium | toggles VAT-inclusive / VAT-exclusive figures |
-| `v3-analytics.vat-inclusive-option` | "Show VAT-inclusive amounts" | `role=menuitem[name="Show VAT-inclusive amounts"]` | `Dashboard/Layout/Header.tsx:452` | low | the element's role was not confirmed |
-| `v3-analytics.vat-exclusive-option` | "Show VAT-exclusive amounts" | `role=menuitem[name="Show VAT-exclusive amounts"]` | `Dashboard/Layout/Header.tsx:455` | low | as above |
+| `v3-analytics.vat-mode-button` | group "VAT presentation mode" | `role=group[name="VAT presentation mode"]` | `Dashboard/Layout/Header.tsx:415` | medium | **DOM-verified 2026-09-18**: a MUI `ToggleButtonGroup` (`div[role=group]`), not a menu button. Assert it; the two options below are clicked directly |
+| `v3-analytics.vat-inclusive-option` | button "Show VAT-inclusive amounts" | `role=button[name="Show VAT-inclusive amounts"]` | `Dashboard/Layout/Header.tsx:452` | medium | **DOM-verified 2026-09-18**: a real `<button aria-label>` inside the group, visible text "Incl. VAT" |
+| `v3-analytics.vat-exclusive-option` | button "Show VAT-exclusive amounts" | `role=button[name="Show VAT-exclusive amounts"]` | `Dashboard/Layout/Header.tsx:455` | medium | **DOM-verified 2026-09-18**: as above, visible text "Excl. VAT" |
 | `v3-analytics.drawer-next-page-button` | button "Next page" | `role=button[name="Next page"]` | `…/DashboardDrawer/components/DashboardDrawerPagination.tsx:58` | medium | inside a drill-in drawer |
 | `v3-analytics.drawer-previous-page-button` | button "Previous page" | `role=button[name="Previous page"]` | `…/DashboardDrawerPagination.tsx:45` | medium | |
 
@@ -106,11 +114,12 @@ the bar, and clicking it would fail with a selector error rather than a permissi
 Preconditions: signed in; Prime tenant.
 
 1. `navigate` → `/companies/{companyId}/v3`
-2. `click` → `v3-analytics.vat-mode-button`
+2. `assertVisible` → `v3-analytics.vat-mode-button`
 3. `click` → `v3-analytics.vat-exclusive-option`
 
-No assertion — the effect is that every figure on the page changes, and nothing in the
-vocabulary can compare a figure before and after. **This flow performs an action it cannot
+The mode control is a toggle-button group, so there is no menu to open first; step 2 only
+proves the group rendered. No outcome assertion — the effect is that every figure on the page
+changes, and nothing in the vocabulary can compare a figure before and after. **This flow performs an action it cannot
 verify**; it is listed so the control is exercised, not because it proves anything.
 
 ### Open a quarterly report
@@ -186,8 +195,8 @@ match, so the value below is safe to assert verbatim. A create page's crumb is l
 
 ## Open questions
 
-- **The VAT menu item roles are unconfirmed.** `role=menuitem` is inference; they may be plain
-  buttons or list items in a popover. Both are `low`.
+- ~~The VAT menu item roles are unconfirmed.~~ Resolved 2026-09-18: they are plain buttons in a
+  `role=group`; see Dashboard controls.
 - **Which permission gates which tab was not read.** The tab list is built conditionally from
   `canView*` flags, but the flags' sources were not traced. Preconditions here say "the role can
   view it" because nothing more precise is known.

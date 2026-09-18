@@ -37,6 +37,19 @@ authoritative list. Two consequences:
 \`role=\` selectors in this application are EXACT and CASE-SENSITIVE. \`role=button[name="Sign in"]\`
 does not match "Sign in with email". Use \`[name*="..."]\` only for a deliberate substring match.
 
+Three facts about this application's markup that decide whether a step resolves:
+
+- Required form fields carry a trailing asterisk in their accessible name. The Location field of
+  a dialog is \`role=combobox[name="Location*"]\`, never \`[name="Location"]\`. Prefer the
+  knowledge base's \`[data-field='…']\` selectors, which do not depend on the label.
+- Status chips render lowercase text in the DOM and capitalise it with CSS, so
+  \`assertText … "Rejected"\` fails against a row whose text is "rejected". Do not assert a status
+  word with assertText. Use the knowledge base's status-scoped row target, or a
+  \`:has-text('rejected')\` filter, which matches case-insensitively.
+- assertText compares an element's text content. An input's text content is empty, so a field's
+  value cannot be checked with assertText. Assert \`input[value*="…"]\` with assertVisible instead,
+  scoped to the field's \`[data-field]\` container.
+
 To pick the visible one of several matches, append \`>> visible=true\`. Never write a \`:visible\`
 pseudo-class: that is CSS-engine syntax and the \`role=\` engine takes attribute filters only, so
 \`role=button[name="Delete"]:visible\` is not a valid selector. Write

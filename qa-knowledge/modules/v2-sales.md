@@ -1,10 +1,10 @@
 ---
 module: v2-sales
 routes: 26
-targets: 42
-flows: 14
+targets: 43
+flows: 15
 status: drafted
-lastUpdated: 2026-09-17
+lastUpdated: 2026-09-18
 ---
 
 # v2-sales
@@ -74,6 +74,7 @@ List-page chrome (`shell.table-*`) and the dropdown workaround (`shell.select-op
 | `v2-sales.orders-import-button` | button "Import" | `role=button[name="Import"]` | `OrdersTable/index.tsx:739` | high | opens a menu of channel importers **verified 2026-09-17**: 1 match. |
 | `v2-sales.orders-ovision-button` | button, name repeats "oVision" | `role=button[name*="oVision"]` | `OrdersTable/index.tsx:756` | high | the icon is `<img alt="oVision">`, so the name is "oVision oVision" — substring is deliberate **verified 2026-09-17**: 1 match. |
 | `v2-sales.orders-row` | row containing the order code | `tr:has(td:has-text('{recordCode}'))` | `OrdersTable/getColumns.tsx:43` | high | content-scoped; the plan vocabulary has no row indexing **verified 2026-09-18**: 1 match. |
+| `v2-sales.quotation-rejected-row` | row containing the code **and** a rejected status chip | `tr:has(td:has-text('{recordCode}')):has-text('rejected')` | `QuotationsTable` | high | **verified 2026-09-18**: 1 match on `/v2/quotations`. Status chips hold **lowercase** text in the DOM (`rejected`) and are capitalised by CSS, so `assertText … "Rejected"` fails; `has-text()` matches case-insensitively, which is why the status lives in the selector |
 | `v2-sales.orders-empty-state` | text | `text=No sales orders found` | `OrdersTable/index.tsx:921` | medium | pairs with a search that matches nothing |
 
 ### Sales orders — bulk actions
@@ -89,7 +90,7 @@ primitives — see `shell.table-row-checkbox` and `shell.table-select-all-checkb
 | `v2-sales.bulk-release-button` | button "Release" | `role=button[name="Release"]` | `…/SalesOrderBulkRelease/useSalesOrderBulkReleaseAction.tsx:34` | medium | releases stock for every selected order |
 | `v2-sales.bulk-print-button` | button "Print" | `role=button[name="Print"]` | `…/SalesOrderBulkPrint/useSalesOrderBulkPrint.tsx:108` | low | shares its name with the record page's Print button, but the two are never on screen together |
 | `v2-sales.bulk-lock-button` | button "Lock" | `role=button[name="Lock"]` | `OrdersTable/getBulkActions.tsx:16` | medium | |
-| `v2-sales.bulk-delete-button` | button "Delete" | `role=button[name="Delete"]` | `OrdersTable/getBulkActions.tsx:35` | medium | soft delete |
+| `v2-sales.bulk-delete-button` | button "Delete" | `role=button[name="Delete"] >> visible=true` | `OrdersTable/getBulkActions.tsx:35` | high | soft delete. **verified 2026-09-18** on `/v2/quotations` with one row selected: 1 visible match; unselected, 0. The `visible=true` filter keeps it distinct from the record page's Delete trigger (held out as ambiguous) |
 | `v2-sales.bulk-collect-date-input` | "Collection date" | `[data-field='collectionDate'] :is(input,textarea):not([aria-hidden])` | `…/SalesOrderBulkCollect/BulkCollectFields.tsx:41` | medium | in the bulk collect dialog |
 | `v2-sales.bulk-collect-reference-input` | textbox "Reference number" | `[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/BulkCollectFields.tsx:48` | medium | |
 
@@ -356,6 +357,24 @@ Preconditions: SALES WRITE; `{orderId}` bound.
 4. `assertText` → `shell.toast` contains `<success copy>`
 
 > Writes a new record. Repeated runs accumulate duplicate orders.
+
+### Select a rejected quotation for bulk delete
+
+Preconditions: SALES READ and DELETE; Prime tenant; `{recordCode}` bound to a quotation whose status
+is Rejected. Read-only — the bulk Delete button is asserted, never clicked.
+
+1. `navigate` → `/companies/{companyId}/v2/quotations`
+2. `assertText` → `shell.breadcrumb` contains `Quotations`
+3. `fill` → `shell.table-search` = `<recordCode>`
+4. `assertVisible` → `v2-sales.quotation-rejected-row`
+5. `click` → `shell.table-row-checkbox`
+6. `assertVisible` → `v2-sales.bulk-delete-button`
+
+Step 4 doubles as the status check: the row target only matches when the row carries the
+rejected chip, so a wrong-status fixture fails there with a clear selector error instead of at
+the assertion. Step 6 is the observable proxy for "selectable": the bulk action bar, including
+Delete, is only mounted once at least one row is checked. **verified 2026-09-18** end to end on
+DHIN-QT-00056: the checkbox is enabled, checks, and the bar appears.
 
 ### Save a new order as a quotation
 

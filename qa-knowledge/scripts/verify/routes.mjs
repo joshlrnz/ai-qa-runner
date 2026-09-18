@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 const APP=JSON.parse(fs.readFileSync('../../application.json','utf8'))
-const st=JSON.parse(fs.readFileSync('./auth.json','utf8'))
+const st=JSON.parse(fs.readFileSync((process.env.OUT ?? './')+'auth.json','utf8'))
 const cookie=st.cookies.map(c=>`${c.name}=${c.value}`).join('; ')
-const B='https://releasing.oboda.app', CID='10004'
+const B=process.env.BASE ?? 'https://releasing.oboda.app', CID=process.env.CID ?? '10004'
 const IDS={orderId:'1',purchaseOrderId:'1',productId:'1',customerId:'1',supplierId:'1'}
 const out={}
 const entries=Object.entries(APP.pages).filter(([n])=>!n.startsWith('lite.'))
@@ -15,7 +15,7 @@ for(const [name,tpl] of entries){
   out[name]={path,status}
   if(++i%40===0) console.log(i+'/'+entries.length)
 }
-fs.writeFileSync('./routes-report.json',JSON.stringify(out,null,1))
+fs.writeFileSync((process.env.OUT ?? './')+'routes-report.json',JSON.stringify(out,null,1))
 const by={}; for(const v of Object.values(out)) by[v.status]=(by[v.status]||0)+1
 console.log('status distribution:',JSON.stringify(by))
 const bad=Object.entries(out).filter(([,v])=>v.status!==200)
