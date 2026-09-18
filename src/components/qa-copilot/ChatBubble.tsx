@@ -45,9 +45,9 @@ export function ChatBubble({ message }: { message: ChatMessage }) {
               boxShadow: 'inset 0 0 0 1px #EAECF0'
             }}
           >
-            {message.details.map((detail) => (
+            {message.details.map((detail, detailIndex) => (
               <div
-                key={detail.label}
+                key={`${detailIndex}-${detail.label}`}
                 style={{ padding: '9px 11px', background: 'var(--surface-sunken)' }}
               >
                 <span style={{ fontSize: 12.5, lineHeight: 1.45, color: 'var(--neutral-700)' }}>

@@ -9,12 +9,11 @@ import {
   useState,
   type ReactNode
 } from 'react'
-import type { TestPlan } from '@/contracts/test-plan'
+import type { PlanParams, TestPlan } from '@/contracts/test-plan'
+import type { ClarificationQuestion, PlanResult } from '@/contracts/plan-request'
 import type { TestRun } from '@/contracts/test-run'
 import type { ChatMessage, SavedCase, WorkspaceView } from '@/contracts/qa-copilot'
-import { QaRequestError, fetchTestRun, generateTestPlan, startTestRun } from '@/lib/qa-client'
-import { fallbackPlan } from '@/lib/fallback-plan'
-import { describeTestStep } from '@/lib/describe-test-step'
+import { answerPlanQuestions, createPlan, fetchTestRun, startTestRun } from '@/lib/qa-client'
 
 const POLL_INTERVAL_MS = 900
 
@@ -26,19 +25,29 @@ const OPENING_MESSAGE: ChatMessage = {
 }
 
 const STARTER_SUGGESTIONS = [
-  'Check that the dashboard loads after sign in',
-  'Verify the Inventory Alerts panel is visible',
-  'Test signing in with the ops account'
+  'Check that the sign in page loads',
+  'Verify the companies list after signing in',
+  'Check the products list on inventory'
 ]
+
+export type PlanMeta = {
+  assumptions: string[]
+  warnings: string[]
+  sourceModules: string[]
+}
 
 type QaCopilotState = {
   view: WorkspaceView
   messages: ChatMessage[]
   suggestions: string[]
   draft: string
-  isGenerating: boolean
+  isPlanning: boolean
   plan: TestPlan | null
+  planMeta: PlanMeta | null
   planApproved: boolean
+  questions: ClarificationQuestion[]
+  paramValues: PlanParams
+  missingParamNames: string[]
   isStartingRun: boolean
   run: TestRun | null
   selectedStepIndex: number | null
@@ -47,6 +56,8 @@ type QaCopilotState = {
   setView: (view: WorkspaceView) => void
   setDraft: (draft: string) => void
   submitDraft: (text: string) => void
+  submitAnswers: (answers: Record<string, string>) => void
+  setParamValue: (name: string, value: string) => void
   approvePlan: () => void
   runPlan: () => void
   selectStep: (index: number) => void
@@ -55,20 +66,8 @@ type QaCopilotState = {
 
 const QaCopilotContext = createContext<QaCopilotState | null>(null)
 
-function summarisePlan(plan: TestPlan) {
-  const paths: string[] = []
-
-  for (const step of plan.steps) {
-    if (step.action === 'navigate' && !paths.includes(step.path)) {
-      paths.push(step.path)
-    }
-  }
-
-  return [
-    { label: 'Steps drafted:', value: String(plan.steps.length) },
-    { label: 'Pages touched:', value: paths.length > 0 ? paths.join(', ') : 'the current page' },
-    { label: 'First step:', value: describeTestStep(plan.steps[0]) }
-  ]
+function agentMessage(text: string, details: ChatMessage['details'] = []): ChatMessage {
+  return { id: `agent-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, role: 'agent', text, details }
 }
 
 export function QaCopilotProvider({ children }: { children: ReactNode }) {
@@ -76,167 +75,154 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<ChatMessage[]>([OPENING_MESSAGE])
   const [suggestions, setSuggestions] = useState<string[]>(STARTER_SUGGESTIONS)
   const [draft, setDraft] = useState('')
-  const [isGenerating, setIsGenerating] = useState(false)
+  const [isPlanning, setIsPlanning] = useState(false)
   const [plan, setPlan] = useState<TestPlan | null>(null)
+  const [planMeta, setPlanMeta] = useState<PlanMeta | null>(null)
   const [planApproved, setPlanApproved] = useState(false)
+  const [questions, setQuestions] = useState<ClarificationQuestion[]>([])
+  const [planRunId, setPlanRunId] = useState<string | null>(null)
+  const [paramValues, setParamValues] = useState<PlanParams>({})
   const [isStartingRun, setIsStartingRun] = useState(false)
   const [runId, setRunId] = useState<string | null>(null)
   const [run, setRun] = useState<TestRun | null>(null)
   const [selectedStepIndex, setSelectedStepIndex] = useState<number | null>(null)
   const [savedCases, setSavedCases] = useState<SavedCase[]>([])
   const [suiteFilter, setSuiteFilter] = useState('All suites')
-  // Parameters the runner reported missing; while set, the next user message
-  // answers them (name=value per line, or a bare value when only one is asked).
-  const [pendingParams, setPendingParams] = useState<string[]>([])
-  const [boundParams, setBoundParams] = useState<Record<string, string>>({})
 
   const appendMessage = useCallback((message: ChatMessage) => {
     setMessages((current) => [...current, message])
   }, [])
 
-  const startRunWith = useCallback(
-    (params: Record<string, string>) => {
-      if (!plan || isStartingRun) {
+  const applyPlanResult = useCallback(
+    (result: PlanResult) => {
+      if (result.status === 'needs_input') {
+        setQuestions(result.questions)
+        setPlanRunId(result.runId)
+        appendMessage(
+          agentMessage(
+            'I need a couple of details before I can draft this properly.',
+            result.inferredParams.map(({ name, description }) => ({ label: `${name}:`, value: description }))
+          )
+        )
+        setSuggestions([])
         return
       }
 
-      const merged = { ...boundParams, ...params }
-      setBoundParams(merged)
-      setIsStartingRun(true)
-      setRun(null)
-      setSelectedStepIndex(null)
-      setView('runs')
+      if (result.status === 'blocked') {
+        setQuestions([])
+        appendMessage(
+          agentMessage(
+            result.reason,
+            result.missingCapabilities.map((capability) => ({ label: 'Missing:', value: capability }))
+          )
+        )
+        setSuggestions([])
+        return
+      }
 
-      startTestRun(plan, merged)
-        .then(({ runId: startedRunId }) => {
-          setPendingParams([])
-          setRunId(startedRunId)
-        })
-        .catch((error: unknown) => {
-          setView('author')
+      setQuestions([])
+      setPlan(result.plan)
+      setPlanApproved(false)
+      setPlanMeta({
+        assumptions: result.assumptions,
+        warnings: result.warnings,
+        sourceModules: result.sourceModules
+      })
 
-          if (error instanceof QaRequestError && error.missingParams.length > 0) {
-            setPendingParams(error.missingParams)
-            const single = error.missingParams.length === 1
-            appendMessage({
-              id: `agent-${Date.now()}`,
-              role: 'agent',
-              text: single
-                ? `Before I can run this I need a value for ${error.missingParams[0]}. Reply with the value.`
-                : `Before I can run this I need values for ${error.missingParams.join(', ')}. Reply with one per line as name=value.`,
-              details: error.missingParams.map((name) => ({
-                label: `${name}:`,
-                value: plan.requiredParams[name]?.description ?? 'no description recorded'
-              }))
-            })
-            setSuggestions([])
-            return
-          }
+      const seeded: PlanParams = {}
 
-          appendMessage({
-            id: `agent-${Date.now()}`,
-            role: 'agent',
-            text: error instanceof Error ? error.message : 'The run could not be started.',
-            details: []
-          })
-        })
-        .finally(() => {
-          setIsStartingRun(false)
-        })
+      for (const name of Object.keys(result.plan.requiredParams)) {
+        seeded[name] = ''
+      }
+
+      setParamValues(seeded)
+      appendMessage(
+        agentMessage(
+          `Drafted "${result.plan.name}" with ${result.plan.steps.length} steps. Read it on the right before anything runs.`,
+          result.assumptions.map((assumption) => ({ label: 'Assumed:', value: assumption }))
+        )
+      )
+      setSuggestions(['Approve and save it'])
     },
-    [appendMessage, boundParams, isStartingRun, plan]
+    [appendMessage]
   )
 
-  const runPlan = useCallback(() => {
-    startRunWith({})
-  }, [startRunWith])
+  const handleFailure = useCallback(
+    (error: unknown) => {
+      appendMessage(
+        agentMessage(error instanceof Error ? error.message : 'Something went wrong while drafting the plan.')
+      )
+    },
+    [appendMessage]
+  )
 
   const submitDraft = useCallback(
     (text: string) => {
       const trimmed = text.trim()
 
-      if (!trimmed || isGenerating) {
+      if (!trimmed || isPlanning) {
         return
       }
 
       setDraft('')
       setSuggestions([])
+      setIsPlanning(true)
       appendMessage({ id: `user-${Date.now()}`, role: 'user', text: trimmed, details: [] })
 
-      if (pendingParams.length > 0) {
-        const answered: Record<string, string> = {}
-        const lines = trimmed.split('\n').map((line) => line.trim()).filter(Boolean)
+      createPlan(trimmed)
+        .then(applyPlanResult)
+        .catch(handleFailure)
+        .finally(() => setIsPlanning(false))
+    },
+    [appendMessage, applyPlanResult, handleFailure, isPlanning]
+  )
 
-        if (pendingParams.length === 1 && lines.length === 1 && !lines[0].includes('=')) {
-          answered[pendingParams[0]] = lines[0]
-        } else {
-          for (const line of lines) {
-            const separator = line.indexOf('=')
-            if (separator > 0) {
-              answered[line.slice(0, separator).trim()] = line.slice(separator + 1).trim()
-            }
-          }
-        }
-
-        const stillMissing = pendingParams.filter((name) => !(name in answered))
-
-        if (stillMissing.length > 0) {
-          appendMessage({
-            id: `agent-${Date.now()}`,
-            role: 'agent',
-            text: `I still need ${stillMissing.join(', ')}. Reply as name=value, one per line.`,
-            details: []
-          })
-          return
-        }
-
-        startRunWith(answered)
+  const submitAnswers = useCallback(
+    (answers: Record<string, string>) => {
+      if (!planRunId || isPlanning) {
         return
       }
 
-      setIsGenerating(true)
+      const entries = Object.entries(answers)
+      const summary: string[] = []
 
-      generateTestPlan(trimmed)
-        .then(({ plan: generated }) => {
-          setPlan(generated)
-          setPlanApproved(false)
-          appendMessage({
-            id: `agent-${Date.now()}`,
-            role: 'agent',
-            text: `Drafted "${generated.name}". Read it on the right and change anything you disagree with. Nothing runs until you approve it.`,
-            details: summarisePlan(generated)
-          })
-          setSuggestions(['Approve and save it', 'Run it now'])
-        })
-        .catch((error: unknown) => {
-          const isNotConfigured = error instanceof QaRequestError && error.status === 503
+      for (const [, answer] of entries) {
+        summary.push(answer)
+      }
 
-          if (isNotConfigured) {
-            setPlan(fallbackPlan)
-            setPlanApproved(false)
-            appendMessage({
-              id: `agent-${Date.now()}`,
-              role: 'agent',
-              text: 'Plan generation is not connected yet, so I loaded the saved example plan instead. Everything after this point is real.',
-              details: summarisePlan(fallbackPlan)
-            })
-            setSuggestions(['Run it now'])
-            return
-          }
+      setIsPlanning(true)
+      setQuestions([])
+      appendMessage({ id: `user-${Date.now()}`, role: 'user', text: summary.join(' · '), details: [] })
 
-          appendMessage({
-            id: `agent-${Date.now()}`,
-            role: 'agent',
-            text: error instanceof Error ? error.message : 'Something went wrong while drafting the plan.',
-            details: []
-          })
-        })
-        .finally(() => {
-          setIsGenerating(false)
-        })
+      answerPlanQuestions(planRunId, {
+        answers: entries.map(([id, answer]) => ({ id, answer }))
+      })
+        .then(applyPlanResult)
+        .catch(handleFailure)
+        .finally(() => setIsPlanning(false))
     },
-    [appendMessage, isGenerating, pendingParams, startRunWith]
+    [appendMessage, applyPlanResult, handleFailure, isPlanning, planRunId]
   )
+
+  const setParamValue = useCallback((name: string, value: string) => {
+    setParamValues((current) => ({ ...current, [name]: value }))
+  }, [])
+
+  const missingParamNames = useMemo(() => {
+    if (!plan) {
+      return []
+    }
+
+    const missing: string[] = []
+
+    for (const name of Object.keys(plan.requiredParams)) {
+      if (!paramValues[name]) {
+        missing.push(name)
+      }
+    }
+
+    return missing
+  }, [paramValues, plan])
 
   const approvePlan = useCallback(() => {
     if (!plan) {
@@ -256,6 +242,25 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       ...current
     ])
   }, [plan])
+
+  const runPlan = useCallback(() => {
+    if (!plan || isStartingRun || missingParamNames.length > 0) {
+      return
+    }
+
+    setIsStartingRun(true)
+    setRun(null)
+    setSelectedStepIndex(null)
+    setView('runs')
+
+    startTestRun(plan, paramValues)
+      .then(({ runId: startedRunId }) => setRunId(startedRunId))
+      .catch((error: unknown) => {
+        setView('author')
+        handleFailure(error)
+      })
+      .finally(() => setIsStartingRun(false))
+  }, [handleFailure, isStartingRun, missingParamNames, paramValues, plan])
 
   useEffect(() => {
     if (!runId) {
@@ -279,10 +284,8 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
           }
         })
         .catch(() => {
-          if (active) {
-            active = false
-            window.clearInterval(timer)
-          }
+          active = false
+          window.clearInterval(timer)
         })
     }
 
@@ -295,9 +298,7 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
     }
   }, [runId])
 
-  const selectStep = useCallback((index: number) => {
-    setSelectedStepIndex(index)
-  }, [])
+  const selectStep = useCallback((index: number) => setSelectedStepIndex(index), [])
 
   const value = useMemo<QaCopilotState>(
     () => ({
@@ -305,9 +306,13 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       messages,
       suggestions,
       draft,
-      isGenerating,
+      isPlanning,
       plan,
+      planMeta,
       planApproved,
+      questions,
+      paramValues,
+      missingParamNames,
       isStartingRun,
       run,
       selectedStepIndex,
@@ -316,6 +321,8 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
       setView,
       setDraft,
       submitDraft,
+      submitAnswers,
+      setParamValue,
       approvePlan,
       runPlan,
       selectStep,
@@ -324,16 +331,22 @@ export function QaCopilotProvider({ children }: { children: ReactNode }) {
     [
       approvePlan,
       draft,
-      isGenerating,
+      isPlanning,
       isStartingRun,
       messages,
+      missingParamNames,
+      paramValues,
       plan,
       planApproved,
+      planMeta,
+      questions,
       run,
       runPlan,
       savedCases,
       selectStep,
       selectedStepIndex,
+      setParamValue,
+      submitAnswers,
       submitDraft,
       suggestions,
       suiteFilter,

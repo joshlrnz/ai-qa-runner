@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { useQaCopilot } from './QaCopilotContext'
 
 export function Composer() {
-  const { draft, setDraft, submitDraft, isGenerating } = useQaCopilot()
+  const { draft, setDraft, submitDraft, isPlanning } = useQaCopilot()
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -33,7 +33,7 @@ export function Composer() {
           outline: 'none'
         }}
       />
-      <Button type='submit' hierarchy='primary' disabled={isGenerating || draft.trim().length === 0}>
+      <Button type='submit' hierarchy='primary' disabled={isPlanning || draft.trim().length === 0}>
         Send
       </Button>
     </form>
