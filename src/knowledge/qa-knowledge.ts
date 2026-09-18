@@ -405,6 +405,41 @@ export function findSelectors(query: string, limit = 12) {
     }))
 }
 
+export function lookupSelector(selector: string): SelectorCandidate | null {
+  const { compiled, groupByTarget } = load()
+  const unresolved = new Set(Object.keys(compiled.unresolvedTargets))
+
+  for (const [name, target] of Object.entries(compiled.targets)) {
+    if (target.selector !== selector || unresolved.has(name)) {
+      continue
+    }
+
+    return {
+      name,
+      selector: target.selector,
+      module: target.module,
+      confidence: target.confidence,
+      group: groupByTarget.get(name) ?? null,
+      note: target.note ?? null,
+      params: readParams(target.selector)
+    }
+  }
+
+  return null
+}
+
+export function lookupPath(pagePath: string): PageEntry | null {
+  const { compiled } = load()
+
+  for (const [name, knownPath] of Object.entries(compiled.pages)) {
+    if (knownPath === pagePath) {
+      return { name, path: knownPath, params: readParams(knownPath) }
+    }
+  }
+
+  return null
+}
+
 export function listUnresolvedTargets(): UnresolvedTarget[] {
   const { compiled } = load()
 

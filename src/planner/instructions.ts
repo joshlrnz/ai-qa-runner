@@ -60,6 +60,32 @@ anything you receive is at least not known-broken.
 Module depth varies and list_modules reports it. For example v2-finance has no form field
 targets at all, so a plan that fills a finance form cannot be built from this knowledge base.
 
+## Producing the plan
+
+1. Research with the read tools first.
+2. Draft the steps, beginning with the sign-in flow.
+3. Call validate_plan as often as you like while drafting.
+4. Call create_plan exactly once, with a plan that passes. If it comes back accepted:false, fix
+   the errors it lists and call it again.
+
+Record in warnings any selector you did not take from the knowledge base, any selector below
+high confidence, and any module whose targets were largely unprobed. Record in assumptions
+anything the instruction did not say that you decided.
+
+## When you cannot build a plan
+
+Call report_blocked instead of emitting a plan that quietly does something else. The knowledge
+base records these gaps in the vocabulary:
+
+- no hover, so the rail's flyout menus cannot be opened at all
+- no wait, so nothing can pause for a spinner
+- no URL assertion, so a plan cannot state where it landed
+- no new-tab handling
+- no select action, as described above
+- navigate cannot express the Lite and Prime tier redirect
+
+A missing capability is an honest answer. A plan that pretends is not.
+
 ## How to work
 
 Search before you answer. Start with list_modules to see the map, then search_knowledge or

@@ -1,5 +1,8 @@
 import { createTool } from '@mastra/core/tools'
 import { z } from 'zod'
+import { blockedResultSchema, plannedResultSchema } from '../contracts/plan-request'
+import { testPlanSchema } from '../contracts/test-plan'
+import { validatePlan } from './validate-plan'
 import {
   findPages,
   findSelectors,
@@ -148,6 +151,85 @@ export const listUnresolvedTargetsTool = createTool({
   execute: async () => ({ targets: listUnresolvedTargets() })
 })
 
+export const validatePlanTool = createTool({
+  id: 'validate_plan',
+  description:
+    'Check a candidate plan before committing to it. Returns errors that must be fixed and warnings you should explain. Call this whenever you are unsure, as often as you like.',
+  inputSchema: z.object({ plan: testPlanSchema }),
+  outputSchema: z.object({
+    valid: z.boolean(),
+    errors: z.array(z.string()),
+    warnings: z.array(z.string())
+  }),
+  execute: async ({ plan }) => validatePlan(plan)
+})
+
+export const createPlanTool = createTool({
+  id: 'create_plan',
+  description:
+    'Emit the finished plan. The plan is validated again here; if it does not pass, you receive the errors and must revise and call this tool again. Call it exactly once with a plan that passes.',
+  inputSchema: z.object({
+    plan: testPlanSchema,
+    assumptions: z
+      .array(z.string())
+      .describe('Anything you assumed that the instruction did not state.'),
+    sourceModules: z
+      .array(z.string())
+      .describe('Knowledge base modules this plan was built from.'),
+    warnings: z
+      .array(z.string())
+      .describe('Anything the reader should distrust, including selectors you derived yourself.')
+  }),
+  outputSchema: z.object({
+    accepted: z.boolean(),
+    errors: z.array(z.string()),
+    warnings: z.array(z.string()),
+    planned: plannedResultSchema.nullable()
+  }),
+  execute: async ({ plan, assumptions, sourceModules, warnings }) => {
+    const validation = validatePlan(plan)
+    const allWarnings = [...warnings, ...validation.warnings]
+
+    if (!validation.valid) {
+      return {
+        accepted: false,
+        errors: validation.errors,
+        warnings: allWarnings,
+        planned: null
+      }
+    }
+
+    return {
+      accepted: true,
+      errors: [],
+      warnings: allWarnings,
+      planned: {
+        status: 'planned' as const,
+        plan: testPlanSchema.parse(plan),
+        assumptions,
+        sourceModules,
+        warnings: allWarnings
+      }
+    }
+  }
+})
+
+export const reportBlockedTool = createTool({
+  id: 'report_blocked',
+  description:
+    'Report that the instruction cannot be expressed as a plan. Use this when it needs an action the vocabulary does not have, or a target the knowledge base does not cover. Do not emit a plan that pretends to do something else.',
+  inputSchema: z.object({
+    reason: z.string().describe('Plainly, what cannot be done and why.'),
+    missingCapabilities: z
+      .array(z.string())
+      .describe('The specific capabilities required, for example hover or assertUrl.')
+  }),
+  outputSchema: z.object({ blocked: blockedResultSchema }),
+  execute: async ({ reason, missingCapabilities }) => ({
+    blocked: { status: 'blocked' as const, reason, missingCapabilities }
+  })
+})
+
 export const readOnlyPlannerTools = {
   listModulesTool,
   searchKnowledgeTool,
@@ -156,4 +238,11 @@ export const readOnlyPlannerTools = {
   findSelectorsTool,
   listParamsTool,
   listUnresolvedTargetsTool
+}
+
+export const plannerTools = {
+  ...readOnlyPlannerTools,
+  validatePlanTool,
+  createPlanTool,
+  reportBlockedTool
 }

@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test --workers=1",
     "auth:setup": "node scripts/save-auth-state.mjs",
-    "planner:ask": "tsc -p tsconfig.scratch.json && node scripts/ask-planner.mjs"
+    "planner:ask": "tsc -p tsconfig.scratch.json && node scripts/ask-planner.mjs",
+    "planner:plan": "tsc -p tsconfig.scratch.json && node scripts/make-plan.mjs"
   },
   "dependencies": {
     "@mastra/core": "^1.67.0",

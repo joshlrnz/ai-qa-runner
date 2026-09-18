@@ -13,3 +13,7 @@ export function substituteParams(value: string, params: PlanParams) {
     return boundValue
   })
 }
+
+export function collectParamNames(value: string) {
+  return [...value.matchAll(parameterPattern)].map((match) => match[1])
+}

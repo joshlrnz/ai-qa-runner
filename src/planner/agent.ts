@@ -1,6 +1,6 @@
 import { Agent } from '@mastra/core/agent'
 import { plannerInstructions } from './instructions'
-import { readOnlyPlannerTools } from './tools'
+import { plannerTools } from './tools'
 
 export const defaultPlannerModel = 'openai/gpt-5.6-sol'
 
@@ -13,5 +13,5 @@ export const plannerAgent = new Agent({
   name: 'QA Planner',
   instructions: plannerInstructions,
   model: getPlannerModel(),
-  tools: readOnlyPlannerTools
+  tools: plannerTools
 })
