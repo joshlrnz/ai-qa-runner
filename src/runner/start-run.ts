@@ -3,9 +3,10 @@ import { closeSync, openSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
-import { testPlanSchema, type TestPlan } from '@/contracts/test-plan'
+import { planParamsSchema, testPlanSchema, type PlanParams, type TestPlan } from '@/contracts/test-plan'
 import type { TestRun } from '@/contracts/test-run'
 import { getRunDirectory } from './run-paths'
+import { findMissingParams, pickNonSecretParams, toParamEnv } from './plan-params'
 import { saveRun } from './run-store'
 
 function getPlaywrightCommand() {
@@ -25,11 +26,19 @@ function getErrorMessage(exitCode: number | null, signal: NodeJS.Signals | null)
   return `Playwright exited with code ${exitCode ?? 'unknown'}. See run.log for details.`
 }
 
-export async function startRun(input: TestPlan) {
+export async function startRun(input: TestPlan, inputParams: PlanParams = {}) {
   const plan = testPlanSchema.parse(input)
+  const params = planParamsSchema.parse(inputParams)
+  const missingParams = findMissingParams(plan, params)
+
+  if (missingParams.length > 0) {
+    throw new Error(`Missing plan parameters: ${missingParams.join(', ')}`)
+  }
+
   const runId = randomUUID()
   const runDirectory = getRunDirectory(runId)
   const planPath = path.join(runDirectory, 'plan.json')
+  const paramsPath = path.join(runDirectory, 'params.json')
   const logPath = path.join(runDirectory, 'run.log')
   const now = new Date().toISOString()
   const queuedRun: TestRun = {
@@ -44,6 +53,11 @@ export async function startRun(input: TestPlan) {
 
   await mkdir(runDirectory, { recursive: true })
   await writeFile(planPath, `${JSON.stringify(plan, null, 2)}\n`, 'utf8')
+  await writeFile(
+    paramsPath,
+    `${JSON.stringify(pickNonSecretParams(plan, params), null, 2)}\n`,
+    'utf8'
+  )
   await saveRun(queuedRun)
 
   const logFile = openSync(logPath, 'a')
@@ -55,7 +69,8 @@ export async function startRun(input: TestPlan) {
       env: {
         ...process.env,
         TEST_PLAN_PATH: planPath,
-        RUN_OUTPUT_DIR: runDirectory
+        RUN_OUTPUT_DIR: runDirectory,
+        ...toParamEnv(params)
       },
       stdio: ['ignore', logFile, logFile]
     }

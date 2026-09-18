@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { testPlanSchema } from '@/contracts/test-plan'
+import { planParamsSchema, testPlanSchema } from '@/contracts/test-plan'
+import { findMissingParams } from '@/runner/plan-params'
 import { startRun } from '@/runner/start-run'
 
 export const runtime = 'nodejs'
 
 const startRunRequestSchema = z.object({
-  plan: testPlanSchema
+  plan: testPlanSchema,
+  params: planParamsSchema.default({})
 })
 
 export async function POST(request: Request) {
@@ -22,7 +24,20 @@ export async function POST(request: Request) {
     )
   }
 
-  const result = await startRun(parsedRequest.data.plan)
+  const { plan, params } = parsedRequest.data
+  const missingParams = findMissingParams(plan, params)
+
+  if (missingParams.length > 0) {
+    return NextResponse.json(
+      {
+        error: 'Missing plan parameters',
+        missingParams
+      },
+      { status: 400 }
+    )
+  }
+
+  const result = await startRun(plan, params)
 
   return NextResponse.json(
     {

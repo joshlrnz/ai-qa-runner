@@ -27,14 +27,20 @@ export const testStepSchema = z.discriminatedUnion('action', [
   })
 ])
 
+export const paramNameSchema = z
+  .string()
+  .regex(/^\w+$/, 'Parameter names may only contain letters, digits and underscores')
+
 export const requiredParamSchema = z.object({
   description: z.string().min(1),
   secret: z.boolean()
 })
 
+export const planParamsSchema = z.record(paramNameSchema, z.string())
+
 export const testPlanSchema = z.object({
   name: z.string().min(1),
-  requiredParams: z.record(z.string(), requiredParamSchema).default({}),
+  requiredParams: z.record(paramNameSchema, requiredParamSchema).default({}),
   steps: z.array(testStepSchema).min(1)
 })
 

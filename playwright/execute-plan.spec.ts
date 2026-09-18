@@ -3,10 +3,11 @@ import path from 'node:path'
 import { test } from '@playwright/test'
 import { testPlanSchema } from '@/contracts/test-plan'
 import { describeTestStep, executeTestStep } from '@/runner/execute-test-plan'
+import { readParamsFromEnv } from '@/runner/plan-params'
 
 const planPath = path.resolve(process.env.TEST_PLAN_PATH ?? path.join('plans', 'smoke.json'))
 const plan = testPlanSchema.parse(JSON.parse(readFileSync(planPath, 'utf8')))
-const params = {}
+const params = readParamsFromEnv(process.env)
 
 test(plan.name, async ({ page }) => {
   for (const step of plan.steps) {

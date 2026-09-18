@@ -50,11 +50,17 @@ curl -X POST http://localhost:3000/api/runs \
   --data @- <<'JSON'
 {
   "plan": {
-    "name": "Open the authenticated oboda dashboard",
+    "name": "Open the sales orders list",
+    "requiredParams": {
+      "companyId": { "description": "Company the run operates in.", "secret": false }
+    },
     "steps": [
-      { "action": "navigate", "path": "/" },
-      { "action": "assertText", "selector": "h2:has-text('Inventory Alerts')", "value": "Inventory Alerts" }
+      { "action": "navigate", "path": "/companies/{companyId}/v2/sales-orders" },
+      { "action": "assertVisible", "selector": "role=heading[name=\"Sales Orders\"]" }
     ]
+  },
+  "params": {
+    "companyId": "10004"
   }
 }
 JSON
@@ -99,6 +105,19 @@ A path, selector or value may contain `{paramName}` placeholders. A plan declare
 
 The runner substitutes bound values before each step. A referenced parameter with no bound value
 throws `Unbound plan parameter: <name>`.
+
+Values are supplied per run, in the `params` object of the `POST /api/runs` body. A request that
+omits a declared parameter returns 400 listing the missing names.
+
+## Secrets
+
+A parameter declared `"secret": true` is passed to the Playwright process as an environment
+variable and is never written to disk. Each run directory holds:
+
+- `plan.json` — the plan, which contains parameter *declarations*, never values
+- `params.json` — the bound values of **non-secret** parameters only
+
+Every parameter reaches the browser process as `QA_PARAM_<name>`.
 
 ## Checks
 
