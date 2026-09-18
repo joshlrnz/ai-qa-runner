@@ -76,6 +76,55 @@ curl http://localhost:3000/api/runs/<run-id>
 
 When the run finishes, open the returned `reportUrl` in the browser.
 
+## Generate a plan from free text
+
+The planning agent turns an instruction into a plan, grounded in `qa-knowledge/`. It needs
+`OPENAI_API_KEY`, and optionally `QA_PLANNER_MODEL` (default `openai/gpt-5.6-sol`).
+
+The agent pauses once to confirm the parameters it inferred and to resolve any ambiguity, so
+planning is always two calls.
+
+```bash
+curl -X POST http://localhost:3000/api/plans \
+  -H 'Content-Type: application/json' \
+  -d '{ "instruction": "check that the sales orders list loads" }'
+```
+
+It returns `needs_input` with a `runId` and the questions:
+
+```json
+{
+  "status": "needs_input",
+  "runId": "143302e1-...",
+  "questions": [{ "id": "edition", "question": "Prime/v2 or Lite?", "why": "..." }],
+  "inferredParams": [{ "name": "companyId", "description": "...", "secret": false }]
+}
+```
+
+Answer to resume. The reply is `planned`, with the plan, the assumptions the agent made and the
+warnings it wants read:
+
+```bash
+curl -X POST http://localhost:3000/api/plans/<run-id> \
+  -H 'Content-Type: application/json' \
+  -d '{ "answers": [{ "id": "edition", "answer": "Prime" }] }'
+```
+
+An instruction the vocabulary cannot express returns `blocked` instead, naming what is missing:
+
+```json
+{ "status": "blocked", "reason": "The Sales flyout opens on mouseover...", "missingCapabilities": ["hover"] }
+```
+
+Post the returned `plan` to `POST /api/runs` with its parameter values to execute it.
+
+From the command line instead:
+
+```bash
+npm run planner:ask  -- "which selectors would I use to sign in?"
+npm run planner:plan -- "open the sales orders list" out.json
+```
+
 ## Supported actions
 
 - `navigate`

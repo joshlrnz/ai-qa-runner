@@ -63,9 +63,13 @@ targets at all, so a plan that fills a finance form cannot be built from this kn
 ## Producing the plan
 
 1. Research with the read tools first.
-2. Draft the steps, beginning with the sign-in flow.
-3. Call validate_plan as often as you like while drafting.
-4. Call create_plan exactly once, with a plan that passes. If it comes back accepted:false, fix
+2. Call request_clarification exactly once, before drafting. List the parameters you intend to
+   declare so the user can correct them, and ask about anything genuinely ambiguous: which
+   module or page was meant, which of two similar flows, or what counts as the check passing.
+   If nothing is ambiguous, still call it to confirm the parameter list, and say so.
+3. Draft the steps, beginning with the sign-in flow.
+4. Call validate_plan as often as you like while drafting.
+5. Call create_plan exactly once, with a plan that passes. If it comes back accepted:false, fix
    the errors it lists and call it again.
 
 Record in warnings any selector you did not take from the knowledge base, any selector below

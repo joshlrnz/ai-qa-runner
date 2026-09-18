@@ -1,5 +1,11 @@
-import { blockedResultSchema, plannedResultSchema, type PlanResult } from '../contracts/plan-request'
-import { plannerAgent } from './agent'
+import {
+  blockedResultSchema,
+  clarificationRequestSchema,
+  plannedResultSchema,
+  type ClarificationAnswers,
+  type PlanResult
+} from '../contracts/plan-request'
+import { mastra } from '../mastra'
 
 type ToolEvent = {
   toolName?: string
@@ -7,16 +13,36 @@ type ToolEvent = {
   payload?: { toolName?: string; result?: unknown }
 }
 
+type AgentRun = {
+  text?: string
+  runId?: string
+  finishReason?: string
+  toolResults?: ToolEvent[]
+  suspendPayload?: { toolName?: string; toolCallId?: string; suspendPayload?: unknown }
+}
+
 export type PlanAttempt = {
   result: PlanResult | null
   text: string
   toolNames: string[]
   finishReason: string | null
+  runId: string | null
 }
 
-// Research plus validation plus emit runs well past Mastra's default of 5 steps.
+export class UnknownPlanRunError extends Error {
+  constructor(runId: string) {
+    super(`No suspended plan run with id ${runId}`)
+    this.name = 'UnknownPlanRunError'
+  }
+}
+
+// Research, clarification and validation run well past Mastra's default of 5 steps.
 export function getPlannerMaxSteps() {
   return Number(process.env.QA_PLANNER_MAX_STEPS ?? 40)
+}
+
+function getPlannerAgent() {
+  return mastra.getAgentById('qa-planner')
 }
 
 function readToolName(event: ToolEvent) {
@@ -27,12 +53,33 @@ function readResult(event: ToolEvent) {
   return event.payload?.result ?? event.result ?? null
 }
 
-export async function planTest(instruction: string): Promise<PlanAttempt> {
-  const run = await plannerAgent.generate(instruction, { maxSteps: getPlannerMaxSteps() })
-  const events = (run.toolResults ?? []) as ToolEvent[]
-  const toolNames = events.map((event) => readToolName(event) ?? 'unknown')
-  const text = run.text ?? ''
-  const finishReason = (run as { finishReason?: string }).finishReason ?? null
+function toAttempt(run: AgentRun): PlanAttempt {
+  const events = run.toolResults ?? []
+  const attempt: PlanAttempt = {
+    result: null,
+    text: run.text ?? '',
+    toolNames: events.map((event) => readToolName(event) ?? 'unknown'),
+    finishReason: run.finishReason ?? null,
+    runId: run.runId ?? null
+  }
+
+  if (run.finishReason === 'suspended') {
+    const clarification = clarificationRequestSchema.safeParse(run.suspendPayload?.suspendPayload)
+
+    if (clarification.success && run.runId) {
+      return {
+        ...attempt,
+        result: {
+          status: 'needs_input',
+          runId: run.runId,
+          questions: clarification.data.questions,
+          inferredParams: clarification.data.inferredParams
+        }
+      }
+    }
+
+    return attempt
+  }
 
   for (let index = events.length - 1; index >= 0; index -= 1) {
     const name = readToolName(events[index])
@@ -42,7 +89,7 @@ export async function planTest(instruction: string): Promise<PlanAttempt> {
       const planned = plannedResultSchema.safeParse((raw as { planned?: unknown })?.planned)
 
       if (planned.success) {
-        return { result: planned.data, text, toolNames, finishReason }
+        return { ...attempt, result: planned.data }
       }
     }
 
@@ -50,10 +97,36 @@ export async function planTest(instruction: string): Promise<PlanAttempt> {
       const blocked = blockedResultSchema.safeParse((raw as { blocked?: unknown })?.blocked)
 
       if (blocked.success) {
-        return { result: blocked.data, text, toolNames, finishReason }
+        return { ...attempt, result: blocked.data }
       }
     }
   }
 
-  return { result: null, text, toolNames, finishReason }
+  return attempt
+}
+
+export async function planTest(instruction: string): Promise<PlanAttempt> {
+  const run = await getPlannerAgent().generate(instruction, { maxSteps: getPlannerMaxSteps() })
+  return toAttempt(run as AgentRun)
+}
+
+export async function resumePlanTest(
+  runId: string,
+  answers: ClarificationAnswers
+): Promise<PlanAttempt> {
+  try {
+    const run = await getPlannerAgent().resumeGenerate(answers, {
+      runId,
+      maxSteps: getPlannerMaxSteps()
+    })
+
+    return toAttempt(run as AgentRun)
+  } catch (error) {
+    // Mastra tags this case, which is steadier than matching the message text.
+    if ((error as { id?: string })?.id === 'AGENT_RESUME_NO_SNAPSHOT_FOUND') {
+      throw new UnknownPlanRunError(runId)
+    }
+
+    throw error
+  }
 }

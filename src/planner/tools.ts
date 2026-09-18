@@ -1,6 +1,11 @@
 import { createTool } from '@mastra/core/tools'
 import { z } from 'zod'
-import { blockedResultSchema, plannedResultSchema } from '../contracts/plan-request'
+import {
+  blockedResultSchema,
+  clarificationAnswersSchema,
+  clarificationRequestSchema,
+  plannedResultSchema
+} from '../contracts/plan-request'
 import { testPlanSchema } from '../contracts/test-plan'
 import { validatePlan } from './validate-plan'
 import {
@@ -214,6 +219,26 @@ export const createPlanTool = createTool({
   }
 })
 
+export const requestClarificationTool = createTool({
+  id: 'request_clarification',
+  description:
+    'Pause and ask the user. Call this exactly once, after your research and before create_plan, to confirm the parameters you inferred and to resolve anything ambiguous about which module, page or flow was meant. The run pauses until the user answers.',
+  inputSchema: clarificationRequestSchema,
+  outputSchema: z.object({ answers: z.array(z.object({ id: z.string(), answer: z.string() })) }),
+  suspendSchema: clarificationRequestSchema,
+  resumeSchema: clarificationAnswersSchema,
+  execute: async ({ questions, inferredParams }, context) => {
+    const resumeData = context?.agent?.resumeData
+
+    if (!resumeData) {
+      await context?.agent?.suspend({ questions, inferredParams })
+      return { answers: [] }
+    }
+
+    return { answers: resumeData.answers }
+  }
+})
+
 export const reportBlockedTool = createTool({
   id: 'report_blocked',
   description:
@@ -244,5 +269,6 @@ export const plannerTools = {
   ...readOnlyPlannerTools,
   validatePlanTool,
   createPlanTool,
-  reportBlockedTool
+  reportBlockedTool,
+  requestClarificationTool
 }
