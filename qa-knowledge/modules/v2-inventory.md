@@ -1,8 +1,8 @@
 ---
 module: v2-inventory
 routes: 35
-targets: 78
-flows: 23
+targets: 109
+flows: 25
 status: drafted
 lastUpdated: 2026-09-17
 ---
@@ -61,7 +61,7 @@ List chrome (`shell.table-*`), `shell.select-option` and `shell.toast` come from
 | `v2-inventory.product-create-button` | button "Add product" | `role=button[name="Add product"]` | `ProductsPage/index.tsx:383` | high | labelled "Add product", not "Create" — the only list in v2 that differs **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-import-button` | button "Import" | `role=button[name="Import"]` | `ProductsPage/index.tsx:371` | high | file picker **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-row` | row containing the code | `tr:has(td:has-text('{recordCode}'))` | `ProductsPage` | medium | |
-| `v2-inventory.product-name-input` | textbox "Name*" | `input[id='name']` | `…/Overview/components/GeneralSection.tsx:59` | high | required **verified 2026-09-17**: 1 match. |
+| `v2-inventory.product-name-input` | textbox "Name*" | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/Overview/components/GeneralSection.tsx:59` | high | required **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-submit` | button "Save changes" | `role=button[name="Save changes"]` | `…/Overview/components/ProductDetailsCard.tsx:95` | high | disabled until the form is dirty **and** valid **verified 2026-09-17**: 1 match. |
 | `v2-inventory.product-delete-button` | button "Delete Product" | `role=button[name="Delete Product"]` | `…/Overview/components/SettingsSection.tsx:98` | high | **verified 2026-09-17**: 1 match. |
 
@@ -216,6 +216,100 @@ aria-label: `Sales Order Tracker Tabs`.
 | `v2-inventory.releasings-list-tab-pending` | PENDING | `role=tab[name="PENDING"]` | `ReleasingsTable/index.tsx:356` | high **verified 2026-09-17**: 1 match. |
 | `v2-inventory.releasings-list-tab-completed` | COMPLETED | `role=tab[name="COMPLETED"]` | `ReleasingsTable/index.tsx:357` | high **verified 2026-09-17**: 1 match. |
 | `v2-inventory.releasings-list-tab-cancelled` | CANCELLED | `role=tab[name="CANCELLED"]` | `ReleasingsTable/index.tsx:358` | high **verified 2026-09-17**: 1 match. |
+
+
+## Form fields
+
+Every v2 form field is addressed through the **`data-field` attribute on its wrapper**:
+
+```
+[data-field='<field name>'] :is(input,textarea):not([aria-hidden])
+```
+
+`_common/Form/Field.tsx:121` puts `data-field={name}` on the wrapper of **every** field type, so
+one shape works for text, number, money, date, autocomplete, select, checkbox and multiline alike.
+It is an authored attribute, not a MUI internal, so it survives a library upgrade. The field name
+is the form path passed to `Form.Field` — `name`, `payment.invoiceNumber`, `collectionEntries.0.amount`.
+
+**Verified 2026-09-18.** The obvious alternative, `input[id='<name>']`, is wrong in two ways this
+app actually hits: a multiline field renders a `<textarea>` plus a hidden autosize twin (hence
+`:not([aria-hidden])`), and `DatePicker` never passes an `id` to its text field at all — every
+date field matched **0**. Its `<label htmlFor={name}>` points at nothing too, so accessible-name
+matching is not a fallback either.
+
+Never match on the label: a required field appends a `*` inside it, which corrupts exact name
+matching.
+
+
+### Product form — `/v2/products/create`, `/v2/products/{productId}/update`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-inventory.product-name-field` | Name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/Overview/components/GeneralSection.tsx:59` | medium |
+| `v2-inventory.product-sku-input` | SKU | text | `[data-field='code'] :is(input,textarea):not([aria-hidden])` | `…/GeneralSection.tsx:211` | medium |
+| `v2-inventory.product-description-input` | Description | text | `[data-field='description'] :is(input,textarea):not([aria-hidden])` | `…/GeneralSection.tsx:232` | medium |
+| `v2-inventory.product-barcode-input` | Barcode | text | `[data-field='barcode'] :is(input,textarea):not([aria-hidden])` | `…/GeneralSection.tsx:233` | medium |
+| `v2-inventory.product-selling-price-input` | Selling Price **REQUIRED** | money | `[data-field='sellingPrice'] :is(input,textarea):not([aria-hidden])` | `…/PricingSection.tsx:118` | medium |
+| `v2-inventory.product-buying-price-input` | Buying price | money | `[data-field='buyingPrice'] :is(input,textarea):not([aria-hidden])` | `…/PricingSection.tsx:97` | medium |
+| `v2-inventory.product-srp-input` | Suggested Retail Price | money | `[data-field='suggestedRetailPrice'] :is(input,textarea):not([aria-hidden])` | `…/PricingSection.tsx:124` | medium |
+| `v2-inventory.product-minimum-quantity-input` | Minimum quantity | number | `[data-field='minimumQuantity'] :is(input,textarea):not([aria-hidden])` | `…/StockLevelCard.tsx:45` | medium |
+| `v2-inventory.product-maximum-quantity-input` | Maximum quantity | number | `[data-field='maximumQuantity'] :is(input,textarea):not([aria-hidden])` | `…/StockLevelCard.tsx:52` | medium |
+| `v2-inventory.product-reordering-quantity-input` | Reordering quantity | number | `[data-field='reorderingQuantity'] :is(input,textarea):not([aria-hidden])` | `…/StockLevelCard.tsx:53` | medium |
+
+`v2-inventory.product-name-field` is the same element as `v2-inventory.product-name-input` defined
+above under Products; prefer the older name. Both are listed because the earlier one predates this
+section.
+
+### Vehicle form — `/v2/vehicles/create`, `/v2/vehicles/{vehicleId}/update`
+
+The most completely expressible form in the knowledge base — no grid, all plain inputs.
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-inventory.vehicle-name-input` | Name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:8` | medium |
+| `v2-inventory.vehicle-plate-number-input` | Plate number | text | `[data-field='plateNumber'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:9` | medium |
+| `v2-inventory.vehicle-model-input` | Model | text | `[data-field='model'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:15` | medium |
+| `v2-inventory.vehicle-maker-input` | Maker | text | `[data-field='maker'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:16` | medium |
+| `v2-inventory.vehicle-color-input` | Color | text | `[data-field='color'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:17` | medium |
+| `v2-inventory.vehicle-cor-number-input` | Certificate of registration number | text | `[data-field='certificateOfRegistrationNumber'] :is(input,textarea):not([aria-hidden])` | `…/RegistrationDetailsCard/index.tsx:8` | medium |
+| `v2-inventory.vehicle-engine-number-input` | Engine number | text | `[data-field='engineNumber'] :is(input,textarea):not([aria-hidden])` | `…/RegistrationDetailsCard/index.tsx:21` | medium |
+| `v2-inventory.vehicle-chassis-number-input` | Chassis number | text | `[data-field='chassisNumber'] :is(input,textarea):not([aria-hidden])` | `…/RegistrationDetailsCard/index.tsx:27` | medium |
+| `v2-inventory.vehicle-vin-input` | Vehicle identification number (VIN) | text | `[data-field='vehicleIdentificationNumber'] :is(input,textarea):not([aria-hidden])` | `…/RegistrationDetailsCard/index.tsx:33` | medium |
+
+### Stock transfer form — `/v2/stock-transfers/create`, `…/{transferId}/update`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-inventory.transfer-source-input` | Source **REQUIRED** | autocomplete | `[data-field='sourceLocationId'] :is(input,textarea):not([aria-hidden])` | `…/Adjustments/Location/index.tsx:100` | medium |
+| `v2-inventory.transfer-destination-input` | Destination **REQUIRED** | autocomplete | `[data-field='destinationLocationId'] :is(input,textarea):not([aria-hidden])` | `…/Adjustments/Location/index.tsx:109` | medium |
+| `v2-inventory.transfer-vehicle-input` | Vehicle | autocomplete | `[data-field='vehicleId'] :is(input,textarea):not([aria-hidden])` | `…/Delivery/DeliveryCard.tsx:42` | medium |
+| `v2-inventory.transfer-delivered-at-input` | Delivery date | date | `[data-field='deliveredAt'] :is(input,textarea):not([aria-hidden])` | `…/Delivery/DeliveryCard.tsx:52` | medium |
+| `v2-inventory.transfer-reference-input` | Reference Number | text | `[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/Delivery/DeliveryCard.tsx:58` | medium |
+
+Source and Destination are the two required fields, and they must differ — this is the one
+transactional form whose header is fully expressible even though its line items are not.
+
+### Stocktake and stock adjustment forms
+
+Both are almost entirely line-item grids; their headers carry only a few fields.
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-inventory.stocktake-reference-date-input` | Reference Date | date | `[data-field='referenceDate'] :is(input,textarea):not([aria-hidden])` | `Stocktake/…/ReferencesCard/index.tsx:92` | medium |
+| `v2-inventory.stocktake-contacts-input` | Contacts | multi-autocomplete | `[data-field='contactIds'] :is(input,textarea):not([aria-hidden])` | `Stocktake/…/ReferencesCard/index.tsx:100` | medium |
+| `v2-inventory.adjustment-type-input` | Release Type | autocomplete | `[data-field='type'] :is(input,textarea):not([aria-hidden])` | `StockAdjustment/…/LocationAndRemarksCard/index.tsx:39` | medium |
+| `v2-inventory.adjustment-reference-date-input` | Reference Date | date | `[data-field='referenceDate'] :is(input,textarea):not([aria-hidden])` | `StockAdjustment/…/ReferencesCard/index.tsx:162` | medium |
+| `v2-inventory.adjustment-vehicle-input` | Vehicle | autocomplete | `[data-field='vehicleId'] :is(input,textarea):not([aria-hidden])` | `StockAdjustment/…/ReferencesCard/index.tsx:170` | medium |
+
+### Inventory location dialog
+
+Locations are created in a dialog, not on a page.
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-inventory.location-name-input` | Name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/CreateUpdateLocationDialog/index.tsx:122` | medium |
+| `v2-inventory.location-description-input` | Description | text | `[data-field='description'] :is(input,textarea):not([aria-hidden])` | `…/CreateUpdateLocationDialog/index.tsx:124` | medium |
+| `v2-inventory.location-branches-input` | Branches | multi-autocomplete | `[data-field='branchIds'] :is(input,textarea):not([aria-hidden])` | `…/CreateUpdateLocationDialog/index.tsx:129` | medium |
 
 ## Flows
 
@@ -476,6 +570,39 @@ Preconditions: PRODUCT READ; `{productId}` bound to a batched product.
 | `v2-inventory.product-history-export-button` | download |
 | `v2-inventory.stocktake-sync-xero-button` | external service; no observable result in the page |
 | `v2-inventory.product-batch-edit-button` | per-row action with a generic name ("Edit"), almost certainly ambiguous; needs row-scoping before it can be used |
+
+
+### Create a vehicle (complete)
+
+Preconditions: VEHICLE WRITE. All targets verified at 1.
+
+1. `navigate` → `/companies/{companyId}/v2/vehicles/create`
+2. `assertVisible` → `v2-inventory.vehicle-name-input`
+3. `fill` → `v2-inventory.vehicle-name-input` = `<vehicle name>`
+4. `fill` → `v2-inventory.vehicle-plate-number-input` = `<plate number>`
+5. `fill` → `v2-inventory.vehicle-model-input` = `<model>`
+6. `click` → `v2-inventory.vehicle-submit`
+7. `assertText` → `shell.toast` contains `<success copy>`
+
+> Writes a record.
+
+Vehicles have no line-item grid, so this module's only fully expressible create flow.
+
+### Start a stock transfer
+
+Preconditions: STOCK_TRANSFER WRITE; at least two inventory locations.
+
+1. `navigate` → `/companies/{companyId}/v2/stock-transfers/create`
+2. `assertVisible` → `v2-inventory.transfer-source-input`
+3. `fill` → `v2-inventory.transfer-source-input` = `<source location>`
+4. `click` → `shell.select-option` with `{optionLabel}` = `<source location>`
+5. `fill` → `v2-inventory.transfer-destination-input` = `<destination location>`
+6. `click` → `shell.select-option` with `{optionLabel}` = `<destination location>`
+7. `fill` → `v2-inventory.transfer-reference-input` = `<reference number>`
+
+> Fills the header only — **no submit step**, deliberately. A transfer cannot be submitted
+> without line items, and those are grid cells with no targets. This flow proves the header is
+> drivable and stops where the vocabulary does.
 
 ### Route flows — every page in this module
 

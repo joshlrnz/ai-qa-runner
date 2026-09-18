@@ -63,13 +63,13 @@ List chrome (`shell.table-*`), the dropdown workaround (`shell.select-option`) a
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-purchasing.po-supplier-input` | combobox "Supplier*" | `input[id='supplierId']` | `…/Details/components/SupplierAutocomplete.tsx:134` | high | autocomplete — `fill`, then click the option **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.po-invoice-number-input` | textbox "Invoice number" | `input[id='payment.invoiceNumber']` | `…/Details/components/PaymentDetailsCard.tsx:133` | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.po-reference-number-input` | textbox "Reference number" | `input[id='payment.referenceNumber']` | `…/PaymentDetailsCard.tsx:163` | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.po-invoice-date-input` | "Invoice date" | `input[id='payment.invoiceAt']` | `…/PaymentDetailsCard.tsx:139` | low | date picker — typing a date string may not commit; unverified |
-| `v2-purchasing.po-payment-due-input` | "Payment due" | `input[id='payment.paymentDueAt']` | `…/PaymentDetailsCard.tsx:92` | low | date picker |
-| `v2-purchasing.po-expected-delivery-input` | "Expected delivery date" | `input[id='payment.expectedDeliveryAt']` | `…/PaymentDetailsCard.tsx:165` | low | date picker |
-| `v2-purchasing.po-attention-input` | textbox "Attention" | `input[id='attention']` | `…/Details/components/SupplierCard.tsx:300` | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.po-supplier-input` | combobox "Supplier*" | `[data-field='supplierId'] :is(input,textarea):not([aria-hidden])` | `…/Details/components/SupplierAutocomplete.tsx:134` | high | autocomplete — `fill`, then click the option **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.po-invoice-number-input` | textbox "Invoice number" | `[data-field='payment.invoiceNumber'] :is(input,textarea):not([aria-hidden])` | `…/Details/components/PaymentDetailsCard.tsx:133` | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.po-reference-number-input` | textbox "Reference number" | `[data-field='payment.referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/PaymentDetailsCard.tsx:163` | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.po-invoice-date-input` | "Invoice date" | `[data-field='payment.invoiceAt'] :is(input,textarea):not([aria-hidden])` | `…/PaymentDetailsCard.tsx:139` | low | date picker — typing a date string may not commit; unverified |
+| `v2-purchasing.po-payment-due-input` | "Payment due" | `[data-field='payment.paymentDueAt'] :is(input,textarea):not([aria-hidden])` | `…/PaymentDetailsCard.tsx:92` | low | date picker |
+| `v2-purchasing.po-expected-delivery-input` | "Expected delivery date" | `[data-field='payment.expectedDeliveryAt'] :is(input,textarea):not([aria-hidden])` | `…/PaymentDetailsCard.tsx:165` | low | date picker |
+| `v2-purchasing.po-attention-input` | textbox "Attention" | `[data-field='attention'] :is(input,textarea):not([aria-hidden])` | `…/Details/components/SupplierCard.tsx:300` | high | **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.po-submit` | button "Submit" | `role=button[name="Submit"]` | `…/Details/index.tsx:375` | high | same label on create and update, unlike sales **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.po-save-as-requisition-button` | button "Save as Requisition" | `role=button[name="Save as Requisition"]` | `…/Details/index.tsx:366` | high | create only **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.po-cancel-button` | button "Cancel" | `role=button[name="Cancel"]` | `CreateUpdateForm/index.tsx:476` | high | opens a dialog **verified 2026-09-17**: 1 match. |
@@ -82,9 +82,9 @@ List chrome (`shell.table-*`), the dropdown workaround (`shell.select-option`) a
 | --- | --- | --- | --- | --- | --- |
 | `v2-purchasing.po-cancel-confirm-button` | button "Cancel order" | `role=dialog >> role=button[name="Cancel order"]` | `CancelPurchaseOrderDialog.tsx:95` | medium | |
 | `v2-purchasing.po-lock-confirm-button` | button "Lock" | `role=dialog >> role=button[name="Lock"]` | `LockPurchaseOrderDialog.tsx:108` | high | **must stay scoped** — the page trigger is also "Lock" **verified 2026-09-18**: 1 match. |
-| `v2-purchasing.po-lock-confirm-checkbox` | checkbox "I confirm that this purchase order is final…" | `input[id='confirmLock']` | `LockPurchaseOrderDialog.tsx:84` | high | the confirm button stays disabled until this is ticked **verified 2026-09-18**: 1 match. |
+| `v2-purchasing.po-lock-confirm-checkbox` | checkbox "I confirm that this purchase order is final…" | `[data-field='confirmLock'] :is(input,textarea):not([aria-hidden])` | `LockPurchaseOrderDialog.tsx:84` | high | the confirm button stays disabled until this is ticked **verified 2026-09-18**: 1 match. |
 | `v2-purchasing.po-override-confirm-button` | button "Override purchase order" | `role=dialog >> role=button[name="Override purchase order"]` | `OverridePurchaseOrderDialog.tsx:196` | medium | |
-| `v2-purchasing.po-override-confirm-checkbox` | checkbox "I confirm that I want to override this purchase order." | `input[id='confirmOverride']` | `OverridePurchaseOrderDialog.tsx:183` | medium | gates the confirm button |
+| `v2-purchasing.po-override-confirm-checkbox` | checkbox "I confirm that I want to override this purchase order." | `[data-field='confirmOverride'] :is(input,textarea):not([aria-hidden])` | `OverridePurchaseOrderDialog.tsx:183` | medium | gates the confirm button |
 | `v2-purchasing.po-delete-confirm-button` | button "Delete" | `role=dialog >> role=button[name="Delete"]` | `DeletePurchaseOrderModal.tsx:49` | medium | |
 
 ### Receivings
@@ -93,8 +93,8 @@ List chrome (`shell.table-*`), the dropdown workaround (`shell.select-option`) a
 | --- | --- | --- | --- | --- | --- |
 | `v2-purchasing.receiving-create-button` | button "Create" | `button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')` | `ReceivingsTable/index.tsx:276` | high | **verified 2026-09-17**: the plain `role=button[name="Create"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name="Create"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested. |
 | `v2-purchasing.receiving-sync-xero-button` | button "Sync to Xero" | `role=button[name="Sync to Xero"]` | `ReceivingsTable/index.tsx:274` | low | only for tenants with Xero connected |
-| `v2-purchasing.receiving-delivery-receipt-input` | textbox "Delivery receipt number" | `input[id='deliveryReceiptNumber']` | `Receivings/.../FiltersDialog` and form | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.receiving-location-input` | combobox "Location" | `input[id='inventoryLocationId']` | Receivings form | medium | autocomplete |
+| `v2-purchasing.receiving-delivery-receipt-input` | textbox "Delivery receipt number" | `[data-field='deliveryReceiptNumber'] :is(input,textarea):not([aria-hidden])` | `Receivings/.../FiltersDialog` and form | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.receiving-location-input` | combobox "Location" | `[data-field='inventoryLocationId'] :is(input,textarea):not([aria-hidden])` | Receivings form | medium | autocomplete |
 | `v2-purchasing.receiving-save-pending-button` | button "Save as Pending" | `role=button[name="Save as Pending"]` | `Receivings/CreateUpdateForm/index.tsx:449` | high | **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.receiving-complete-button` | button "Complete" | `role=button[name="Complete"]` | `Receivings/CreateUpdateForm/index.tsx:458` | high | completing a receiving moves stock **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.receiving-override-confirm-button` | button "Override receiving" | `role=dialog >> role=button[name="Override receiving"]` | `OverrideReceivingDialog.tsx:139` | medium | |
@@ -114,9 +114,9 @@ List chrome (`shell.table-*`), the dropdown workaround (`shell.select-option`) a
 | --- | --- | --- | --- | --- | --- |
 | `v2-purchasing.supplier-create-button` | button "Create" | `button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')` | `SuppliersPage/index.tsx:112` | high | **verified 2026-09-17**: the plain `role=button[name="Create"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name="Create"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested. |
 | `v2-purchasing.supplier-import-button` | button "Import" | `role=button[name="Import"]` | `SuppliersPage/index.tsx:110` | high | opens a file picker **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.supplier-code-input` | textbox "Code" | `input[id='code']` | Suppliers form | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.supplier-address-input` | textbox "Address" | `input[id='address']` | Suppliers form | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchasing.supplier-email-input` | textbox "Primary email" | `input[id='primaryEmail']` | Suppliers form | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.supplier-code-input` | textbox "Code" | `[data-field='code'] :is(input,textarea):not([aria-hidden])` | Suppliers form | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.supplier-address-input` | textbox "Address" | `[data-field='address'] :is(input,textarea):not([aria-hidden])` | Suppliers form | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchasing.supplier-email-input` | textbox "Primary email" | `[data-field='primaryEmail'] :is(input,textarea):not([aria-hidden])` | Suppliers form | high | **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.supplier-submit` | button "Submit" | `role=button[name="Submit"]` | `Suppliers/CreateUpdateForm/components/Details/index.tsx:58` | high | **verified 2026-09-17**: 1 match. |
 | `v2-purchasing.supplier-delete-confirm-button` | button "Delete Supplier" | `role=dialog >> role=button[name="Delete Supplier"]` | `DeleteSupplierModal.tsx:50` | medium | |
 
@@ -418,7 +418,7 @@ Everything in `v2-sales.md`'s Contract gaps applies here unchanged. Specific to 
   (invoice date, payment due, expected delivery). `fill` against a MUI date picker input may not
   commit the value. All three are recorded `low` and none is used in a flow.
 - **Checkbox confirmation via `click`.** Lock and Override gate their confirm button behind a
-  checkbox. `click` on `input[id='confirmLock']` should toggle it, but this is inference — the
+  checkbox. `click` on `[data-field='confirmLock'] :is(input,textarea):not([aria-hidden])` should toggle it, but this is inference — the
   checkbox may render the input visually hidden behind a styled span, in which case the click
   lands on nothing. Phase 4 must check.
 - **Xero sync and the importers** leave the app or open file pickers. Untestable.

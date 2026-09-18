@@ -1,7 +1,7 @@
 import { testPlanSchema, type TestStep } from '../contracts/test-plan'
 import {
   findAmbiguousMatch,
-  listFlows,
+  listFlowEntries,
   lookupPath,
   lookupSelectors
 } from '../knowledge/qa-knowledge'
@@ -150,16 +150,25 @@ export function validatePlan(
   const sourceFlows = context.sourceFlows ?? []
 
   for (const source of sourceFlows) {
-    const known = listFlows(source.module)
+    const known = listFlowEntries(source.module)
 
     if (known.length === 0) {
       errors.push(`sourceFlows names module ${source.module}, which has no Flows section.`)
       continue
     }
 
-    if (!known.includes(source.flow)) {
+    const match = known.find((flow) => flow.name === source.flow)
+
+    if (!match) {
       errors.push(
         `sourceFlows names "${source.flow}" in ${source.module}, which is not a flow there. Cite a heading from that module's Flows section, or declare no source flow.`
+      )
+      continue
+    }
+
+    if (match.superseded) {
+      errors.push(
+        `sourceFlows names "${source.flow}" in ${source.module}, which the knowledge base marks superseded. Cite the flow that replaced it, or declare no source flow.`
       )
     }
   }
@@ -168,11 +177,37 @@ export function validatePlan(
     (step) => step.action === 'click' || step.action === 'fill'
   )
 
-  if (sourceFlows.length === 0 && interactiveSteps.length > 0) {
-    const count = interactiveSteps.length
-    warnings.push(
-      `The plan drives ${count} interactive ${count === 1 ? 'step' : 'steps'} but reproduces no documented flow, so its ordering and preconditions are inferred rather than recorded. Nothing here checks that the sequence is possible.`
-    )
+  if (interactiveSteps.length > 0) {
+    // Citing one flow used to silence this for the whole plan, so a plan that
+    // reproduced sign-in and composed everything after it passed unremarked.
+    // Attribution is per module the plan actually navigates into.
+    const citedModules = new Set(sourceFlows.map((source) => source.module))
+    const touchedModules = new Set<string>()
+
+    for (const step of plan.steps) {
+      if (step.action !== 'navigate') {
+        continue
+      }
+
+      const page = lookupPath(step.path)
+
+      if (page) {
+        touchedModules.add(page.module)
+      }
+    }
+
+    const uncited = [...touchedModules].filter((module) => !citedModules.has(module))
+
+    if (uncited.length > 0) {
+      warnings.push(
+        `The plan navigates into ${uncited.join(', ')} but cites no documented flow there, so its ordering and preconditions in ${uncited.length === 1 ? 'that module' : 'those modules'} are inferred rather than recorded. Nothing here checks that the sequence is possible.`
+      )
+    } else if (sourceFlows.length === 0) {
+      const count = interactiveSteps.length
+      warnings.push(
+        `The plan drives ${count} interactive ${count === 1 ? 'step' : 'steps'} but reproduces no documented flow, so its ordering and preconditions are inferred rather than recorded.`
+      )
+    }
   }
 
   return { valid: errors.length === 0, errors, warnings }

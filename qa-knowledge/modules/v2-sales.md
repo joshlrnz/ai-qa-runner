@@ -1,7 +1,7 @@
 ---
 module: v2-sales
 routes: 26
-targets: 43
+targets: 42
 flows: 14
 status: drafted
 lastUpdated: 2026-09-17
@@ -90,8 +90,8 @@ primitives — see `shell.table-row-checkbox` and `shell.table-select-all-checkb
 | `v2-sales.bulk-print-button` | button "Print" | `role=button[name="Print"]` | `…/SalesOrderBulkPrint/useSalesOrderBulkPrint.tsx:108` | low | shares its name with the record page's Print button, but the two are never on screen together |
 | `v2-sales.bulk-lock-button` | button "Lock" | `role=button[name="Lock"]` | `OrdersTable/getBulkActions.tsx:16` | medium | |
 | `v2-sales.bulk-delete-button` | button "Delete" | `role=button[name="Delete"]` | `OrdersTable/getBulkActions.tsx:35` | medium | soft delete |
-| `v2-sales.bulk-collect-date-input` | "Collection date" | `input[id='collectionDate']` | `…/SalesOrderBulkCollect/BulkCollectFields.tsx:41` | medium | in the bulk collect dialog |
-| `v2-sales.bulk-collect-reference-input` | textbox "Reference number" | `input[id='referenceNumber']` | `…/BulkCollectFields.tsx:48` | medium | |
+| `v2-sales.bulk-collect-date-input` | "Collection date" | `[data-field='collectionDate'] :is(input,textarea):not([aria-hidden])` | `…/SalesOrderBulkCollect/BulkCollectFields.tsx:41` | medium | in the bulk collect dialog |
+| `v2-sales.bulk-collect-reference-input` | textbox "Reference number" | `[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/BulkCollectFields.tsx:48` | medium | |
 
 ### Sales orders — filters
 
@@ -100,13 +100,13 @@ The Filter button opens a dialog of multi-selects; every v2 filter dialog submit
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-sales.filter-status-input` | combobox "Status" | `input[id='status']` | `OrdersTable/FiltersDialog/FiltersDialog.tsx:319` | medium | multi-select |
-| `v2-sales.filter-delivery-status-input` | combobox "Delivery status" | `input[id='deliveryStatus']` | `…/FiltersDialog.tsx:344` | medium | |
-| `v2-sales.filter-payment-status-input` | combobox "Payment status" | `input[id='paymentStatus']` | `…/FiltersDialog.tsx:353` | medium | |
-| `v2-sales.filter-customer-input` | combobox "Customer" | `input[id='customerIds']` | `…/FiltersDialog.tsx:373` | medium | |
-| `v2-sales.filter-product-input` | combobox "Product" | `input[id='productIds']` | `…/FiltersDialog.tsx:327` | medium | |
-| `v2-sales.filter-payment-method-input` | combobox "Payment method" | `input[id='paymentMethod']` | `…/FiltersDialog.tsx:367` | medium | |
-| `v2-sales.filter-sales-channel-input` | combobox "Sales channel" | `input[id='salesChannelIds']` | `…/FiltersDialog.tsx:390` | medium | |
+| `v2-sales.filter-status-input` | combobox "Status" | `[data-field='status'] :is(input,textarea):not([aria-hidden])` | `OrdersTable/FiltersDialog/FiltersDialog.tsx:319` | medium | multi-select |
+| `v2-sales.filter-delivery-status-input` | combobox "Delivery status" | `[data-field='deliveryStatus'] :is(input,textarea):not([aria-hidden])` | `…/FiltersDialog.tsx:344` | medium | |
+| `v2-sales.filter-payment-status-input` | combobox "Payment status" | `[data-field='paymentStatus'] :is(input,textarea):not([aria-hidden])` | `…/FiltersDialog.tsx:353` | medium | |
+| `v2-sales.filter-customer-input` | combobox "Customer" | `[data-field='customerIds'] :is(input,textarea):not([aria-hidden])` | `…/FiltersDialog.tsx:373` | medium | |
+| `v2-sales.filter-product-input` | combobox "Product" | `[data-field='productIds'] :is(input,textarea):not([aria-hidden])` | `…/FiltersDialog.tsx:327` | medium | |
+| `v2-sales.filter-payment-method-input` | combobox "Payment method" | `[data-field='paymentMethod'] :is(input,textarea):not([aria-hidden])` | `…/FiltersDialog.tsx:367` | medium | |
+| `v2-sales.filter-sales-channel-input` | combobox "Sales channel" | `[data-field='salesChannelIds'] :is(input,textarea):not([aria-hidden])` | `…/FiltersDialog.tsx:390` | medium | |
 
 ### Sales order form (create and update)
 
@@ -114,18 +114,18 @@ Field inputs are addressed by `id`, not by label. `_common/Form/Field` renders
 `<label htmlFor={name}>` against `<TextField id={name}>` (`Form/Label.tsx:10`,
 `Form/TextInput.tsx:21`), so the association is real and `role=textbox[name="…"]` would work —
 **except that a required field's label appends a nested `*` span** (`Form/Label.tsx:27`), which
-lands inside the accessible name. `input[id='…']` sidesteps that entirely, is derived
+lands inside the accessible name. `[data-field='…'] :is(input,textarea):not([aria-hidden])` sidesteps that entirely, is derived
 mechanically from the field's `name` prop, and survives a copy change. Use it as the default for
 every v2 form field; the role selector is recorded as the fallback.
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-sales.order-customer-input` | combobox "Customer*" | `input[id='billing.customerId']` | `…/Details/Customer/CustomerAutocomplete.tsx:159` | high | MUI Autocomplete — `fill` to filter, then click the option **verified 2026-09-17**: 1 match. |
-| `v2-sales.order-delivery-receipt-input` | textbox "Delivery receipt number" | `input[id='billing.deliveryReceiptNumber']` | `…/Details/Customer/index.tsx:288` | medium | |
-| `v2-sales.order-remarks-input` | textbox | `input[id='billing.remarks']` | `…/Details/Customer/index.tsx:323` | medium | |
-| `v2-sales.order-invoice-number-input` | textbox "Invoice number" | `input[id='payment.invoiceNumber']` | `…/Details/PaymentInformation/index.tsx:193` | high | **verified 2026-09-17**: 1 match. |
-| `v2-sales.order-reference-number-input` | textbox "Reference number" | `input[id='payment.referenceNumber']` | `…/Details/PaymentInformation/index.tsx:196` | high | **verified 2026-09-17**: 1 match. |
-| `v2-sales.order-payment-terms-select` | combobox "Payment terms" | `div[id='payment.terms']` | `…/Details/PaymentInformation/index.tsx:187` | low | MUI Select renders a div, not an input — needs the two-click workaround and Phase 4 must confirm the element |
+| `v2-sales.order-customer-input` | combobox "Customer*" | `[data-field='billing.customerId'] :is(input,textarea):not([aria-hidden])` | `…/Details/Customer/CustomerAutocomplete.tsx:159` | high | MUI Autocomplete — `fill` to filter, then click the option **verified 2026-09-17**: 1 match. |
+| `v2-sales.order-delivery-receipt-input` | textbox "Delivery receipt number" | `[data-field='billing.deliveryReceiptNumber'] :is(input,textarea):not([aria-hidden])` | `…/Details/Customer/index.tsx:288` | medium | |
+| `v2-sales.order-remarks-input` | textbox | `[data-field='billing.remarks'] :is(input,textarea):not([aria-hidden])` | `…/Details/Customer/index.tsx:323` | medium | |
+| `v2-sales.order-invoice-number-input` | textbox "Invoice number" | `[data-field='payment.invoiceNumber'] :is(input,textarea):not([aria-hidden])` | `…/Details/PaymentInformation/index.tsx:193` | high | **verified 2026-09-17**: 1 match. |
+| `v2-sales.order-reference-number-input` | textbox "Reference number" | `[data-field='payment.referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/Details/PaymentInformation/index.tsx:196` | high | **verified 2026-09-17**: 1 match. |
+| `v2-sales.order-payment-terms-select` | combobox "Payment terms" | `[data-field='payment.terms'] :is(input,textarea):not([aria-hidden])` | `…/Details/PaymentInformation/index.tsx:187` | low | MUI Select renders a div, not an input — needs the two-click workaround and Phase 4 must confirm the element |
 | `v2-sales.order-add-product-button` | button "Add product" | `role=button[name="Add product"]` | `…/Details/OrderItemsDataGrid/index.tsx:994` | high | **verified 2026-09-17**: 1 match. |
 | `v2-sales.order-submit-create` | button "Save as Pending" | `role=button[name="Save as Pending"]` | `…/Details/index.tsx:679` | high | label is state-derived: create → "Save as Pending" **verified 2026-09-17**: 1 match. |
 | `v2-sales.order-submit-update` | button "Save changes" | `role=button[name="Save changes"]` | `…/Details/index.tsx:679` | high | update → "Save changes" **verified 2026-09-17**: 1 match. |
@@ -469,7 +469,7 @@ match, so the value below is safe to assert verbatim. A create page's crumb is l
   breadcrumb does not carry status either. Worth asking whether `Attributes.Item` can take an
   `aria-label`.
 - **`v2-sales.order-payment-terms-select` is a guess.** MUI `Select` renders the id onto a `div`,
-  not an `input`; `div[id='payment.terms']` is inference, not observation. Phase 4 must confirm
+  not an `input`; `[data-field='payment.terms'] :is(input,textarea):not([aria-hidden])` is inference, not observation. Phase 4 must confirm
   before this is used.
 - **Which of the 26 routes are actually reachable for a given tenant** depends on company
   settings (`enableBeatRoute`, `enableCustomerGroups`) and channel integrations (TikTok, Shopee,

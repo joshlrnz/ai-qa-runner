@@ -384,7 +384,7 @@
     "3": "confirmed",
     "4": "partial"
   },
-  "nextAction": "Probe the 127 unreached targets; bind a LITE companyId for the lite module; scope the 24 ambiguous selectors.",
+  "nextAction": "Add create/edit flows that use the new form fields; bind a LITE companyId; scope the 7 ambiguous selectors.",
   "parameters": {
     "policy": "Everything environment- or data-dependent is a parameter supplied by the caller. This knowledge base does no seeding and reads no env vars.",
     "run": [
@@ -411,7 +411,7 @@
   },
   "totals": {
     "routes": 234,
-    "targets": 405,
+    "targets": 489,
     "namedFlows": 117,
     "params": 38
   },
@@ -430,10 +430,11 @@
     "env": "releasing.oboda.app",
     "companyId": "10004",
     "role": "admin",
-    "targets": "405 total: 227 verified at 1 match, 6 ambiguous (held out), 27 zero, 145 unprobed",
-    "registry": "399 targets + 6 unresolved held out",
+    "targets": "489 total: 315 verified at 1 match, 7 ambiguous (held out), 148 zero, 19 unprobed",
+    "registry": "398 targets + 7 unresolved held out",
     "routes": "154/157 Prime routes 200",
     "fixes": "Create-button collision (18), account-button name, sidenav-help scope, all 6 row selectors :text-is -> :has-text",
-    "blocked": "v3 tab bar not rendered for this tenant; lite needs a LITE companyId"
+    "blocked": "v3 tab bar not rendered for this tenant; lite needs a LITE companyId",
+    "formFields": "167 field targets added 2026-09-18; 101 verified. Addressed via [data-field=NAME] :is(input,textarea):not([aria-hidden]) — id-based selectors fail for multiline (textarea) and date pickers (no id at all)."
   }
 }

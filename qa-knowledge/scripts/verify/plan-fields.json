@@ -1,0 +1,17 @@
+[
+ {"path":"/companies/10004/v2/expenses/create","targets":["v2-finance.expense-*"]},
+ {"path":"/companies/10004/v2/bank-accounts/create","targets":["v2-finance.bank-account-*"]},
+ {"path":"/companies/10004/v2/post-dated-cheques/create","targets":["v2-finance.cheque-*"]},
+ {"path":"/companies/10004/v2/payments/create","targets":["v2-finance.payment-*"]},
+ {"path":"/companies/10004/v2/products/create","targets":["v2-inventory.product-*"]},
+ {"path":"/companies/10004/v2/vehicles/create","targets":["v2-inventory.vehicle-*"]},
+ {"path":"/companies/10004/v2/stock-transfers/create","targets":["v2-inventory.transfer-*"]},
+ {"path":"/companies/10004/v2/stocktakes/create","targets":["v2-inventory.stocktake-*"]},
+ {"path":"/companies/10004/v2/stock-adjustments/create","targets":["v2-inventory.adjustment-*"]},
+ {"path":"/companies/10004/v2/customers/create","targets":["v2-masterdata.customer-*"]},
+ {"path":"/companies/10004/v2/customer-groups/create","targets":["v2-masterdata.customer-group-*"]},
+ {"path":"/companies/10004/v2/contacts/create","targets":["v2-masterdata.contact-*"]},
+ {"path":"/companies/10004/v2/customers/9572/update","targets":["v2-masterdata.customer-*"]},
+ {"path":"/companies/10004/v2/vehicles/193/update","targets":["v2-inventory.vehicle-*"]},
+ {"path":"/companies/10004/v2/expenses/687/update","targets":["v2-finance.expense-*"]}
+]

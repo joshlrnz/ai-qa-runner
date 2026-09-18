@@ -10,11 +10,6 @@
    "where": "/companies/{companyId}/v2/sales-orders",
    "selector": "role=navigation[name=\"breadcrumb\"]"
   },
-  "v2-sales.orders-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/sales-orders",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-sales.orders-import-button": {
    "count": 1,
    "where": "/companies/{companyId}/v2/sales-orders",
@@ -125,11 +120,6 @@
    "where": "/companies/10004/v2/sales-orders/26018/update",
    "selector": "role=dialog >> role=button[name=\"Duplicate order\"]"
   },
-  "v2-purchasing.po-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/purchase-orders",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-purchasing.po-import-button": {
    "count": 1,
    "where": "/companies/{companyId}/v2/purchase-orders",
@@ -210,8 +200,8 @@
   },
   "v2-inventory.product-name-input": {
    "count": 1,
-   "where": "/companies/10004/v2/products/44687/update",
-   "selector": "input[id='name']"
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
   },
   "v2-inventory.product-submit": {
    "count": 1,
@@ -293,11 +283,6 @@
    "where": "/companies/10004/v2/products/44687/update",
    "selector": "role=button[name=\"Filter\"]"
   },
-  "v2-masterdata.customer-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/customers",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-masterdata.customer-row": {
    "count": 8,
    "where": "/companies/10004/v2/customers",
@@ -305,23 +290,18 @@
   },
   "v2-masterdata.customer-name-input": {
    "count": 1,
-   "where": "/companies/{companyId}/v2/customers/create",
-   "selector": "input[id='name']"
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
   },
   "v2-masterdata.customer-code-input": {
    "count": 1,
-   "where": "/companies/{companyId}/v2/customers/create",
-   "selector": "input[id='code']"
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='code'] :is(input,textarea):not([aria-hidden])"
   },
   "v2-masterdata.customer-submit": {
    "count": 1,
    "where": "/companies/{companyId}/v2/customers/create",
    "selector": "role=button[name=\"Submit\"]"
-  },
-  "v2-masterdata.customer-group-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/customers",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-masterdata.customer-group-submit": {
    "count": 1,
@@ -342,11 +322,6 @@
    "count": 1,
    "where": "/companies/{companyId}/v2/customers/create",
    "selector": "role=tabpanel"
-  },
-  "v2-purchasing.supplier-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/suppliers",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-purchasing.supplier-import-button": {
    "count": 1,
@@ -413,11 +388,6 @@
    "where": "/companies/{companyId}/v2/suppliers/create",
    "selector": "role=tab[name=\"AUDIT LOGS\"]"
   },
-  "v2-inventory.stocktake-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/stocktakes",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-inventory.stocktake-import-button": {
    "count": 1,
    "where": "/companies/{companyId}/v2/stocktakes",
@@ -453,11 +423,6 @@
    "where": "/companies/10004/v2/stocktakes/907/update",
    "selector": "role=tab[name=\"AUDIT LOGS\"]"
   },
-  "v2-inventory.adjustment-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/stock-adjustments",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-inventory.adjustment-tablist": {
    "count": 1,
    "where": "/companies/10004/v2/stock-adjustments/1493/update",
@@ -482,11 +447,6 @@
    "count": 1,
    "where": "/companies/10004/v2/stock-adjustments/1493/update",
    "selector": "role=tab[name=\"AUDIT LOGS\"]"
-  },
-  "v2-inventory.transfer-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/stock-transfers",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-inventory.transfer-cancel-button": {
    "count": 1,
@@ -518,11 +478,6 @@
    "where": "/companies/10004/v2/stock-transfers/1306/update",
    "selector": "role=tab[name=\"AUDIT LOGS\"]"
   },
-  "v2-inventory.releasing-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/releasings",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-inventory.releasings-list-tab-all": {
    "count": 1,
    "where": "/companies/{companyId}/v2/releasings",
@@ -542,11 +497,6 @@
    "count": 1,
    "where": "/companies/{companyId}/v2/releasings",
    "selector": "role=tab[name=\"CANCELLED\"]"
-  },
-  "v2-purchasing.receiving-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/receivings",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-purchasing.receiving-delivery-receipt-input": {
    "count": 1,
@@ -598,11 +548,6 @@
    "where": "/companies/10004/v2/requisitions/126/update",
    "selector": "role=button[name=\"Cancel\"]"
   },
-  "v2-finance.payment-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/payments",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-finance.payment-row": {
    "count": "needs:recordCode",
    "where": "/companies/{companyId}/v2/payments"
@@ -632,25 +577,10 @@
    "where": "/companies/10004/v2/payments/2531/update",
    "selector": "role=tab[name=\"AUDIT LOG\"]"
   },
-  "v2-finance.bank-account-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/bank-accounts",
-   "selector": "role=button[name=\"Create\"]"
-  },
-  "v2-finance.expense-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/expenses",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-finance.expense-import-button": {
    "count": 1,
    "where": "/companies/{companyId}/v2/expenses",
    "selector": "role=button[name=\"Import\"]"
-  },
-  "v2-finance.cheque-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/post-dated-cheques",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-finance.cheque-bulk-create-button": {
    "count": 1,
@@ -672,20 +602,10 @@
    "where": "/companies/10004/v2/post-dated-cheques/591/update",
    "selector": "role=button[name=\"Delete\"]"
   },
-  "v2-masterdata.contact-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/contacts",
-   "selector": "role=button[name=\"Create\"]"
-  },
   "v2-masterdata.contact-import-button": {
    "count": 1,
    "where": "/companies/{companyId}/v2/contacts",
    "selector": "role=button[name=\"Import\"]"
-  },
-  "v2-inventory.vehicle-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/vehicles",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-inventory.vehicle-submit": {
    "count": 1,
@@ -696,16 +616,6 @@
    "count": 1,
    "where": "/companies/10004/v2/vehicles/193/update",
    "selector": "role=button[name=\"Delete\"]"
-  },
-  "v2-inventory.assembly-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/assemblies",
-   "selector": "role=button[name=\"Create\"]"
-  },
-  "v2-inventory.bom-create-button": {
-   "count": 2,
-   "where": "/companies/{companyId}/v2/bill-of-materials",
-   "selector": "role=button[name=\"Create\"]"
   },
   "v2-inventory.location-view-qr-button": {
    "count": 4,
@@ -1159,7 +1069,7 @@
   },
   "v2-masterdata.customer-export-button": {
    "count": 0,
-   "where": "/companies/10004/v2/customers/9572/update",
+   "where": "/companies/10004/v2/customers/create",
    "selector": "role=button[name=\"Export\"]"
   },
   "v2-masterdata.customer-delete-button": {
@@ -1309,7 +1219,7 @@
   },
   "v2-finance.expense-tab-payments": {
    "count": 0,
-   "where": "/companies/10004/v2/expenses",
+   "where": "/companies/10004/v2/expenses/create",
    "selector": "role=tab[name=\"PAYMENTS\"]"
   },
   "v2-finance.expense-tab-attachments": {
@@ -1359,7 +1269,7 @@
   },
   "v2-finance.bank-account-tab-expense-payments": {
    "count": 0,
-   "where": "/companies/10004/v2/bank-accounts",
+   "where": "/companies/10004/v2/bank-accounts/create",
    "selector": "role=tab[name=\"EXPENSE PAYMENTS\"]"
   },
   "v2-inventory.assembly-complete-button": {
@@ -1384,12 +1294,12 @@
   },
   "v2-finance.cheque-quick-create-confirm-button": {
    "count": 0,
-   "where": "/companies/10004/v2/post-dated-cheques",
+   "where": "/companies/10004/v2/post-dated-cheques/create",
    "selector": "role=dialog >> role=button[name=\"Create Post-dated Check\"]"
   },
   "v2-finance.cheque-bulk-submit-button": {
    "count": 0,
-   "where": "/companies/10004/v2/post-dated-cheques",
+   "where": "/companies/10004/v2/post-dated-cheques/create",
    "selector": "role=dialog >> role=button[name=\"Submit\"]"
   },
   "v2-masterdata.settings-user-export-button": {
@@ -1401,6 +1311,1056 @@
    "count": 0,
    "where": "/companies/10004/v2/settings",
    "selector": "role=button[name=\"Save Account Codes\"]"
+  },
+  "v2-sales.orders-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/sales-orders",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "shell.filter-apply-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=dialog >> role=button[name=\"Apply\"]"
+  },
+  "v2-sales.order-delivery-receipt-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='billing.deliveryReceiptNumber']"
+  },
+  "v2-sales.order-remarks-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='billing.remarks']"
+  },
+  "v2-sales.order-payment-terms-select": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "div[id='payment.terms']"
+  },
+  "v2-sales.order-submit-saving": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Saving...\"]"
+  },
+  "v2-sales.order-override-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Override\"]"
+  },
+  "v2-sales.order-delete-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Delete\"]"
+  },
+  "v2-sales.order-override-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Override order\"]"
+  },
+  "v2-purchasing.po-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/purchase-orders",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-purchasing.po-export-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=button[name=\"Export\"]"
+  },
+  "v2-purchasing.po-invoice-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='payment.invoiceAt']"
+  },
+  "v2-purchasing.po-payment-due-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='payment.paymentDueAt']"
+  },
+  "v2-purchasing.po-expected-delivery-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='payment.expectedDeliveryAt']"
+  },
+  "v2-purchasing.po-override-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=button[name=\"Override\"]"
+  },
+  "v2-purchasing.po-cancel-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Cancel order\"]"
+  },
+  "v2-purchasing.po-override-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Override purchase order\"]"
+  },
+  "v2-purchasing.po-override-confirm-checkbox": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='confirmOverride']"
+  },
+  "v2-purchasing.po-delete-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Delete\"]"
+  },
+  "v2-inventory.product-tab-serials": {
+   "count": 0,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "role=tab[name=\"SERIALS\"]"
+  },
+  "v2-inventory.product-history-export-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "role=button[name=\"Export\"]"
+  },
+  "v2-masterdata.customer-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-masterdata.customer-group-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/customers",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-purchasing.supplier-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/suppliers",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.stocktake-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/stocktakes",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.stocktake-sync-xero-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stocktakes/create",
+   "selector": "role=button[name=\"Sync to Xero\"]"
+  },
+  "v2-inventory.stocktake-save-pending-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/create",
+   "selector": "role=button[name=\"Save as Pending\"]"
+  },
+  "v2-inventory.stocktake-complete-button": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/create",
+   "selector": "role=button[name=\"Complete\"]"
+  },
+  "v2-inventory.adjustment-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/stock-adjustments",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.adjustment-save-pending-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-adjustments/create",
+   "selector": "role=button[name=\"Save as Pending\"]"
+  },
+  "v2-inventory.adjustment-complete-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-adjustments/create",
+   "selector": "role=button[name=\"Complete\"]"
+  },
+  "v2-inventory.adjustment-delete-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-adjustments/create",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-inventory.transfer-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/stock-transfers",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.transfer-submit": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "role=button[name=\"Submit\"]"
+  },
+  "v2-inventory.transfer-cancel-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+  },
+  "v2-inventory.transfer-delete-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-inventory.transfer-override-received-qty-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "role=button[name=\"Override received quantity\"]"
+  },
+  "v2-inventory.transfer-override-save-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "role=dialog >> role=button[name=\"Save\"]"
+  },
+  "v2-inventory.releasing-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.releasing-save-pending-button": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=button[name=\"Save as Pending\"]"
+  },
+  "v2-inventory.releasing-complete-button": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=button[name=\"Complete\"]"
+  },
+  "v2-inventory.releasing-override-button": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=button[name=\"Override\"]"
+  },
+  "v2-inventory.releasing-override-confirm-button": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=dialog >> role=button[name=\"Override releasing\"]"
+  },
+  "v2-inventory.releasing-create-sales-return-button": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=button[name=\"Create sales return\"]"
+  },
+  "v2-inventory.releasing-tablist": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tablist[name=\"Releasing details tabs\"]"
+  },
+  "v2-inventory.releasing-tab-details": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"DETAILS\"]"
+  },
+  "v2-inventory.releasing-tab-delivery-receipts": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"DELIVERY RECEIPTS\"]"
+  },
+  "v2-inventory.releasing-tab-audit-logs": {
+   "count": 0,
+   "where": "/companies/{companyId}/v2/releasings",
+   "selector": "role=tab[name=\"AUDIT LOGS\"]"
+  },
+  "v2-purchasing.receiving-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/receivings",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-purchasing.receiving-sync-xero-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=button[name=\"Sync to Xero\"]"
+  },
+  "v2-purchasing.receiving-location-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "input[id='inventoryLocationId']"
+  },
+  "v2-purchasing.receiving-override-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/receivings/3900/update",
+   "selector": "role=dialog >> role=button[name=\"Override receiving\"]"
+  },
+  "v2-finance.payment-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/payments",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-finance.payment-print-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "role=button[name=\"Print\"]"
+  },
+  "v2-finance.payment-override-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "role=dialog >> role=button[name=\"Override payment\"]"
+  },
+  "v2-finance.payment-post-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "role=dialog >> role=button[name=\"Post payment\"]"
+  },
+  "v2-finance.bank-account-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/bank-accounts",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-finance.expense-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/expenses",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-finance.cheque-create-button": {
+   "count": 2,
+   "where": "/companies/{companyId}/v2/post-dated-cheques",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-masterdata.contact-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/contacts",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.vehicle-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/vehicles",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.assembly-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/assemblies",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "v2-inventory.bom-create-button": {
+   "count": 1,
+   "where": "/companies/{companyId}/v2/bill-of-materials",
+   "selector": "button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')"
+  },
+  "shell.sign-in-heading": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "role=heading[name=\"Sign in to oboda\"]"
+  },
+  "shell.sign-in-with-email-button": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "role=button[name=\"Sign in with email\"]"
+  },
+  "shell.sign-in-with-google-button": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "role=button[name=\"Continue with Google\"]"
+  },
+  "shell.sign-in-with-apple-button": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "role=button[name=\"Continue with Apple\"]"
+  },
+  "shell.email-input": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "input[name='email']"
+  },
+  "shell.password-input": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "input[name='password']"
+  },
+  "shell.sign-in-submit": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "role=button[name=\"Sign in\"]"
+  },
+  "shell.sign-in-back-button": {
+   "count": 0,
+   "where": "/sign-in",
+   "selector": "role=button[name=\"Back\"]"
+  },
+  "shell.companies-list-item": {
+   "count": 0,
+   "where": "/companies",
+   "selector": "role=button[name=\"Dhin Company\"]"
+  },
+  "shell.companies-sign-out-button": {
+   "count": 0,
+   "where": "/companies",
+   "selector": "role=button[name=\"Sign-out\"]"
+  },
+  "v2-sales.filter-status-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='status']"
+  },
+  "v2-sales.filter-delivery-status-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='deliveryStatus']"
+  },
+  "v2-sales.filter-payment-status-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='paymentStatus']"
+  },
+  "v2-sales.filter-customer-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='customerIds']"
+  },
+  "v2-sales.filter-product-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='productIds']"
+  },
+  "v2-sales.filter-payment-method-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='paymentMethod']"
+  },
+  "v2-sales.filter-sales-channel-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='salesChannelIds']"
+  },
+  "v2-sales.bulk-collect-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Collect\"]"
+  },
+  "v2-sales.bulk-release-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Release\"]"
+  },
+  "v2-sales.bulk-print-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Print\"]"
+  },
+  "v2-sales.bulk-lock-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Lock\"]"
+  },
+  "v2-sales.bulk-delete-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "role=button[name=\"Delete\"]"
+  },
+  "v2-sales.bulk-collect-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='collectionDate']"
+  },
+  "v2-sales.bulk-collect-reference-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders",
+   "selector": "input[id='referenceNumber']"
+  },
+  "shell.select-option": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=option[name=\"Cash\"]"
+  },
+  "v2-sales-order-record.collection-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='collectionDate']"
+  },
+  "v2-sales-order-record.collection-currency-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='currency']"
+  },
+  "v2-sales-order-record.collection-remarks-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='remarks']"
+  },
+  "v2-sales-order-record.collection-create-pdc-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Create Post-dated Check\"]"
+  },
+  "v2-sales-order-record.collection-edit-pdc-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Edit Post-dated Check\"]"
+  },
+  "v2-sales-order-record.releasing-delivered-at-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='deliveredAt']"
+  },
+  "v2-sales-order-record.releasing-apply-location-to-all-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Apply to All\"]"
+  },
+  "v2-sales-order-record.releasing-complete-confirm-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=dialog >> role=button[name=\"Submit\"]"
+  },
+  "v2-sales-order-record.return-dummy-releasing-toggle": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=checkbox[name=\"Return with dummy releasing\"]"
+  },
+  "v2-sales-order-record.return-driver-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactDriverIds']"
+  },
+  "v2-sales-order-record.return-checker-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactCheckerIds']"
+  },
+  "v2-sales-order-record.return-helper-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='contactHelperIds']"
+  },
+  "v2-sales-order-record.return-submit": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+  },
+  "v2-sales-order-record.return-discard-item-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Discard Item\"]"
+  },
+  "v2-sales-order-record.return-open-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "role=button[name=\"Open\"]"
+  },
+  "v2-sales-order-record.refund-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='refundDate']"
+  },
+  "v2-sales-order-record.refund-remarks-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='remarks']"
+  },
+  "v2-sales-order-record.print-discount-option-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='discountOption']"
+  },
+  "v2-sales-order-record.print-brand-name-option-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='brandNameOption']"
+  },
+  "v2-sales-order-record.print-sku-option-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='skuOption']"
+  },
+  "v2-sales-order-record.print-price-option-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/sales-orders/26018/update",
+   "selector": "input[id='priceOption']"
+  },
+  "v2-purchase-order-record.payment-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentDate']"
+  },
+  "v2-purchase-order-record.payment-currency-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='currency']"
+  },
+  "v2-purchase-order-record.payment-remarks-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='remarks']"
+  },
+  "v2-purchase-order-record.payment-entry-type-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentEntries.0.type']"
+  },
+  "v2-purchase-order-record.payment-entry-amount-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentEntries.0.amount']"
+  },
+  "v2-purchase-order-record.payment-entry-method-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentEntries.0.paymentMethod']"
+  },
+  "v2-purchase-order-record.payment-entry-bank-account-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentEntries.0.bankAccountId']"
+  },
+  "v2-purchase-order-record.payment-entry-reference-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='paymentEntries.0.referenceNumber']"
+  },
+  "v2-purchase-order-record.payment-add-source-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=button[name=\"Add Another Source\"]"
+  },
+  "v2-purchase-order-record.payment-submit": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+  },
+  "v2-purchase-order-record.payment-post-confirm-checkbox": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='confirmPost']"
+  },
+  "v2-purchase-order-record.payment-post-continue-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Continue\"]"
+  },
+  "v2-purchase-order-record.receiving-apply-location-to-all-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Apply to All\"]"
+  },
+  "v2-purchase-order-record.receiving-complete-dismiss-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+  },
+  "v2-purchase-order-record.refund-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='refundDate']"
+  },
+  "v2-purchase-order-record.refund-remarks-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "input[id='remarks']"
+  },
+  "v2-purchase-order-record.refund-warning-continue-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Continue\"]"
+  },
+  "v2-purchase-order-record.return-submit": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+  },
+  "v2-purchase-order-record.return-dummy-receiving-submit": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=tabpanel >> role=button[name=\"Submit\"]"
+  },
+  "v2-purchase-order-record.return-complete-dismiss-button": {
+   "count": 0,
+   "where": "/companies/10004/v2/purchase-orders/5791/update",
+   "selector": "role=dialog >> role=button[name=\"Cancel\"]"
+  },
+  "v2-finance.expense-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.expense-supplier-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/create",
+   "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.expense-sales-agent-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/create",
+   "selector": "[data-field='salesAgentId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.expense-reference-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/create",
+   "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.expense-remarks-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/expenses/create",
+   "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.bank-account-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.bank-account-number-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/bank-accounts/create",
+   "selector": "[data-field='bankAccountNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.bank-account-xero-code-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/bank-accounts/create",
+   "selector": "[data-field='xeroAccountCode'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-date-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='chequeDate'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-amount-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='amount'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-reference-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-bank-account-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='bankAccountId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-customer-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='customerId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-supplier-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.cheque-remarks-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/post-dated-cheques/create",
+   "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-supplier-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='supplierId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-date-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentDate'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-currency-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='payInCurrency'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-entry-type-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentEntries.0.type'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-entry-amount-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentEntries.0.amount'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-entry-method-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-entry-bank-account-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentEntries.0.bankAccountId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-entry-reference-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-entry-remarks-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='paymentEntries.0.remarks'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-override-confirm-checkbox": {
+   "count": 0,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='confirmOverride'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-finance.payment-post-confirm-checkbox": {
+   "count": 0,
+   "where": "/companies/10004/v2/payments/create",
+   "selector": "[data-field='confirmPost'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-name-field": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-sku-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='code'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-description-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='description'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-barcode-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='barcode'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-selling-price-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='sellingPrice'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-buying-price-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='buyingPrice'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-srp-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='suggestedRetailPrice'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-minimum-quantity-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='minimumQuantity'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-maximum-quantity-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='maximumQuantity'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.product-reordering-quantity-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/products/create",
+   "selector": "[data-field='reorderingQuantity'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-plate-number-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='plateNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-model-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='model'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-maker-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='maker'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-color-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='color'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-cor-number-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='certificateOfRegistrationNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-engine-number-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='engineNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-chassis-number-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='chassisNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.vehicle-vin-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/vehicles/create",
+   "selector": "[data-field='vehicleIdentificationNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.transfer-source-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "[data-field='sourceLocationId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.transfer-destination-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "[data-field='destinationLocationId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.transfer-vehicle-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "[data-field='vehicleId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.transfer-delivered-at-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "[data-field='deliveredAt'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.transfer-reference-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stock-transfers/create",
+   "selector": "[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.stocktake-reference-date-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/create",
+   "selector": "[data-field='referenceDate'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.stocktake-contacts-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/stocktakes/create",
+   "selector": "[data-field='contactIds'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.adjustment-type-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-adjustments/create",
+   "selector": "[data-field='type'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.adjustment-reference-date-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-adjustments/create",
+   "selector": "[data-field='referenceDate'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-inventory.adjustment-vehicle-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/stock-adjustments/create",
+   "selector": "[data-field='vehicleId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-legal-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='legalName'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-business-style-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='businessStyle'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-mailing-address-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='mailingAddress'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-email-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='email'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-phone-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='phoneNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-group-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/customer-groups/create",
+   "selector": "[data-field='customerGroupId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-contacts-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='contactIds'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-website-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='website'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-remarks-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='remarks'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-bank-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='bank'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-account-number-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='accountNumber'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-ewt-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='defaultEwtPercentage'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-price-matrix-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='salesPriceMatrixId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-sales-agent-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='salesAgentId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-tin-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='tin'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-credit-limit-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='creditLimit'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-vat-chargeable-checkbox": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='vatChargeable'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-group-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='name'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-group-customers-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customer-groups/create",
+   "selector": "[data-field='customers'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.customer-group-price-matrix-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/customers/create",
+   "selector": "[data-field='salesPriceMatrixId'] :is(input,textarea):not([aria-hidden])"
+  },
+  "v2-masterdata.contact-name-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/create",
+   "selector": "[id='name']"
+  },
+  "v2-masterdata.contact-email-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/create",
+   "selector": "[id='email']"
+  },
+  "v2-masterdata.contact-description-input": {
+   "count": 1,
+   "where": "/companies/10004/v2/contacts/create",
+   "selector": "[id='description']"
+  },
+  "v2-masterdata.contact-birthday-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/contacts/create",
+   "selector": "[id='birthday']"
+  },
+  "v2-masterdata.contact-number-label-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/contacts/create",
+   "selector": "[id='contactNumbers.0.label']"
+  },
+  "v2-masterdata.contact-number-value-input": {
+   "count": 0,
+   "where": "/companies/10004/v2/contacts/create",
+   "selector": "[id='contactNumbers.0.number']"
   }
  },
  "notes": []

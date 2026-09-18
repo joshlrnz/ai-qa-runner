@@ -1,8 +1,8 @@
 ---
 module: v2-masterdata
 routes: 29
-targets: 40
-flows: 9
+targets: 65
+flows: 13
 status: drafted
 lastUpdated: 2026-09-17
 ---
@@ -60,8 +60,8 @@ List chrome (`shell.table-*`), `shell.select-option` and `shell.toast` come from
 | `v2-masterdata.customer-create-button` | button "Create" | `button.MuiIconButton-root:not(.MuiDrawer-root *):has-text('Create')` | `CustomersPage/index.tsx:162` | high | **verified 2026-09-17**: the plain `role=button[name="Create"]` matched **2** — the sidenav's own Create menu collides with the page button. Scoped selector above matched exactly 1 on all 10 list pages tested. **verified 2026-09-18**: the plain `role=button[name="Create"]` matched **2** (the rail's own Create menu collides); this scoped selector matched exactly 1 on all 10 list pages tested. |
 | `v2-masterdata.customer-export-button` | button "Export" | `role=button[name="Export"]` | `CustomersPage/index.tsx:157` | low | triggers a download the plan cannot follow |
 | `v2-masterdata.customer-row` | row containing the code | `tr:has(td:has-text('{recordCode}'))` | `CustomersPage` | unresolved | **verified 2026-09-18: AMBIGUOUS — 8 matches.** Needs scoping. |
-| `v2-masterdata.customer-name-input` | textbox "Name*" | `input[id='name']` | `…/Details/components/AddressContactCard/index.tsx:29` | high | required **verified 2026-09-17**: 1 match. |
-| `v2-masterdata.customer-code-input` | textbox "Code" | `input[id='code']` | `…/AddressContactCard/index.tsx:38` | high | **verified 2026-09-17**: 1 match. |
+| `v2-masterdata.customer-name-input` | textbox "Name*" | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/Details/components/AddressContactCard/index.tsx:29` | high | required **verified 2026-09-17**: 1 match. |
+| `v2-masterdata.customer-code-input` | textbox "Code" | `[data-field='code'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:38` | high | **verified 2026-09-17**: 1 match. |
 | `v2-masterdata.customer-submit` | button "Submit" | `role=button[name="Submit"]` | `Customers/CreateUpdateForm/components/Details/index.tsx:51` | high | **verified 2026-09-17**: 1 match. |
 | `v2-masterdata.customer-delete-button` | button "Delete" | `role=button[name="Delete"]` | `Customers/CreateUpdateForm/index.tsx:420` | high | **verified 2026-09-18**: 1 match. |
 | `v2-masterdata.customer-attach-file-button` | button "Attach file" | `role=button[name="Attach file"]` | `Customers/CreateUpdateForm/index.tsx:414` | high | file picker **verified 2026-09-18**: 1 match. |
@@ -141,6 +141,77 @@ read-only list of the documents this contact appears on. Tablist aria-label:
 | `v2-masterdata.contact-tab-suppliers` | SUPPLIERS | `role=tab[name="SUPPLIERS"]` | `…/index.tsx:143` | medium **verified 2026-09-18**: 1 match. |
 | `v2-masterdata.contact-tab-stock-adjustments` | STOCK ADJUSTMENTS | `role=tab[name="STOCK ADJUSTMENTS"]` | `…/index.tsx:148` | medium **verified 2026-09-18**: 1 match. |
 | `v2-masterdata.contact-tab-stocktakes` | STOCKTAKES | `role=tab[name="STOCKTAKES"]` | `…/index.tsx:153` | medium **verified 2026-09-18**: 1 match. |
+
+
+## Form fields
+
+Every v2 form field is addressed through the **`data-field` attribute on its wrapper**:
+
+```
+[data-field='<field name>'] :is(input,textarea):not([aria-hidden])
+```
+
+`_common/Form/Field.tsx:121` puts `data-field={name}` on the wrapper of **every** field type, so
+one shape works for text, number, money, date, autocomplete, select, checkbox and multiline alike.
+It is an authored attribute, not a MUI internal, so it survives a library upgrade. The field name
+is the form path passed to `Form.Field` — `name`, `payment.invoiceNumber`, `collectionEntries.0.amount`.
+
+**Verified 2026-09-18.** The obvious alternative, `input[id='<name>']`, is wrong in two ways this
+app actually hits: a multiline field renders a `<textarea>` plus a hidden autosize twin (hence
+`:not([aria-hidden])`), and `DatePicker` never passes an `id` to its text field at all — every
+date field matched **0**. Its `<label htmlFor={name}>` points at nothing too, so accessible-name
+matching is not a fallback either.
+
+Never match on the label: a required field appends a `*` inside it, which corrupts exact name
+matching.
+
+
+### Customer form — `/v2/customers/create`, `/v2/customers/{customerId}/update`
+
+The most complete create form in the knowledge base: no line-item grid, so a customer can be
+created end to end through the vocabulary.
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-masterdata.customer-legal-name-input` | Legal name | text | `[data-field='legalName'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:31` | medium |
+| `v2-masterdata.customer-business-style-input` | Business style | text | `[data-field='businessStyle'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:39` | medium |
+| `v2-masterdata.customer-mailing-address-input` | Mailing address | text | `[data-field='mailingAddress'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:46` | medium |
+| `v2-masterdata.customer-email-input` | Primary email | text | `[data-field='email'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:53` | medium |
+| `v2-masterdata.customer-phone-input` | Contact number | text | `[data-field='phoneNumber'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:59` | medium |
+| `v2-masterdata.customer-group-input` | Customer group | autocomplete | `[data-field='customerGroupId'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:66` | medium |
+| `v2-masterdata.customer-contacts-input` | Contacts | multi-autocomplete | `[data-field='contactIds'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:75` | medium |
+| `v2-masterdata.customer-website-input` | Website | text | `[data-field='website'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:82` | medium |
+| `v2-masterdata.customer-remarks-input` | Remarks | multiline | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `…/AddressContactCard/index.tsx:83` | medium |
+| `v2-masterdata.customer-bank-input` | Bank | autocomplete | `[data-field='bank'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:33` | medium |
+| `v2-masterdata.customer-account-number-input` | Account number | text | `[data-field='accountNumber'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:40` | medium |
+| `v2-masterdata.customer-ewt-input` | EWT % | number | `[data-field='defaultEwtPercentage'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:53` | medium |
+| `v2-masterdata.customer-price-matrix-input` | Sales price matrix | autocomplete | `[data-field='salesPriceMatrixId'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:62` | medium |
+| `v2-masterdata.customer-sales-agent-input` | Sales agent | autocomplete | `[data-field='salesAgentId'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:71` | medium |
+| `v2-masterdata.customer-tin-input` | TIN | text | `[data-field='tin'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:79` | medium |
+| `v2-masterdata.customer-credit-limit-input` | Credit limit | money | `[data-field='creditLimit'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:80` | medium |
+| `v2-masterdata.customer-vat-chargeable-checkbox` | This customer is VAT chargeable | checkbox | `[data-field='vatChargeable'] :is(input,textarea):not([aria-hidden])` | `…/PaymentCard/index.tsx:86` | medium |
+
+`v2-masterdata.customer-name-input` (Name, **REQUIRED**) and `-code-input` (Code) are defined in
+the Customers target table above.
+
+### Customer group form — `/v2/customer-groups/create`, `…/{customerGroupId}/update`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-masterdata.customer-group-name-input` | Customer group name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:25` | medium |
+| `v2-masterdata.customer-group-customers-input` | Customers | multi-autocomplete | `[data-field='customers'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:33` | medium |
+| `v2-masterdata.customer-group-price-matrix-input` | Sales price matrix | autocomplete | `[data-field='salesPriceMatrixId'] :is(input,textarea):not([aria-hidden])` | `…/GeneralCard/index.tsx:41` | medium |
+
+### Contact form — `/v2/contacts/create`, `/v2/contacts/{contactId}/update`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-masterdata.contact-name-input` | Contact Name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `Contacts/CreateUpdateForm/Details/index.tsx:89` | medium |
+| `v2-masterdata.contact-email-input` | Email | text | `[data-field='email'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:98` | medium |
+| `v2-masterdata.contact-description-input` | Description | text | `[data-field='description'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:106` | medium |
+| `v2-masterdata.contact-birthday-input` | Birthday | date | `[data-field='birthday'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:158` | medium |
+| `v2-masterdata.contact-number-label-input` | phone label (row 0) | text | `[data-field='contactNumbers.0.label'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:43` | low |
+| `v2-masterdata.contact-number-value-input` | phone number (row 0) | text | `[data-field='contactNumbers.0.number'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:56` | low |
 
 ## Flows
 
@@ -253,6 +324,63 @@ Preconditions: company admin; the tenant has Xero connected.
 | `v2-masterdata.customer-export-button`, `v2-masterdata.settings-user-export-button`, `v2-masterdata.audit-logs-download-button` | downloads |
 | `v2-masterdata.contact-import-button` | file picker |
 | `v2-masterdata.customer-attach-file-button` | file picker |
+
+
+### Create a customer (complete)
+
+Preconditions: CUSTOMER WRITE. Every target below is verified at exactly 1 match.
+
+1. `navigate` → `/companies/{companyId}/v2/customers/create`
+2. `assertVisible` → `v2-masterdata.customer-name-input`
+3. `fill` → `v2-masterdata.customer-name-input` = `<customer name>`
+4. `fill` → `v2-masterdata.customer-code-input` = `<customer code>`
+5. `fill` → `v2-masterdata.customer-email-input` = `<email>`
+6. `fill` → `v2-masterdata.customer-phone-input` = `<phone>`
+7. `fill` → `v2-masterdata.customer-mailing-address-input` = `<address>`
+8. `click` → `v2-masterdata.customer-submit`
+9. `assertText` → `shell.toast` contains `<success copy>`
+
+> Writes a record.
+
+This is the reference create flow for the whole knowledge base: no line-item grid, every field
+addressable, every step verified. Copy its shape for any other header-only entity.
+
+### Edit a customer's contact details
+
+Preconditions: CUSTOMER WRITE; `{customerId}` bound.
+
+1. `navigate` → `/companies/{companyId}/v2/customers/{customerId}/update`
+2. `assertVisible` → `v2-masterdata.customer-tab-details`
+3. `fill` → `v2-masterdata.customer-email-input` = `<new email>`
+4. `fill` → `v2-masterdata.customer-phone-input` = `<new phone>`
+5. `click` → `v2-masterdata.customer-submit`
+6. `assertText` → `shell.toast` contains `<success copy>`
+
+> Writes to an existing record. Step 2 guards that an existing customer loaded — the tab bar
+> only renders on the update page.
+
+### Create a customer group
+
+Preconditions: CUSTOMER WRITE.
+
+1. `navigate` → `/companies/{companyId}/v2/customer-groups/create`
+2. `fill` → `v2-masterdata.customer-group-name-input` = `<group name>`
+3. `click` → `v2-masterdata.customer-group-submit`
+4. `assertText` → `shell.toast` contains `<success copy>`
+
+> Writes a record. Name is the only required field.
+
+### Create a contact
+
+Preconditions: CONTACTS WRITE.
+
+1. `navigate` → `/companies/{companyId}/v2/contacts/create`
+2. `fill` → `v2-masterdata.contact-name-input` = `<contact name>`
+3. `fill` → `v2-masterdata.contact-email-input` = `<email>`
+4. `click` → `v2-masterdata.contact-submit`
+5. `assertText` → `shell.toast` contains `<success copy>`
+
+> Writes a record.
 
 ### Route flows — every page in this module
 

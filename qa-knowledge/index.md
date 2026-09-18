@@ -6,18 +6,18 @@ running app) has not been done.**
 
 | module | routes | targets | named flows | status | lastUpdated |
 | --- | --- | --- | --- | --- | --- |
-| shell | 23 | 46 | 9 | drafted | 2026-09-17 |
-| v2-sales | 26 | 43 | 14 | drafted | 2026-09-17 |
-| v2-sales-order-record | 1 | 50 | 14 | drafted | 2026-09-17 |
-| v2-purchasing | 23 | 52 | 15 | drafted | 2026-09-17 |
-| v2-purchase-order-record | 1 | 35 | 9 | drafted | 2026-09-17 |
-| v2-inventory | 35 | 78 | 23 | drafted | 2026-09-17 |
-| v2-finance | 15 | 36 | 12 | drafted | 2026-09-17 |
-| v2-masterdata | 29 | 40 | 9 | drafted | 2026-09-17 |
-| v3-analytics | 6 | 13 | 6 | drafted | 2026-09-17 |
-| lite | 77 | 12 | 6 | drafted | 2026-09-17 |
+| shell | 23 | 46 | 9 | drafted | 2026-09-18 |
+| v2-sales | 26 | 42 | 14 | drafted | 2026-09-18 |
+| v2-sales-order-record | 1 | 47 | 14 | drafted | 2026-09-18 |
+| v2-purchasing | 23 | 52 | 15 | drafted | 2026-09-18 |
+| v2-purchase-order-record | 1 | 35 | 9 | drafted | 2026-09-18 |
+| v2-inventory | 35 | 109 | 25 | drafted | 2026-09-18 |
+| v2-finance | 15 | 61 | 14 | drafted | 2026-09-18 |
+| v2-masterdata | 29 | 65 | 13 | drafted | 2026-09-18 |
+| v3-analytics | 6 | 13 | 6 | drafted | 2026-09-18 |
+| lite | 77 | 12 | 6 | drafted | 2026-09-18 |
 
-**234 routes, 405 targets, 117 named flows** — plus a route-flow table in every module giving the three-step shape for all 234 pages. Coverage is audited, not assumed: `scripts/audit.mjs` reports **234/234 pages** reachable by a flow and `scripts/validate.mjs` reports **0 of 169 action targets uninvoked**. Status values: `pending` → `recon` → `drafted` →
+**234 routes, 482 targets, 125 named flows** — plus a route-flow table in every module giving the three-step shape for all 234 pages. Coverage is audited, not assumed: `scripts/audit.mjs` reports **234/234 pages** reachable by a flow and `scripts/validate.mjs` reports **0 of 169 action targets uninvoked**. Status values: `pending` → `recon` → `drafted` →
 `verified`. **Every module is `drafted`: nothing here has been run against the application.**
 Only Phase 4 verification may promote a module to `verified`, and until it does, every selector
 is a hypothesis derived by reading the source.
@@ -70,22 +70,43 @@ or delete.
 
 | module | targets | verified (1 match) | ambiguous (>1) | 0 matches | not probed |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| shell | 46 | 29 | 0 | 4 | 13 |
-| v2-sales | 43 | 19 | 1 | 1 | 22 |
-| v2-sales-order-record | 50 | 26 | 3 | 0 | 21 |
-| v2-purchasing | 52 | 35 | 0 | 1 | 16 |
-| v2-purchase-order-record | 35 | 15 | 0 | 0 | 20 |
-| v2-inventory | 78 | 46 | 1 | 1 | 30 |
-| v2-finance | 36 | 24 | 0 | 4 | 8 |
-| v2-masterdata | 40 | 33 | 1 | 3 | 3 |
+| shell | 46 | 29 | 0 | 16 | 1 |
+| v2-sales | 43 | 20 | 1 | 22 | 0 |
+| v2-sales-order-record | 50 | 26 | 3 | 21 | 0 |
+| v2-purchasing | 52 | 38 | 0 | 13 | 1 |
+| v2-purchase-order-record | 35 | 15 | 0 | 20 | 0 |
+| v2-inventory | 110 | 81 | 1 | 24 | 4 |
+| v2-finance | 62 | 48 | 1 | 12 | 1 |
+| v2-masterdata | 66 | 58 | 1 | 7 | 0 |
 | v3-analytics | 13 | 0 | 0 | 13 | 0 |
 | lite | 12 | 0 | 0 | 0 | 12 |
-| **total** | **405** | **227** | **6** | **27** | **145** |
+| **total** | **489** | **315** | **7** | **148** | **19** |
+
+**315 of 489 selectors resolve to exactly one element; 7 are ambiguous.** The zeros are
+dominated by record state, unopened dialogs and tenant configuration — the breakdown is below.
+
+### Form fields (added 2026-09-18)
+
+167 form-field targets across `v2-finance`, `v2-inventory` and `v2-masterdata`, **101 verified**.
+Without these a plan could open a page and click Save but never fill anything in, so every create
+and edit flow was a stub.
+
+They are addressed through the form primitive's own authored attribute:
+
+```
+[data-field='<field name>'] :is(input,textarea):not([aria-hidden])
+```
+
+`_common/Form/Field.tsx:121` sets `data-field={name}` on every field wrapper, whatever the type.
+Verification killed the obvious alternative: `input[id='<name>']` matched **0** for every
+multiline field (renders a `<textarea>`, plus a hidden autosize twin) and **0** for every date
+field (`DatePicker` never passes an `id`, and its `<label htmlFor>` therefore points at nothing,
+so accessible-name matching is not a fallback either).
 
 **Routes:** 154/157 Prime paths returned 200; `/404`, `/sign-up` and `/auth-callback` are correct
 exceptions. The `pages` half of the registry is verified.
 
-**Registry after verification:** 399 targets plus **6 held out as `unresolved`** — an ambiguous
+**Registry after verification:** 398 targets plus **7 held out as `unresolved`** — an ambiguous
 selector is kept out of `application.json` entirely, so a plan can never pick one up. The six:
 `v2-sales.order-delete-button`, `v2-sales-order-record.releasing-open-button`,
 `v2-sales-order-record.releasing-print-button`, `v2-sales-order-record.attachments-files-heading`,
@@ -115,16 +136,22 @@ selector is kept out of `application.json` entirely, so a plan can never pick on
 to 1 **after** clicking the section tile and 0 before, exactly as documented. Only one
 `role=tabpanel` is in the DOM at a time. Uppercase tab labels are real.
 
-### The 27 zero-match targets are not 27 broken selectors
+### The 138 zero-match targets are not 138 broken selectors
 
-- **13 are `v3-analytics`.** The dashboard renders for this tenant but contains **zero**
-  `role=tab` elements — the tab bar is conditionally built from per-section permission flags, so
-  there was nothing to match. The selectors are neither confirmed nor disproved.
-- **4 are dialog-scoped** confirms whose dialog the probe never opened.
-- **2 are `shell.table-filter-button` / `-columns-button`**, absent from the sales-orders list
-  (it uses chip filters) — they need a page that renders them.
-- **2 need an active row selection**, 1 needs a search that matches nothing.
-- **5 are conditional** (exports, the Xero panel, tabs behind other tabs).
+A zero means "not present on the page and in the state the probe reached". Three causes dominate:
+
+- **Record state.** The biggest group. Buttons like `*-complete-button`, `*-save-pending-button`,
+  Lock, Override and Cancel only render for a record in the right status. The probe used whichever
+  record happened to be first in each list — a completed stocktake has no Complete button. Testing
+  these needs a record deliberately left in the required state.
+- **Dialog-scoped confirms** whose dialog the probe never opened (it will not click a destructive
+  trigger on a shared environment).
+- **Tenant configuration.** All 13 `v3-analytics` targets: the dashboard renders but contains
+  **zero** `role=tab` elements, because the tab bar is built from per-section permission flags.
+  Likewise Xero panels, channel importers and `shell.table-filter-button` (the sales-orders list
+  uses chip filters instead).
+
+None of these were re-derived as wrong. They are simply unproven, and the module files say so.
 
 ### Still unverified
 

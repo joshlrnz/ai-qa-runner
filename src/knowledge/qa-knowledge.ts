@@ -23,7 +23,13 @@ export type UnresolvedTarget = {
 export type PageEntry = {
   name: string
   path: string
+  module: string
   params: string[]
+}
+
+export type FlowEntry = {
+  name: string
+  superseded: boolean
 }
 
 export type ParamEntry = {
@@ -88,6 +94,11 @@ export function getKnowledgeDirectory() {
 
 function readParams(value: string) {
   return [...value.matchAll(parameterPattern)].map((match) => match[1])
+}
+
+function moduleOfKey(key: string) {
+  const [prefix] = key.split('.')
+  return prefix ?? key
 }
 
 function normalise(value: string) {
@@ -349,6 +360,7 @@ export function findPages(query: string, limit = 10) {
     ([name, pagePath]) => ({
       name,
       path: pagePath,
+      module: moduleOfKey(name),
       params: readParams(pagePath),
       score: scoreText(tokens, name, 2) + scoreText(tokens, pagePath, 2)
     })
@@ -358,7 +370,12 @@ export function findPages(query: string, limit = 10) {
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score || a.path.length - b.path.length)
     .slice(0, limit)
-    .map((entry) => ({ name: entry.name, path: entry.path, params: entry.params }))
+    .map((entry) => ({
+      name: entry.name,
+      path: entry.path,
+      module: entry.module,
+      params: entry.params
+    }))
 }
 
 export function findSelectors(query: string, limit = 12) {
@@ -452,14 +469,31 @@ export function findAmbiguousMatch(selector: string): UnresolvedTarget | null {
   return null
 }
 
-export function listFlows(module: string): string[] {
+export function listFlowEntries(module: string): FlowEntry[] {
   const section = getModuleSection(module, 'Flows')
 
   if (!section) {
     return []
   }
 
-  return [...section.content.matchAll(/^###\s+(.+)$/gm)].map((match) => match[1].trim())
+  return section.content
+    .split(/^###\s+/m)
+    .slice(1)
+    .map((part) => {
+      const lineBreak = part.indexOf('\n')
+      const name = (lineBreak < 0 ? part : part.slice(0, lineBreak)).trim()
+      const body = lineBreak < 0 ? '' : part.slice(lineBreak + 1)
+
+      return { name, superseded: /\*\*superseded\*\*/i.test(body) }
+    })
+}
+
+// A flow kept for history is still a heading in the markdown. Prose alone does not
+// stop it being cited, so retired flows are filtered out here.
+export function listFlows(module: string): string[] {
+  return listFlowEntries(module)
+    .filter((flow) => !flow.superseded)
+    .map((flow) => flow.name)
 }
 
 export function lookupPath(pagePath: string): PageEntry | null {
@@ -467,7 +501,7 @@ export function lookupPath(pagePath: string): PageEntry | null {
 
   for (const [name, knownPath] of Object.entries(compiled.pages)) {
     if (knownPath === pagePath) {
-      return { name, path: knownPath, params: readParams(knownPath) }
+      return { name, path: knownPath, module: moduleOfKey(name), params: readParams(knownPath) }
     }
   }
 

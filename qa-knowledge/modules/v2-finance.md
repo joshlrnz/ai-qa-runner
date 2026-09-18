@@ -1,8 +1,8 @@
 ---
 module: v2-finance
 routes: 15
-targets: 36
-flows: 12
+targets: 61
+flows: 14
 status: drafted
 lastUpdated: 2026-09-17
 ---
@@ -131,6 +131,81 @@ read-only ledger of movements through the account. Tablist aria-label:
 | `v2-finance.bank-account-tab-post-dated-checks` | POST DATED CHECKS | `role=tab[name="POST DATED CHECKS"]` | `…/index.tsx:136` | medium **verified 2026-09-18**: 1 match. |
 | `v2-finance.bank-account-tab-expense-payments` | EXPENSE PAYMENTS | `role=tab[name="EXPENSE PAYMENTS"]` | `…/index.tsx:144` | medium |
 
+
+## Form fields
+
+Every v2 form field is addressed through the **`data-field` attribute on its wrapper**:
+
+```
+[data-field='<field name>'] :is(input,textarea):not([aria-hidden])
+```
+
+`_common/Form/Field.tsx:121` puts `data-field={name}` on the wrapper of **every** field type, so
+one shape works for text, number, money, date, autocomplete, select, checkbox and multiline alike.
+It is an authored attribute, not a MUI internal, so it survives a library upgrade. The field name
+is the form path passed to `Form.Field` — `name`, `payment.invoiceNumber`, `collectionEntries.0.amount`.
+
+**Verified 2026-09-18.** The obvious alternative, `input[id='<name>']`, is wrong in two ways this
+app actually hits: a multiline field renders a `<textarea>` plus a hidden autosize twin (hence
+`:not([aria-hidden])`), and `DatePicker` never passes an `id` to its text field at all — every
+date field matched **0**. Its `<label htmlFor={name}>` points at nothing too, so accessible-name
+matching is not a fallback either.
+
+Never match on the label: a required field appends a `*` inside it, which corrupts exact name
+matching.
+
+
+### Expense form — `/v2/expenses/create`, `/v2/expenses/{expenseId}/update`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-finance.expense-name-input` | Name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/Details/ExpenseDetailsCard.tsx:116` | medium |
+| `v2-finance.expense-supplier-input` | Supplier | autocomplete | `[data-field='supplierId'] :is(input,textarea):not([aria-hidden])` | `…/ExpenseDetailsCard.tsx:124` | medium |
+| `v2-finance.expense-sales-agent-input` | Sales Agent | autocomplete | `[data-field='salesAgentId'] :is(input,textarea):not([aria-hidden])` | `…/ExpenseDetailsCard.tsx:133` | medium |
+| `v2-finance.expense-reference-input` | Reference Number | text | `[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/ExpenseDetailsCard.tsx:141` | medium |
+| `v2-finance.expense-remarks-input` | Remarks | multiline | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `…/ExpenseDetailsCard.tsx:148` | medium |
+
+### Bank account form — `/v2/bank-accounts/create`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-finance.bank-account-name-input` | Bank Name **REQUIRED** | text | `[data-field='name'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:33` | medium |
+| `v2-finance.bank-account-number-input` | Bank Account Number | text | `[data-field='bankAccountNumber'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:42` | medium |
+| `v2-finance.bank-account-xero-code-input` | Xero Account Code | text | `[data-field='xeroAccountCode'] :is(input,textarea):not([aria-hidden])` | `…/Details/index.tsx:51` | medium |
+
+### Post-dated cheque form — `/v2/post-dated-cheques/create`, `…/{chequeId}/update`
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-finance.cheque-date-input` | Check date **REQUIRED** | date | `[data-field='chequeDate'] :is(input,textarea):not([aria-hidden])` | `…/ChequeCard/index.tsx:54` | medium |
+| `v2-finance.cheque-amount-input` | Amount **REQUIRED** | money | `[data-field='amount'] :is(input,textarea):not([aria-hidden])` | `…/ChequeCard/index.tsx:65` | medium |
+| `v2-finance.cheque-reference-input` | Reference no. **REQUIRED** | text | `[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/ChequeCard/index.tsx:75` | medium |
+| `v2-finance.cheque-bank-account-input` | Bank account | autocomplete | `[data-field='bankAccountId'] :is(input,textarea):not([aria-hidden])` | `…/ChequeCard/index.tsx:85` | medium |
+| `v2-finance.cheque-customer-input` | Customer **REQUIRED** | autocomplete | `[data-field='customerId'] :is(input,textarea):not([aria-hidden])` | `…/CustomerSupplierCard/index.tsx:93` | medium |
+| `v2-finance.cheque-supplier-input` | Supplier **REQUIRED** | autocomplete | `[data-field='supplierId'] :is(input,textarea):not([aria-hidden])` | `…/CustomerSupplierCard/index.tsx:103` | medium |
+| `v2-finance.cheque-remarks-input` | Remarks | multiline | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `…/CustomerSupplierCard/index.tsx:129` | medium |
+
+Customer and Supplier are both marked required because the form switches on cheque direction —
+only one renders at a time.
+
+### Payment form — `/v2/payments/create`, `/v2/payments/{paymentId}/update`
+
+Header fields plus indexed entry rows; only row `0` is addressable.
+
+| name | field | type | selector | source | confidence |
+| --- | --- | --- | --- | --- | --- |
+| `v2-finance.payment-supplier-input` | Supplier **REQUIRED** | autocomplete | `[data-field='supplierId'] :is(input,textarea):not([aria-hidden])` | `…/SupplierInformation/index.tsx:77` | medium |
+| `v2-finance.payment-date-input` | Date Paid **REQUIRED** | date | `[data-field='paymentDate'] :is(input,textarea):not([aria-hidden])` | `…/PaymentInformation/index.tsx:84` | medium |
+| `v2-finance.payment-currency-input` | Pay in | autocomplete | `[data-field='payInCurrency'] :is(input,textarea):not([aria-hidden])` | `…/PaymentInformation/index.tsx:77` | medium |
+| `v2-finance.payment-entry-type-input` | Payment Type **REQUIRED** | autocomplete | `[data-field='paymentEntries.0.type'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:152` | medium |
+| `v2-finance.payment-entry-amount-input` | Amount **REQUIRED** | money | `[data-field='paymentEntries.0.amount'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:187` | medium |
+| `v2-finance.payment-entry-method-input` | Payment Method | autocomplete | `[data-field='paymentEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:207` | medium |
+| `v2-finance.payment-entry-bank-account-input` | Bank Account | autocomplete | `[data-field='paymentEntries.0.bankAccountId'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:218` | medium |
+| `v2-finance.payment-entry-reference-input` | Reference Number | text | `[data-field='paymentEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:243` | medium |
+| `v2-finance.payment-entry-remarks-input` | Remarks | multiline | `[data-field='paymentEntries.0.remarks'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:252` | medium |
+| `v2-finance.payment-override-confirm-checkbox` | I confirm… override | checkbox | `[data-field='confirmOverride'] :is(input,textarea):not([aria-hidden])` | `…/OverridePaymentDialog.tsx:132` | medium |
+| `v2-finance.payment-post-confirm-checkbox` | I confirm… final | checkbox | `[data-field='confirmPost'] :is(input,textarea):not([aria-hidden])` | `…/PostPaymentDialog.tsx:182` | medium |
+
 ## Flows
 
 ### Open the payments list
@@ -160,9 +235,8 @@ Preconditions: BANK_ACCOUNT WRITE.
 2. `click` → `v2-finance.bank-account-submit`
 3. `assertText` → `shell.toast` contains `<validation or success copy>`
 
-> Writes a record when the form is complete. **The bank account form's fields have no targets
-> yet**, so as written this flow only proves the page submits and reports something. Fill steps
-> must be added once the fields are identified.
+> **Superseded** by *Create a bank account (complete)* below, which fills the fields. Kept only
+> as the minimal "does the page submit" check.
 
 ### Approve an expense
 
@@ -274,6 +348,55 @@ Preconditions: EXPENSE WRITE plus approver rights; `{expenseId}` bound to a pend
 | target | why no flow |
 | --- | --- |
 | `v2-finance.cheque-import-button`, `v2-finance.expense-import-button` | file pickers |
+
+
+### Create a bank account (complete)
+
+Preconditions: BANK_ACCOUNT WRITE. Targets verified at 1.
+
+1. `navigate` → `/companies/{companyId}/v2/bank-accounts/create`
+2. `assertVisible` → `v2-finance.bank-account-name-input`
+3. `fill` → `v2-finance.bank-account-name-input` = `<bank name>`
+4. `fill` → `v2-finance.bank-account-number-input` = `<account number>`
+5. `click` → `v2-finance.bank-account-submit`
+6. `assertText` → `shell.toast` contains `Bank account created successfully`
+
+> Destructive: writes a record. This replaces the earlier stub, which submitted an empty form
+> because no field targets existed.
+
+The toast copy is exact, from `BankAccount/CreateUpdateForm/index.tsx:70`. Step 3 is not
+optional: `Submit` is disabled until the name field is non-empty
+(`isSubmitButtonDisabled = !hasName || isSubmitting || hasErrors || !hasDirtyFields`,
+`index.tsx:25`).
+
+### Update a bank account
+
+Preconditions: BANK_ACCOUNT WRITE; `{bankAccountId}` bound to an existing bank account.
+
+1. `navigate` → `/companies/{companyId}/v2/bank-accounts/{bankAccountId}`
+2. `assertVisible` → `v2-finance.bank-account-name-input`
+3. `fill` → `v2-finance.bank-account-name-input` = `<bank name>`
+4. `click` → `v2-finance.bank-account-submit`
+5. `assertText` → `shell.toast` contains `Bank account updated successfully`
+
+> Destructive: mutates an existing record.
+
+The record page opens on the details tab (`setActiveTab('details')`, `index.tsx:84`), so step 3
+needs no tab click. `!hasDirtyFields` also gates `Submit`, so the new name must differ from the
+current one or the button stays disabled. Toast copy is exact, from `index.tsx:62`.
+
+### Create an expense
+
+Preconditions: EXPENSE WRITE.
+
+1. `navigate` → `/companies/{companyId}/v2/expenses/create`
+2. `assertVisible` → `v2-finance.expense-name-input`
+3. `fill` → `v2-finance.expense-name-input` = `<expense name>`
+4. `fill` → `v2-finance.expense-reference-input` = `<reference number>`
+5. `click` → `v2-finance.expense-submit`
+6. `assertText` → `shell.toast` contains `<success copy>`
+
+> Writes a record. Name is the only required field.
 
 ### Route flows — every page in this module
 

@@ -1,7 +1,7 @@
 ---
 module: v2-sales-order-record
 routes: 1
-targets: 50
+targets: 47
 flows: 14
 status: drafted
 lastUpdated: 2026-09-17
@@ -96,13 +96,13 @@ row is index `0`, so its fields are addressable; later rows are not — see Cont
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-sales-order-record.collection-date-input` | "Collection date" | `input[id='collectionDate']` | `Collections/CollectionEntry/index.tsx:295` | medium | date picker |
-| `v2-sales-order-record.collection-currency-input` | combobox "Pay in" | `input[id='currency']` | `Collections/CollectionEntry/index.tsx:303` | medium | |
-| `v2-sales-order-record.collection-remarks-input` | textbox "Remarks" | `input[id='remarks']` | `Collections/CollectionEntry/index.tsx:315` | medium | id is shared with the refund form, but never mounted at the same time |
-| `v2-sales-order-record.collection-entry-type-input` | combobox "Payment Type*" | `input[id='collectionEntries.0.type']` | `Collections/CollectionEntry/CollectionEntryItem.tsx:149` | high | first entry row **verified 2026-09-18**: 1 match. |
-| `v2-sales-order-record.collection-entry-amount-input` | "Amount" | `input[id='collectionEntries.0.amount']` | `…/CollectionEntryItem.tsx:234` | high | money input; disabled when the entry type is a post-dated cheque **verified 2026-09-18**: 1 match. |
-| `v2-sales-order-record.collection-entry-payment-method-input` | combobox "Payment method" | `input[id='collectionEntries.0.paymentMethod']` | `…/CollectionEntryItem.tsx:253` | high | **verified 2026-09-18**: 1 match. |
-| `v2-sales-order-record.collection-entry-reference-input` | textbox "Reference Number" | `input[id='collectionEntries.0.referenceNumber']` | `…/CollectionEntryItem.tsx:283` | high | **verified 2026-09-18**: 1 match. |
+| `v2-sales-order-record.collection-date-input` | "Collection date" | `[data-field='collectionDate'] :is(input,textarea):not([aria-hidden])` | `Collections/CollectionEntry/index.tsx:295` | medium | date picker |
+| `v2-sales-order-record.collection-currency-input` | combobox "Pay in" | `[data-field='currency'] :is(input,textarea):not([aria-hidden])` | `Collections/CollectionEntry/index.tsx:303` | medium | |
+| `v2-sales-order-record.collection-remarks-input` | textbox "Remarks" | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `Collections/CollectionEntry/index.tsx:315` | medium | id is shared with the refund form, but never mounted at the same time |
+| `v2-sales-order-record.collection-entry-type-input` | combobox "Payment Type*" | `[data-field='collectionEntries.0.type'] :is(input,textarea):not([aria-hidden])` | `Collections/CollectionEntry/CollectionEntryItem.tsx:149` | high | first entry row **verified 2026-09-18**: 1 match. |
+| `v2-sales-order-record.collection-entry-amount-input` | "Amount" | `[data-field='collectionEntries.0.amount'] :is(input,textarea):not([aria-hidden])` | `…/CollectionEntryItem.tsx:234` | high | money input; disabled when the entry type is a post-dated cheque **verified 2026-09-18**: 1 match. |
+| `v2-sales-order-record.collection-entry-payment-method-input` | combobox "Payment method" | `[data-field='collectionEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])` | `…/CollectionEntryItem.tsx:253` | high | **verified 2026-09-18**: 1 match. |
+| `v2-sales-order-record.collection-entry-reference-input` | textbox "Reference Number" | `[data-field='collectionEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/CollectionEntryItem.tsx:283` | high | **verified 2026-09-18**: 1 match. |
 | `v2-sales-order-record.collection-create-pdc-button` | button "Create Post-dated Check" | `role=button[name="Create Post-dated Check"]` | `…/CollectionEntryItem.tsx:184` | medium | only when the entry type is a post-dated cheque |
 | `v2-sales-order-record.collection-edit-pdc-button` | button "Edit Post-dated Check" | `role=button[name="Edit Post-dated Check"]` | `…/CollectionEntryItem.tsx:198` | medium | |
 | `v2-sales-order-record.collection-submit` | button "Submit" | `role=tabpanel >> role=button[name="Submit"]` | `Collections/CollectionEntry/index.tsx:386` | high | **scoped to the panel** — "Submit" is used by the returns and refunds forms too **verified 2026-09-18**: 1 match. |
@@ -111,11 +111,11 @@ row is index `0`, so its fields are addressable; later rows are not — see Cont
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-sales-order-record.releasing-delivered-at-input` | date | `input[id='deliveredAt']` | `Releasings/AddReleasingForm/index.tsx:524` | low | rendered twice in the same form (two layouts); may match more than one |
-| `v2-sales-order-record.releasing-driver-input` | combobox "Driver" | `input[id='contactDriverIds']` | `Releasings/AddReleasingForm/index.tsx:600` | high | `ContactCreatableAutocomplete` — the id mapping from `fieldName` is inferred **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.releasing-checker-input` | combobox "Checker" | `input[id='contactCheckerIds']` | `…/AddReleasingForm/index.tsx:617` | high | as above **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.releasing-helper-input` | combobox "Helper" | `input[id='contactHelperIds']` | `…/AddReleasingForm/index.tsx:634` | high | as above **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.releasing-dispatcher-input` | combobox "Dispatcher" | `input[id='contactDispatcherIds']` | `…/AddReleasingForm/index.tsx:651` | high | as above **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.releasing-delivered-at-input` | date | `[data-field='deliveredAt'] :is(input,textarea):not([aria-hidden])` | `Releasings/AddReleasingForm/index.tsx:524` | low | rendered twice in the same form (two layouts); may match more than one |
+| `v2-sales-order-record.releasing-driver-input` | combobox "Driver" | `[data-field='contactDriverIds'] :is(input,textarea):not([aria-hidden])` | `Releasings/AddReleasingForm/index.tsx:600` | high | `ContactCreatableAutocomplete` — the id mapping from `fieldName` is inferred **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.releasing-checker-input` | combobox "Checker" | `[data-field='contactCheckerIds'] :is(input,textarea):not([aria-hidden])` | `…/AddReleasingForm/index.tsx:617` | high | as above **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.releasing-helper-input` | combobox "Helper" | `[data-field='contactHelperIds'] :is(input,textarea):not([aria-hidden])` | `…/AddReleasingForm/index.tsx:634` | high | as above **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.releasing-dispatcher-input` | combobox "Dispatcher" | `[data-field='contactDispatcherIds'] :is(input,textarea):not([aria-hidden])` | `…/AddReleasingForm/index.tsx:651` | high | as above **verified 2026-09-17**: 1 match. |
 | `v2-sales-order-record.releasing-add-location-button` | button "Add location" | `role=button[name="Add location"]` | `…/AddReleasingForm/index.tsx:664` | high | **verified 2026-09-17**: 1 match. |
 | `v2-sales-order-record.releasing-apply-location-to-all-button` | button "Apply to All" | `role=dialog >> role=button[name="Apply to All"]` | `…/SelectLocationForAllDialog.tsx:105` | medium | |
 | `v2-sales-order-record.releasing-complete-confirm-button` | button "Submit" | `role=dialog >> role=button[name="Submit"]` | `Releasings/Dialogs/CompleteReleasingDialog.tsx:32` | medium | confirms completion; dialog-scoped |
@@ -127,9 +127,9 @@ row is index `0`, so its fields are addressable; later rows are not — see Cont
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
 | `v2-sales-order-record.return-dummy-releasing-toggle` | checkbox "Return with dummy releasing" | `role=checkbox[name="Return with dummy releasing"]` | `Returns/index.tsx:106` | low | a `FormControlLabel`; may resolve as `switch` rather than `checkbox` |
-| `v2-sales-order-record.return-driver-input` | combobox "Driver" | `input[id='contactDriverIds']` | `Returns/AddReturnForm/index.tsx:247` | low | same inference as releasings |
-| `v2-sales-order-record.return-checker-input` | combobox "Checker" | `input[id='contactCheckerIds']` | `Returns/AddReturnForm/index.tsx:264` | low | |
-| `v2-sales-order-record.return-helper-input` | combobox "Helper" | `input[id='contactHelperIds']` | `Returns/AddReturnForm/index.tsx:281` | low | |
+| `v2-sales-order-record.return-driver-input` | combobox "Driver" | `[data-field='contactDriverIds'] :is(input,textarea):not([aria-hidden])` | `Returns/AddReturnForm/index.tsx:247` | low | same inference as releasings |
+| `v2-sales-order-record.return-checker-input` | combobox "Checker" | `[data-field='contactCheckerIds'] :is(input,textarea):not([aria-hidden])` | `Returns/AddReturnForm/index.tsx:264` | low | |
+| `v2-sales-order-record.return-helper-input` | combobox "Helper" | `[data-field='contactHelperIds'] :is(input,textarea):not([aria-hidden])` | `Returns/AddReturnForm/index.tsx:281` | low | |
 | `v2-sales-order-record.return-submit` | button "Submit" | `role=tabpanel >> role=button[name="Submit"]` | `Returns/AddReturnForm/index.tsx:333` | medium | panel-scoped |
 | `v2-sales-order-record.return-discard-item-button` | button "Discard Item" | `role=button[name="Discard Item"]` | `Returns/AddReturnForm/getReturnFormColumns.tsx:68` | medium | per line |
 | `v2-sales-order-record.return-open-button` | button "Open" | `role=button[name="Open"]` | `…/SalesReturnsTableHeader.tsx:132` | medium | opens the return record |
@@ -138,11 +138,11 @@ row is index `0`, so its fields are addressable; later rows are not — see Cont
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-sales-order-record.refund-type-input` | combobox "Refund Type" | `input[id='refundType']` | `Refunds/RefundForm.tsx:184` | high | **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.refund-amount-input` | "Amount" | `input[id='amount']` | `Refunds/RefundForm.tsx:194` | high | money input **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.refund-date-input` | "Refund date" | `input[id='refundDate']` | `Refunds/RefundForm.tsx:203` | medium | date picker |
-| `v2-sales-order-record.refund-bank-account-input` | combobox "Bank Account" | `input[id='bankAccountId']` | `Refunds/RefundForm.tsx:215` | high | **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.refund-remarks-input` | textbox "Remarks" | `input[id='remarks']` | `Refunds/RefundForm.tsx:243` | medium | same id as the collection remarks; never co-mounted |
+| `v2-sales-order-record.refund-type-input` | combobox "Refund Type" | `[data-field='refundType'] :is(input,textarea):not([aria-hidden])` | `Refunds/RefundForm.tsx:184` | high | **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.refund-amount-input` | "Amount" | `[data-field='amount'] :is(input,textarea):not([aria-hidden])` | `Refunds/RefundForm.tsx:194` | high | money input **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.refund-date-input` | "Refund date" | `[data-field='refundDate'] :is(input,textarea):not([aria-hidden])` | `Refunds/RefundForm.tsx:203` | medium | date picker |
+| `v2-sales-order-record.refund-bank-account-input` | combobox "Bank Account" | `[data-field='bankAccountId'] :is(input,textarea):not([aria-hidden])` | `Refunds/RefundForm.tsx:215` | high | **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.refund-remarks-input` | textbox "Remarks" | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `Refunds/RefundForm.tsx:243` | medium | same id as the collection remarks; never co-mounted |
 
 ### Print dialog
 
@@ -152,11 +152,11 @@ template and a set of content toggles, then renders it.
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
 | `v2-sales-order-record.print-dialog` | dialog | `role=dialog` | `…/PrintModal/index.tsx:204` | high | header reads "Print" **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.print-template-input` | combobox "Title" | `input[id='specId']` | `…/PrintModal/index.tsx:208` | high | the printout template; labelled "Title", not "Template" **verified 2026-09-17**: 1 match. |
-| `v2-sales-order-record.print-discount-option-input` | combobox "Discount" | `input[id='discountOption']` | `…/PrintModal/index.tsx:217` | medium | |
-| `v2-sales-order-record.print-brand-name-option-input` | combobox "Brand Name" | `input[id='brandNameOption']` | `…/PrintModal/index.tsx:227` | medium | |
-| `v2-sales-order-record.print-sku-option-input` | combobox "SKU" | `input[id='skuOption']` | `…/PrintModal/index.tsx:247` | medium | |
-| `v2-sales-order-record.print-price-option-input` | combobox "Price" | `input[id='priceOption']` | `…/PrintModal/index.tsx:257` | medium | `SHOW_PRICES` |
+| `v2-sales-order-record.print-template-input` | combobox "Title" | `[data-field='specId'] :is(input,textarea):not([aria-hidden])` | `…/PrintModal/index.tsx:208` | high | the printout template; labelled "Title", not "Template" **verified 2026-09-17**: 1 match. |
+| `v2-sales-order-record.print-discount-option-input` | combobox "Discount" | `[data-field='discountOption'] :is(input,textarea):not([aria-hidden])` | `…/PrintModal/index.tsx:217` | medium | |
+| `v2-sales-order-record.print-brand-name-option-input` | combobox "Brand Name" | `[data-field='brandNameOption'] :is(input,textarea):not([aria-hidden])` | `…/PrintModal/index.tsx:227` | medium | |
+| `v2-sales-order-record.print-sku-option-input` | combobox "SKU" | `[data-field='skuOption'] :is(input,textarea):not([aria-hidden])` | `…/PrintModal/index.tsx:247` | medium | |
+| `v2-sales-order-record.print-price-option-input` | combobox "Price" | `[data-field='priceOption'] :is(input,textarea):not([aria-hidden])` | `…/PrintModal/index.tsx:257` | medium | `SHOW_PRICES` |
 | `v2-sales-order-record.print-confirm-button` | button "Print" | `role=dialog >> role=button[name="Print"]` | `…/PrintModal/index.tsx:295` | high | **must stay scoped** — the page header button is also "Print". Reads "Preparing..." while it renders **verified 2026-09-17**: 1 match. |
 
 ### Attachments and audit logs

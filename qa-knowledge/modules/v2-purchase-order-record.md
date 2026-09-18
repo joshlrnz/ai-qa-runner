@@ -82,17 +82,17 @@ Header fields plus indexed entry rows, exactly like sales collections. First row
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-purchase-order-record.payment-date-input` | "Payment Date" | `input[id='paymentDate']` | `…/Payments/components/PaymentInformationCard.tsx:39` | medium | date picker |
-| `v2-purchase-order-record.payment-currency-input` | combobox "Pay in" | `input[id='currency']` | `…/PaymentInformationCard.tsx:47` | medium | |
-| `v2-purchase-order-record.payment-remarks-input` | textbox "Remarks" | `input[id='remarks']` | `…/PaymentInformationCard.tsx:57` | medium | id shared with the refund form; never co-mounted |
-| `v2-purchase-order-record.payment-entry-type-input` | combobox "Payment Type" | `input[id='paymentEntries.0.type']` | `…/PaymentEntry/PaymentEntryItem.tsx:152` | medium | first entry row |
-| `v2-purchase-order-record.payment-entry-amount-input` | "Amount" | `input[id='paymentEntries.0.amount']` | `…/PaymentEntryItem.tsx:176` | medium | money input |
-| `v2-purchase-order-record.payment-entry-method-input` | combobox "Payment method" | `input[id='paymentEntries.0.paymentMethod']` | `…/PaymentEntryItem.tsx:188` | medium | |
-| `v2-purchase-order-record.payment-entry-bank-account-input` | combobox "Bank Account" | `input[id='paymentEntries.0.bankAccountId']` | `…/PaymentEntryItem.tsx:207` | medium | |
-| `v2-purchase-order-record.payment-entry-reference-input` | textbox "Reference Number" | `input[id='paymentEntries.0.referenceNumber']` | `…/PaymentEntryItem.tsx:218` | medium | |
+| `v2-purchase-order-record.payment-date-input` | "Payment Date" | `[data-field='paymentDate'] :is(input,textarea):not([aria-hidden])` | `…/Payments/components/PaymentInformationCard.tsx:39` | medium | date picker |
+| `v2-purchase-order-record.payment-currency-input` | combobox "Pay in" | `[data-field='currency'] :is(input,textarea):not([aria-hidden])` | `…/PaymentInformationCard.tsx:47` | medium | |
+| `v2-purchase-order-record.payment-remarks-input` | textbox "Remarks" | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `…/PaymentInformationCard.tsx:57` | medium | id shared with the refund form; never co-mounted |
+| `v2-purchase-order-record.payment-entry-type-input` | combobox "Payment Type" | `[data-field='paymentEntries.0.type'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntry/PaymentEntryItem.tsx:152` | medium | first entry row |
+| `v2-purchase-order-record.payment-entry-amount-input` | "Amount" | `[data-field='paymentEntries.0.amount'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:176` | medium | money input |
+| `v2-purchase-order-record.payment-entry-method-input` | combobox "Payment method" | `[data-field='paymentEntries.0.paymentMethod'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:188` | medium | |
+| `v2-purchase-order-record.payment-entry-bank-account-input` | combobox "Bank Account" | `[data-field='paymentEntries.0.bankAccountId'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:207` | medium | |
+| `v2-purchase-order-record.payment-entry-reference-input` | textbox "Reference Number" | `[data-field='paymentEntries.0.referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/PaymentEntryItem.tsx:218` | medium | |
 | `v2-purchase-order-record.payment-add-source-button` | button "Add Another Source" | `role=button[name="Add Another Source"]` | `…/PaymentEntry/index.tsx:313` | medium | adds entry row index 1, which has no target |
 | `v2-purchase-order-record.payment-submit` | button "Submit" | `role=tabpanel >> role=button[name="Submit"]` | `…/PaymentEntry/index.tsx:328` | medium | **panel-scoped** — returns and refunds also use "Submit" |
-| `v2-purchase-order-record.payment-post-confirm-checkbox` | checkbox "I confirm that this Payment is final and cannot be changed after posting." | `input[id='confirmPost']` | `…/PostContinueWarningDialog.tsx:124` | medium | gates the continue button |
+| `v2-purchase-order-record.payment-post-confirm-checkbox` | checkbox "I confirm that this Payment is final and cannot be changed after posting." | `[data-field='confirmPost'] :is(input,textarea):not([aria-hidden])` | `…/PostContinueWarningDialog.tsx:124` | medium | gates the continue button |
 | `v2-purchase-order-record.payment-post-continue-button` | button "Continue" | `role=dialog >> role=button[name="Continue"]` | `…/PostContinueWarningDialog.tsx:144` | medium | posting is irreversible |
 
 ### Receivings tab
@@ -115,12 +115,12 @@ Header fields plus indexed entry rows, exactly like sales collections. First row
 
 | name | role / accessible name | selector | source | confidence | notes |
 | --- | --- | --- | --- | --- | --- |
-| `v2-purchase-order-record.refund-type-input` | combobox "Refund Type" | `input[id='refundType']` | `…/Refunds/RefundForm.tsx:170` | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchase-order-record.refund-amount-input` | "Amount" | `input[id='amount']` | `…/Refunds/RefundForm.tsx:179` | high | money input **verified 2026-09-17**: 1 match. |
-| `v2-purchase-order-record.refund-date-input` | "Refund date" | `input[id='refundDate']` | `…/Refunds/RefundForm.tsx:187` | medium | date picker |
-| `v2-purchase-order-record.refund-reference-input` | textbox "Reference #" | `input[id='referenceNumber']` | `…/Refunds/RefundForm.tsx:196` | high | label is "Reference #", not "Reference number" **verified 2026-09-17**: 1 match. |
-| `v2-purchase-order-record.refund-payment-method-input` | combobox "Payment method" | `input[id='paymentMethod']` | `…/Refunds/RefundForm.tsx:203` | high | **verified 2026-09-17**: 1 match. |
-| `v2-purchase-order-record.refund-remarks-input` | textbox "Remarks" | `input[id='remarks']` | `…/Refunds/RefundForm.tsx:212` | medium | |
+| `v2-purchase-order-record.refund-type-input` | combobox "Refund Type" | `[data-field='refundType'] :is(input,textarea):not([aria-hidden])` | `…/Refunds/RefundForm.tsx:170` | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchase-order-record.refund-amount-input` | "Amount" | `[data-field='amount'] :is(input,textarea):not([aria-hidden])` | `…/Refunds/RefundForm.tsx:179` | high | money input **verified 2026-09-17**: 1 match. |
+| `v2-purchase-order-record.refund-date-input` | "Refund date" | `[data-field='refundDate'] :is(input,textarea):not([aria-hidden])` | `…/Refunds/RefundForm.tsx:187` | medium | date picker |
+| `v2-purchase-order-record.refund-reference-input` | textbox "Reference #" | `[data-field='referenceNumber'] :is(input,textarea):not([aria-hidden])` | `…/Refunds/RefundForm.tsx:196` | high | label is "Reference #", not "Reference number" **verified 2026-09-17**: 1 match. |
+| `v2-purchase-order-record.refund-payment-method-input` | combobox "Payment method" | `[data-field='paymentMethod'] :is(input,textarea):not([aria-hidden])` | `…/Refunds/RefundForm.tsx:203` | high | **verified 2026-09-17**: 1 match. |
+| `v2-purchase-order-record.refund-remarks-input` | textbox "Remarks" | `[data-field='remarks'] :is(input,textarea):not([aria-hidden])` | `…/Refunds/RefundForm.tsx:212` | medium | |
 | `v2-purchase-order-record.refund-submit` | button "Submit" | `role=tabpanel >> role=button[name="Submit"]` | `…/Refunds/RefundForm.tsx:226` | high | panel-scoped. **This is the target the sales refund flow is missing** — the purchase side has it, sales does not **verified 2026-09-17**: 1 match. |
 | `v2-purchase-order-record.refund-warning-continue-button` | button "Continue" | `role=dialog >> role=button[name="Continue"]` | `…/Refunds/PurchaseRefundSubmissionWarningDialog.tsx:30` | medium | a confirmation step before the refund commits |
 
